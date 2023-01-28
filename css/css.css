@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:ital,wght@1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
+
+@font-face {
+  font-family: 'YESMyoungjo-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESMyoungjo-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+font-family: 'D2Coding';
+src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/D2Coding.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+body{
+  font: 13px 'Arial';
+  letter-spacing: 0.5px;
+  line-height: 120%;
+}
+
+.mac body{
+  font-family: 'Arial';
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  line-height: 120%;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+.Container1{
+  display: grid;
+  grid-template-columns: 1fr 820px 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.mac .Container1{
+  display: grid;
+  grid-template-columns: 1fr 800px 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.GridBottom{
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.Container2{
+  display: grid;
+  grid-template-columns: 175px 470px 175px;
+  grid-template-rows: 150px 25px 30px 1fr;
+}
+
+.mac .Container2{
+  display: grid;
+  grid-template-columns: 175px 450px 175px;
+  grid-template-rows: 150px 25px 30px 1fr;
+}
+
+.BlogNameSpace{
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.DateSpace{
+  padding: 10px 20px;
+}
+
+.SubjectSpace{
+  padding: 0px 20px;
+}
+
+.mac .DateSpace{
+  padding: 10px 40px;
+}
+
+.mac .SubjectSpace{
+  padding: 0px 40px;
+}
+
+.ContentSpace{
+  padding: 10px 20px;
+  /* font: 400 13px 'Nanum Myeongjo', serif; */
+  /* font: 12px '굴림'; */
+  font: 13px 'YESMyoungjo-Regular';
+  letter-spacing: 0.5px;
+  line-height: 140%;
+}
+
+.mac .ContentSpace{
+  padding: 10px 40px;
+  font-family: 'menlo', 'Arial';
+  font-size: 12px;
+  letter-spacing: -0.5px;
+  line-height: 140%;
+}
+
+.SidebarSpace{
+  padding-top: 23px;
+  padding-left: 50px;
+  font-size: 12px;
+}
+
+.mac .SidebarSpace{
+  padding-top: 23px;
+  padding-left: 30px;
+  font-size: 11px;
+}
+
+#BlogName{
+  font: 40px 'Archivo Black', sans-serif;
+  margin-top: 30px;
+  margin-left: 70px;
+}
+
+#Date{
+  display: inline;
+  background-color: rgb(187, 187, 187);
+  color: white;
+  font: 12px 'D2Coding';
+  letter-spacing: 1px;
+  padding: 4px 5px;
+}
+
+.mac #Date{
+  display: inline;
+  background-color: rgb(187, 187, 187);
+  color: white;
+  font: 11px 'D2Coding';
+  letter-spacing: 1px;
+  padding: 3.5px 4.5px;
+}
+
+#Subject{
+  font: bold 20px Arial;
+}
+
+.mac #Subject{
+  display: inline-block;
+  font: bold 19px Arial;
+}
+
+#Sidebar1{
+  font-weight: bold;
+}
+
+#Sidebar2{
+  font-weight: bold;
+}
+
+.Pagination button{
+  font-size: 10px;
+  margin: 1px;
+}
+
+input{
+  font-size: 10px;
+  font-weight: bold;
+  margin: -3px;
+}
+
+.active{
+  font-weight: bold;
+}
+
+img {
+  margin: auto;
+  display: block;
+}
+
+/* .mac .ContentSpace{
+  font-family: "Arial";
+  font-size: 12.5px;
+
+} */

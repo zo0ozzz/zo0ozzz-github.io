@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
 @font-face {
   font-family: 'YESMyoungjo-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESMyoungjo-Regular.woff') format('woff');
@@ -15,7 +17,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 
 /* div{
   border: 1px solid;
@@ -195,9 +196,9 @@ img {
 
 .pre_codeBlock{
   background-color: whitesmoke;
-  margin: 0px 10px 0px 10px;
+  margin: 20px 10px 20px 10px;
   white-space: pre-wrap;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 30px 0px 30px;
   border: 1px solid;
   letter-spacing: 0;
   word-spacing: 0;
@@ -206,9 +207,9 @@ img {
 
 .mac .pre_codeBlock{
   background-color: whitesmoke;
-  margin: 0px 10px 0px 10px;
+  margin: 20px 10px 20px 10px;
   white-space: pre-wrap;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 30px 0px 30px;
   border: 0.1px solid;
   letter-spacing: 0;
   word-spacing: 0;
@@ -216,8 +217,19 @@ img {
 }
 
 .code_codeBlock{
-  font-family: 'Courier New', 'Courier', 'menlo';
+  font-family: 'Source Code Pro', monospace;
+  /* font-family: 'Courier New', 'Courier', 'menlo'; */
+  letter-spacing: -1px;
   line-height: 100%;
+}
+
+.pre_text{
+  font: 13px 'D2coding';
+  letter-spacing: -0.03rem;
+  word-spacing: -1px;
+  line-height: 150%;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 

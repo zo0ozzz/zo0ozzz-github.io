@@ -1,13 +1,25 @@
 const 전체글 = {
-  ['+20221220'] : {
-    코딩 : ['기록을 시작하며', '신기루 프로젝트', '신기루1 블로그 만들기'],
+  ['+20230226'] :{
+    JavaScript : ['JavaScript 사전(계속 추가)'],
+    HTML : ['HTML 사전(계속 추가)',],
+    CSS : ['CSS 사전(계속 추가)',],
   },
+  ['+20230222'] :{
+    '엘리스 SW 트랙': ['엘리스 SW 트랙 합격', ],
+  },
+  ['+20221220'] : {
+    코딩 : ['신기루1 블로그 만들기', '신기루 프로젝트', '기록을 시작하며', ],
+  },
+  
 };
 
-const Categories = ['코딩',];
+const Categories = ['코딩', 'HTML', 'CSS', 'JavaScript', '엘리스 SW 트랙'];
 
 const 모든글 = array_allpost();
 const 코딩 = array_byCategory('코딩');
+const HTML = array_byCategory('HTML');
+const CSS = array_byCategory('CSS');
+const JavaScript = array_byCategory('JavaScript');
 
 const title = document.querySelector('title');
 const h_blogName = document.querySelector('.h_blogName');
@@ -39,14 +51,50 @@ if(allPostPage !== null){
   allPostPage.innerHTML = array_s_b_allPostPage().join('');
 }
 
-// 카테고리1 페이지
+// 카테고리 페이지
+// 카테고리1 코딩
 const category1Page = document.querySelector('.category1Page');
 
 if(category1Page !== null){
   category1Page.innerHTML = array_s_b_category1Page('코딩').join('');
 };
 
+// 카테고리2 HTML
+const category2Page = document.querySelector('.category2Page');
+
+if(category2Page !== null){
+  category2Page.innerHTML = array_s_b_category1Page('HTML').join('');
+};
+
+// 카테고리3 CSS
+const category3Page = document.querySelector('.category3Page');
+
+if(category3Page !== null){
+  category3Page.innerHTML = array_s_b_category1Page('CSS').join('');
+};
+
+// 카테고리4 JS
+const category4Page = document.querySelector('.category4Page');
+
+if(category4Page !== null){
+  category4Page.innerHTML = array_s_b_category1Page('JavaScript').join('');
+};
+
+// 카테고리5 엘리스
+const category5Page = document.querySelector('.category5Page');
+
+if(category5Page !== null){
+  category5Page.innerHTML = array_s_b_category1Page('엘리스 SW 트랙').join('');
+};
+
 // 월별 게시물 페이지
+
+const datePage2302 = document.querySelector('.datePage2302');
+
+if(datePage2302 !== null){
+  datePage2302.innerHTML = array_s_b_YearMonthPage(2023, 2).join('');
+};
+
 const datePage2212 = document.querySelector('.datePage2212');
 
 if(datePage2212 !== null){

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>zo0ozzz</title>
+    <link rel="stylesheet" href="css/css.css">
+  </head>
+  <body>
+    <div class = "container1">
+      <div></div>
+      <div class = "container2">
+        <!-- 블로그 이름 -->
+        <div class="head_blogName">
+          <a href = "index.html" class = "h_blogName"></a>
+          </div>
+        <div></div>
+        <!-- 날짜 -->
+        <div class="section_head_date">
+          <div class="s_h_date">
+            2023년 2월 26일 일요일
+          </div>
+          </div>
+        <div></div>
+        <div></div>
+        <!-- 제목 -->
+        <div class="section_head_subject">
+          <h1 class="s_h_subject">
+            HTML 사전
+          </h1>
+          </div>
+        <div></div>
+        <div></div>
+        <!-- 본문 -->
+        <div class="section_body 사전">
+HTML
+: HyperText Markup Language. 하이퍼텍스트 마크업 언어.
+- 비선형적 초월 이동이 가능하며 구조적 의미를 가진 데이터로 이루어지는 문서를 작성하는 언어.
+- HyperText: 초월. 고전적 문서의 한계를 넘어선.
+- Markup: 데이터에 이름을 붙인다. 즉, 해당 데이터의 구조적 의미를 설명한다.
+
+&lt;!DOCTYPE html&gt;
+: 문서 종류
+- 브라우저 쪽에 해당 문서의 종류를 설명.
+
+&lt;html lang="en"&gt;
+: 문서의 주된 언어.
+- 스크린 리더의 동작에 영향. 웹 접근성 측면에서 중요함.
+
+&lt;head&gt; 
+: 기계가 식별할 수 있는 문서 정보(메타데이터)를 담는다.
+- 제목, 스크립트, 스타일 시트 등.
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+-&gt; 콘텐츠를 담는다.
+    &lt;h1&gt;hello world&lt;/h1&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;h&gt;
+: heading. 제목.
+- 32px
+- 1~6단계
+
+&lt;p&gt;
+: paragraph. 문단.
+
+&lt;a&gt;
+: Anchor. 앵커. 초월 닻.
+- &lt;a href = "URL"&gt;
+: 다른 문서로 이동할 수 있는 하이퍼링크를 생성.
+  - URL
+  : Uniform Resource Locator. web address.
+  : 주소. 링크.
+  : 네트워크 상에서 자원이 어디 있는지를 알려준다.
+- &lt;a href = "URL" target = "_blank, _self, _parent, _top..."&gt;
+: 연결된 문서가 로드될 구역을 지정.
+    - _self
+    : 현재 프레임에서 연결된 문서를 로드(디폴트 값).
+    - _blank
+    : 새로운 탭에 연결된 문서로를 로드.
+    - _parent
+    : 현재 프레임의 부모 프레임에서 문서를 로드.
+    - _top
+    : 전체 화면에 문서를 로드.
+    - 프레임 이름
+    : 특정한 프레임에서 문서를 로드.
+- &lt;a href = "URL" download (="File Name")&gt;
+: 연결된 파일을 다운로드.
+    - 파일 이름을 속성값으로 설정해 내려받아지는 파일 이름을 변경할 수 있음.
+
+./
+: 현재 폴더(를 의미).
+- ex) &lt;a href = "./index.html"&gt;click&lt;/a&gt;
+
+#id
+: 페이지 내 해당 id를 가진 태그로 화면을 이동시킨다.
+- ex) &lt;a href = "#move"&gt;click&lt;/a&gt;
+
+&lt;strong&gt;
+: 굵게 강조. 태그 안의 내용을 bold하게 표시.
+- 스크린 리더가 강조해서 읽음.
+
+&lt;b&gt;
+: 굵게 강조. 태그 안의 내용을 bold하게 표시.
+- 스크린 리더가 강조하지 않음.
+
+&lt;em&gt;
+: 기울임 강조. 태그 안의 내용을 italic하게 표시.
+- 스크린 리더가 강조해서 읽음.
+
+&lt;i&gt;
+: 기울임 강조. 태그 안의 내용을 italic하게 표시.
+- 스크린 리더가 강조하지 않음.
+
+&lt;mark&gt;
+: 색 강조. 형광펜처럼 표시.
+
+&lt;hr&gt;
+: 가로선
+
+&lt;abbr&gt;
+: abbreviation. 약어. 준말 표시.
+- ex) &lt;abbr&gt;웅짱&lt;/abbr&gt;(웅비는 짱이다)
+
+&lt;kbd&gt;
+: 키보드 키 표시.
+
+&lt;pre&gt;
+: 있는 그대로 표시.
+
+&lt;code&gt;
+: 코드 블록 표시.
+
+&lt;cite&gt;
+: 인용 표시. Block.
+
+&lt;q&gt;
+: 인용 표시. Inline.
+
+&lt;ol&gt;
+: 오더 리스트. 순서가 있는 목록을 생성한다.
+- 리스트 내용 앞에 순서를 나타내는 기호가 생성됨.
+- type 지정 가능. &lt;ol type = "A(, a, I, i, ...)"&gt;
+
+&lt;ul&gt;
+: 언오더 리스트. 순서가 없는 목록을 생성한다.
+- 리스트 내용 앞에 점이 생성됨.
+
+&lt;li&gt;
+: list. 목록의 내용.
+
+&lt;dl&gt;
+: definition list. 정의 목록.
+
+&lt;dt&gt;
+: definition term. 정의 용어.
+
+&lt;dd&gt;
+: definition description. 정의 설명.
+
+- ex) 사업자 번호(dt): 번호(dd), 대표 이름(dt): 이름(dd)
+- 주로 홈페이지 하단 footer 구역에 들어간다.
+
+&lt;div&gt;, &lt;span&gt;
+: 구역을 지정.
+- 시멘틱한 HTML 구성을 지향해야 하기 때문에,
+- 해당 데이터를 꾸미는 목적의 태그가 따로 없을 경우에만 사용하기.
+- 태그는 용도에 맞게 쓰자.
+
+&lt;img&gt;
+- 이미지 삽입.
+- ex) &lt;img src = "URL(./src/a.jpg)" scrset = "" alt = ""&gt;
+  - src = "URL"
+  : source의 약자. 소스.
+  : 속성값으로 URL을 가진다.
+  - alt
+  : alternative. 대체 텍스트.
+  : 속성에는 이미지에 대한 설명을 적는다. 스크린 리더가 읽는다.
+  - scrset
+  : 이미지 소스의 세트. 같은 비율의 다양한 크기를 가지는 동일 이미지들.
+  - 내용 추가해야 함.
+
+구성
+
+header.
+nav. / section.(header. / article. / footer.) / aside
+footer
+
+article
+: 아티클. 완전히 독립적으로 역할할 수 있는 요소.
+- 포스트, 기사 등.
+
+section
+: 섹션. 아티클을 감싸주는 용도.
+
+&lt;input&gt;
+: 특정 요소를 삽입한다.
+- ex) &lt;input type = "" name = "" id = ""&gt;
+- type 속성. 속성값으로는 text, password, date, time, range, color, radio, checkbox...
+- name 속성. name = 입력값 형식으로 전송됨.
+- readonly 속성. 태그를 읽기 전용으로 만듦. -&gt; ???
+- maxlength 속성. 최대 글자 수를 지정.
+- required 속성. 해당 태그를 필수 태그로 만듦.
+- autofocus 속성. 페이지 로딩과 동시에 이 속성을 지정한 태그로 포커스 이동.
+- placeholder 속성. 태그에 입력할 값에 대한 힌트를 표시.
+- pattern: 정규표현식을 사용하여 특정 범위 내의 유효한 값을 입력받음. -&gt; ???
+
+&lt;label&gt;
+: 라벨. input 태그 앞에 사용되어 input 요소에 이름을 붙여준다.
+- ex) &lt;label for = "id"&gt;아이디&lt;/label&gt;
+- for 속성을 사용할 수 있음. 클릭 시 같은 속성 값(id 값)을 가진 input 요소로 초점을 이동시킴.
+
+&lt;form&gt;
+: 입력받은 데이터를 정리해 한꺼번에 서버로 전송한다.
+- ex) &lt;form action = "http:// ... " accept-charst="utf-8" name = "person_info" method = "get"&gt;
+- input &amp; label 요소를 포함함.
+- name = value 형식으로 정리됨.
+- ex) l?아이디=zo0ozzz&amp;패스워드=123&amp;성별=남&amp;언어=Python#move
+- action 속성.
+: 데이터를 전송할 서버 쪽 스크립트 파일을 지정.
+- 속성값이 없으면 자기 자신에게 값을 전달함.
+- name 속성.
+: 폼을 식별하기 위한 이름을 지정.
+- accept-charset 속성.
+: 폼 전송에 사용할 문자 인코딩 지정.
+- method 속성.
+: 폼을 서버에 전송할 http 메소드를 지정(get or post).
+- form을 구성하는 요소들.
+  - &lt;field&gt;
+  : 연관된 요소들을 그룹화.
+  - &lt;legend&gt;
+  : &lt;field&gt;의 하위 태그로 요소 그룹의 이름을 지정.
+  - &lt;select&gt;
+  : 항목을 선택할 수 있는 태그.
+    - size 속성.
+    : 한번에 표시할 항목 수.
+    - multiple 속성.
+    : 다중 선택 허용.
+    - &lt;optgroup&gt;
+    : 태그 안에서 목록들을 그룹화.
+    - label 속성을 사용해 그룹 이름을 지정.
+    - &lt;option&gt;
+    : 목록을 나타냄.
+- ex)
+
+  &lt;form action = "#" accept-charset="utf-8" name = "person_info" method = "get"&gt;
+            &lt;fieldset style = "width:250"&gt;
+                &lt;legend&gt;개인 정보 입력&lt;/legend&gt;
+                    지역선택 (size, multiple속성 추가)&lt;br&gt;
+                    &lt;select name = "city2" size = "5" multiple&gt;
+                            &lt;option value = "seongnam-si"&gt;성남시&lt;/option&gt;
+                            &lt;option value = "suwon-si"&gt;수원시&lt;/option&gt;
+                            &lt;option value = "yongin-si"&gt;용인시&lt;/option&gt;
+                            &lt;option value = "anyang-si"&gt;안양시&lt;/option&gt;
+                            &lt;option value = "gwacheon-si"&gt;과천시&lt;/option&gt;
+                            &lt;option value = "hanam-si"&gt;과천시&lt;/option&gt;
+                    &lt;/select&gt;
+                    &lt;br&gt;&lt;br&gt;
+                    지역선택 (optgroup 태그 포함)&lt;br&gt;
+                    &lt;select name = "city1"&gt;
+                        &lt;optgroup label = "서울"&gt;
+                            &lt;option value = "songpa-gu"&gt;송파구&lt;/option&gt;
+                            &lt;option value = "gangnam-gu"&gt;강남구&lt;/option&gt;
+                            &lt;option value = "seocho-gu"&gt;서초구&lt;/option&gt;
+                            &lt;option value = "junggu-gu"&gt;중구&lt;/option&gt;
+                        &lt;/optgroup&gt;
+
+                          &lt;optgroup label = "경기도"&gt;
+                            &lt;option value = "seongnam-si"&gt;성남시&lt;/option&gt;
+                            &lt;option value = "suwon-si"&gt;수원시&lt;/option&gt;
+                            &lt;option value = "yongin-si"&gt;용인시&lt;/option&gt;
+                            &lt;option value = "anyang-si"&gt;안양시&lt;/option&gt;
+                        &lt;/optgroup&gt;
+                    &lt;/select&gt;
+                    &lt;br&gt;&lt;br&gt;
+                    &lt;input type = "submit" value = "submit"/&gt;
+                    &lt;input type = "reset" value = "reset"/&gt;&lt;br&gt;&lt;br&gt;
+            &lt;/fieldset&gt;
+        &lt;/form&gt;
+
+  - &lt;textarea&gt;
+  : 여러 줄 글 상자.
+    - rows 속성.
+    : 줄 개수.
+    - cols 속성.
+    : 한 줄에 입력될 크기 지정.
+    - ex)
+
+    &lt;form action = "#" accept-charset="utf-8" name = "person_info" method = "get"&gt;
+          &lt;fieldset style = "width:250"&gt;
+            &lt;legend&gt;개인 정보 입력&lt;/legend&gt;
+              가입 인사 &lt;br&gt;
+              &lt;textarea name = "comment" cols = "50" rows = "5"
+                    placeholder="가입인사를 남겨주세요."&gt;&lt;/textarea&gt;
+              &lt;br&gt;&lt;br&gt;
+              &lt;input type = "submit" value = "submit"/&gt;
+              &lt;input type = "reset" value = "reset"/&gt;&lt;br&gt;&lt;br&gt;
+          &lt;/fieldset&gt;
+        &lt;/form&gt;
+
+  - &lt;datalist&gt;
+  : 입력 값 후보 목록을 지정.
+    - ex)
+
+      &lt;form action = "#" accept-charset="utf-8" name = "datalist" method = "get"&gt;
+            &lt;fieldset style = "width:350"&gt;
+                &lt;legend&gt;HTML5 &lt; 입력 값 후보 &gt;&lt;/legend&gt;
+                    &lt;br&gt;
+                    자주 사용하는 웹 브라우저를 입력해주세요.&lt;br&gt;
+                    &lt;input type = "text" name = "browser" list = "browser"&gt;
+                    &lt;datalist id = "browser"&gt;
+                        &lt;option value = "크롬"&gt;Google&lt;/option&gt;
+                        &lt;option value = "파이어폭스"&gt;Mozilla&lt;/option&gt;
+                        &lt;option value = "사라피"&gt;Apple&lt;/option&gt;
+                        &lt;option value = "익스플로러"&gt;MicroSoft&lt;/option&gt;
+                    &lt;/datalist&gt;
+                    &lt;br&gt;&lt;br&gt;
+                    &lt;input type = "submit" value = "submit"/&gt;
+                    &lt;input type = "reset" value = "reset"/&gt;&lt;br&gt;&lt;br&gt;
+            &lt;/fieldset&gt;
+        &lt;/form&gt;
+
+&lt;table&gt;
+: 표.
+- 페이지의 골격을 잡는 용도로는 사용하지 않음.
+
+&lt;caption&gt;
+: 표에 대한 설명.
+- ex)
+
+&lt;table&gt;
+    &lt;caption&gt;분식&lt;/caption&gt;
+    &lt;tr&gt;
+        &lt;th&gt;밥류&lt;/th&gt;
+        &lt;th&gt;면류&lt;/th&gt;
+        &lt;th&gt;분식류&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;th&gt;
+: table head. 표 제목.
+- 데이터의 항목을 설명.
+- 자동 가운데 정렬.
+  - scope 속성.
+  : 헤더의 해당 셀이 관련되는 셀의 종류를 명시.
+
+&lt;tr&gt;
+: table row. 표 가로 줄.
+
+&lt;td&gt;
+: table data. 표 셀.
+  - colspan, rowspan 속성
+    - ex)
+
+    &lt;td colspan="2"&gt;
+    : 두 컬런을 합친다.
+    &lt;td rowspan="2"&gt;
+    : 두 줄을 합친다.
+
+&lt;thead&gt;
+: table head 묶음.
+- 표의 제목 부분을 묶는다.
+
+&lt;tbody&gt;
+: table body 묶음.
+- 표의 데이터 부분을 묶는다.
+
+&lt;tfoot&gt;
+: table 집계 묶음.
+- 표의 집계 부분을 묶는다.
+
+(table 관련 CSS)
+
+border-collapse: collapse;
+: 표의 외곽선이 겹치는 곳의 외곽선을 하나로 합친다.
+- ex)
+
+&lt;style&gt;
+  table, tr, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+&lt;/style&gt;
+          </div>
+          <!-- 사이드바 -->
+        <div class="section_sidebar">
+        </div>
+      </div>
+      <div class="bottom"></div>
+    </div>
+      <script src="javascript/script.js"></script>
+  </body>
+</html>

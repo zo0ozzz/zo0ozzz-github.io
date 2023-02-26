@@ -232,6 +232,10 @@ img {
   word-break: break-all;
 }
 
+.사전{
+  white-space: pre-wrap;
+}
+
 
 
 

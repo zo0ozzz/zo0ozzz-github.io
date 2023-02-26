@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>zo0ozzz</title>
+    <link rel="stylesheet" href="css/css.css">
+  </head>
+  <body>
+    <div class = "container1">
+      <div></div>
+      <div class = "container2">
+        <!-- 블로그 이름 -->
+        <div class="head_blogName">
+          <a href = "index.html" class = "h_blogName"></a>
+          </div>
+        <div></div>
+        <!-- 날짜 -->
+        <div class="section_head_date">
+          <div class="s_h_date">
+            2023년 2월 26일 일요일
+          </div>
+          </div>
+        <div></div>
+        <div></div>
+        <!-- 제목 -->
+        <div class="section_head_subject">
+          <h1 class="s_h_subject">
+            CSS 사전
+          </h1>
+          </div>
+        <div></div>
+        <div></div>
+        <!-- 본문 -->
+        <div class="section_body 사전">
+CSS
+: Cascading Style Sheet. 캐이스캐이딩 스타일 시트.
+- Cascading: 계단식. 위에서 밑으로 내려오는.
+- 가장 마지막에 선언되는 CSS가 적용되기 때문에.
+- Style Sheet: 요소가 보여지는 모양을 지정. 폰트, 색, 크기 등.
+- 웹 문서는 연결된 스타일 문서를 참조하여 출력됨.
+
+구글에서 css reset
+: css 값을 초기화시킨다.
+
+&lt;style&gt;
+    h1{
+    -&gt; 선택자
+        color: blue;
+        -&gt; 속성(property) / 속성값(value)
+    }
+&lt;/style&gt;
+
+h1{}
+: CSS 적용 대상으로 h1 태그를 선택한다.
+
+h1, h2{}
+: 복수의 선택자를 사용할 때는 ','로 구분한다.
+
+div (&gt;) p{}
+: 어떤 선택자 내부에 있는 태그를 선택한다.
+- '&gt;'는 띄어쓰기로 대체 가능.
+
+#id{}
+: 특정 id를 가진 요소를 선택한다.
+- 요소는 하나의 id값만 가질 수 있음. 즉, id로는 CSS 중첩 적용 불가능.
+
+.class{}
+: 특정 class를 가진 요소를 선택한다.
+- 요소는 여러 class값을 가질 수 있음.
+- 여러 class 값을 부여할 땐 띄어쓰기를 사용.
+
+이전에는 '각기 다른 브라우저에서도 동일하게 보이는 것'이 중요했다.
+하지만 요즘은 기존의 컴퓨터 환경뿐 아니라 모바일의 비중이 높아졌고,
+'동일성'보다는 '각 환경에 알맞게 보이는 것'이 중요해졌다.
+-&gt; 여러 요소를 하나로 합쳐놓으면 다양한 상황에 대응하기가 어렵기 때문에
+-&gt; 각각의 요소를 분리해서 개발하기를 권장.
+
+HTML
+- 구조. 웹 페이지를 이루는 요소들에 의미를 부여하고 설계에 따라 엮어내 구조를 형성한다.
+
+CSS
+- 표현. 웹 페이지의 요소들을 시각적으로 디자인하여 효과적으로 전달되게 한다.
+
+JavaScript
+- 동작. 웹 페이지의 요소들과 사용자 간의 상호 작용을 설게한다.
+
+단위.
+
+em
+: 부모 태그를 기준으로 n배.
+
+rem
+: body를 기준으로 n배.
+- 기본 폰트 크기는 16px.
+
+.selector{
+width: 50%;
+heigth: 100px;
+}
+- 부모 태그의 크기를 기준으로 50%.
+
+.selector{
+width: 50vw(vh)
+}
+: Viewprot. 화면 크기. vw(뷰포트 윋스). vh(뷰포트 하이트).
+- (어느 요소에 속해 있든지) 사용자에게 보여지는 화면 크기를 기준으로 50%.
+
+width: 200px;
+border: 1px solid black;
+padding: 20px;
+- 가로 폭은 242(200 + 1 * 2 + 20 * 2)px.
+
+width: 200px;
+border: 1px solid black;
+padding: 20px;
+box-sizing: border-box;
+
+box-sizing: border-box;
+: border을 기준으로 크기를 설정.
+          </div>
+          <!-- 사이드바 -->
+        <div class="section_sidebar">
+        </div>
+      </div>
+      <div class="bottom"></div>
+    </div>
+      <script src="javascript/script.js"></script>
+  </body>
+</html>

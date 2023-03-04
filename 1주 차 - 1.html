@@ -53,9 +53,9 @@ HTTP 프로토콜
 : 상태가 없다. stateless.
 : 데이터를 주고 받기 위한 각각의 데이터 요청이 서로 독립적으로 관리된다.
 : 즉, 이전 데이터 요청과 다음 데이터 요청이 서로 관련이 없다.
-  -&amp;gt; 서버는 별도의 추가 정보를 관리하지 않아도 된다.
-  -&amp;gt; 다수의 요청 처리 및 서버의 부하를 줄일 수 있다.
-  -&amp;gt; 서버와 클라이언트가 상태를 주고받을 때 스토리지와 쿠키가 필요하다.
+    -&gt; 서버는 별도의 추가 정보를 관리하지 않아도 된다.
+    -&gt; 다수의 요청 처리 및 서버의 부하를 줄일 수 있다.
+    -&gt; 서버와 클라이언트가 상태를 주고받을 때 스토리지와 쿠키가 필요하다.
 
 URL
 : 서버에 자원을 요청하기 위해 입력하는 영문 주소.
@@ -116,10 +116,10 @@ head
 body
 : 눈에 보이는 정보를 담는다.
 
-&amp;lt;!DOCTYPE html&amp;gt;
+&lt;!DOCTYPE html&gt;
 : html5로 작성한 문서다.
 
-&amp;lt;meta charset="UTF-8"&amp;gt;
+&lt;meta charset="UTF-8"&gt;
 : 모든 문자를 표시한다.
 - 넣지 않으면 한글이 깨져 보일 수 있다.
 
@@ -146,27 +146,27 @@ HTML 태그 구성
 
 HTML 문서의 기본 구조
 
-1. &amp;lt;!DOCTYPE html&amp;gt;
+1. &lt;!DOCTYPE html&gt;
 : 문서에 사용될 언어를 선언.
 : HTML5라는 언어를 사용할 것.
 
-2. &amp;lt;html&amp;gt;...&amp;lt;/html&amp;gt;
+2. &lt;html&gt;...&lt;/html&gt;
 : HTML 문서의 시작과 끝을 의미.
-  - 모든 HTML 태그들은 &amp;lt;html&amp;gt; 태그 안쪽에 입력해야 한다.
+  - 모든 HTML 태그들은 &lt;html&gt; 태그 안쪽에 입력해야 한다.
 
-3. &amp;lt;head&amp;gt;...&amp;lt;/head&amp;gt;
+3. &lt;head&gt;...&lt;/head&gt;
 : 웹사이트의 간단한 요약 정보를 담는 영역.
   - 웹사이트에서 노출되지 않는다.
 
-4. &amp;lt;body&amp;gt;...&amp;lt;body&amp;gt;
+4. &lt;body&gt;...&lt;body&gt;
 : 눈에 보이는 정보.
 
-5. &amp;lt;meta charset="UTF-8"&amp;gt;
+5. &lt;meta charset="UTF-8"&gt;
 : character setting의 약자 문자 코드
 : 모든 문자를 웹 브라우저에서 깨짐 없이 표시하겠다는 의미.
 ??? 넣지 않으면 왜 깨질까.
 
-6. &amp;lt;title&amp;gt;...&amp;lt;/title&amp;gt;
+6. &lt;title&gt;...&lt;/title&gt;
 : 웹 사이트 탭에 나타나는 제목을 적는 태그
 
 HTML5 문서 선언.
@@ -176,9 +176,9 @@ HTML 문서의 시작과 끝
 웹사이트 제목
 웹사이트 내용
 
-&amp;lt;img&amp;gt;
+&lt;img&gt;
 : 이미지를 넣을 때 사용.
-: 예) &amp;lt;img src="logo.png(이미지 파일의 경로)" alt="회사 로고"&amp;gt;
+: 예) &lt;img src="logo.png(이미지 파일의 경로)" alt="회사 로고"&gt;
 - img
 : 정보성을 갖고 있는 이미지 삽입.
 - src
@@ -194,23 +194,23 @@ HTML 문서의 시작과 끝
   2. height
     - width를 조정하면 원래 이미지의 비율에 따라 높이가 자동으로 바뀐다.
 
-&amp;lt;h&amp;gt; 태그
+&lt;h&gt; 태그
 : heading의 약자. 제목이나 부제목을 표현.
 - 숫자는 정보의 중요도를 나타낸다.
 - h1태그는 가장 중요한 정보를 담으므로 하나의 html 문서에 한 번 만 사용된다.
   - 네이버 다음은 회사의 이름 서비스의 이름이 가장 중요한 정보일 것.
-  -&amp;gt; ?? 개인 블로그의 경우엔
+  -&gt; ?? 개인 블로그의 경우엔
 
-&amp;lt;p&amp;gt;
+&lt;p&gt;
 : paragraph. 본문 내용을 담는다.
 
-&amp;lt;ul&amp;gt;
+&lt;ul&gt;
 : unordered list. 순서가 없는 리스트.
 :  nav 구역의 메뉴 버튼을 만들 때 사용된다.
 
-&amp;lt;a&amp;gt;
+&lt;a&gt;
 : anchor. 초월닻.
-- &amp;lt;a hrer="url"&amp;gt;
+- &lt;a hrer="url"&gt;
 : 클릭 시 해당 url로 이동.
   - 이동시킬 URL이 정해지지 않았으면 임시로 #를 넣어준다.
 - 속성
@@ -237,65 +237,65 @@ HTML 문서의 시작과 끝
 - 3. 부록
 : 웹 사이트의 최하단 회사와 관련된 정보가 담겨진 영역.
 
-&amp;lt;header&amp;gt;
+&lt;header&gt;
 : 웹사이트의 머리글. 사용자가 접속했을 때 가장 먼저 보여지는 영역.
 : 목차
 - 일반적으로 nav 영역을 포함하고 있음.
 
-&amp;lt;nav&amp;gt;
+&lt;nav&gt;
 : navigation. 메뉴 버튼을 담는 영역.
 - 일반적으로 헤더 태그 안에 포함되어 있다.
 - 메뉴 버튼은 일반적으로 inline-block 성격으로 만든다.
-- 일반적으로 &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt; &amp;lt;a&amp;gt; 와 함께 사용
-- ul -&amp;gt; li -&amp;gt; a
+- 일반적으로 &lt;ul&gt; &lt;li&gt; &lt;a&gt; 와 함께 사용
+- ul -&gt; li -&gt; a
 
-&amp;lt;header&amp;gt;
-  &amp;lt;img&amp;gt;
-  &amp;lt;nav&amp;gt;
-    &amp;lt;ul&amp;gt;
-      &amp;lt;li&amp;gt;
-        &amp;lt;a&amp;gt;
-        &amp;lt;/a&amp;gt;
-      &amp;lt;/li&amp;gt;
-    &amp;lt;/ul&amp;gt;
-  &amp;lt;/nav&amp;gt;
-&amp;lt;/header&amp;gt;
+&lt;header&gt;
+  &lt;img&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
 
-&amp;lt;main&amp;gt;
+&lt;main&gt;
 : 본문
 - 하위 그룹으로 article을 가진다.
 - 속성
   1. role
   : 메인 태그의 역할을 설명
   - 익스플로러는 해당 태그를 이해하지 못하기 때문에.
-  - 예) &amp;lt;main role="main"&amp;gt;&amp;lt;/main&amp;gt;
+  - 예) &lt;main role="main"&gt;&lt;/main&gt;
 
-&amp;lt;article&amp;gt;
+&lt;article&gt;
 : 주요 이미지나 텍스트 정보를 담는 영역.
-- 웹 표준상 &amp;lt;article&amp;gt; 그룹 내부에는 각 영역을 대표하는 타이틀 정보가 반드시 필요함.
+- 웹 표준상 &lt;article&gt; 그룹 내부에는 각 영역을 대표하는 타이틀 정보가 반드시 필요함.
 - 즉, h태그가 무조건 하나 이상은 필요함.
 
-&amp;lt;main role  = "main"&amp;gt; 본문 영역
-&amp;lt;article&amp;gt; 정보 영역
-&amp;lt;h&amp;gt;&amp;lt;/h&amp;gt; 제목 영역
-&amp;lt;/article&amp;gt;
-&amp;lt;/main&amp;gt;
+&lt;main role  = "main"&gt; 본문 영역
+&lt;article&gt; 정보 영역
+&lt;h&gt;&lt;/h&gt; 제목 영역
+&lt;/article&gt;
+&lt;/main&gt;
 
-&amp;lt;footer&amp;gt;
+&lt;footer&gt;
 : 웹 사이트의 가장 밑에 들어가는 정보를 담는 영역.
 - 예) 저작권 정보 등.
 
-&amp;lt;footer&amp;gt;
-&amp;lt;div&amp;gt;
-&amp;lt;p&amp;gt;주소: ㅇㅇㅇ&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;이메일: ㅇㅇㅇ&amp;lt;/p&amp;gt;
-&amp;lt;/div&amp;gt;
-&amp;lt;div&amp;gt;
-&amp;lt;p&amp;gt;사업자: ㅇㅇㅇ&amp;lt;/p&amp;gt;
-&amp;lt;/div&amp;gt;
-&amp;lt;/footer&amp;gt;
+&lt;footer&gt;
+&lt;div&gt;
+&lt;p&gt;주소: ㅇㅇㅇ&lt;/p&gt;
+&lt;p&gt;이메일: ㅇㅇㅇ&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;p&gt;사업자: ㅇㅇㅇ&lt;/p&gt;
+&lt;/div&gt;
+&lt;/footer&gt;
 
-&amp;lt;div&amp;gt;
+&lt;div&gt;
 : 임의의 공간을 만들 때 사용하는 태그.
 - 거실, 화장실처럼 이미 적절한 의미를 갖는 태그가 있는 경우를 제외한 쇼파를 놓을 자리 티비를 놓을 자리 등 애매한 작은 공간들을 이 태그로 구획함.
 
@@ -347,7 +347,7 @@ CSS
 3. external
 : link 태그로 미리 만들어둔 CSS 파일을 불러와 적용.
 - 예)
-&amp;lt;link rel="stylesheet" href="css.css"&amp;gt;
+&lt;link rel="stylesheet" href="css.css"&gt;
   rel = ""
   : 연결된 문서가 어떠한 정보를 담고 있는지 설명.
 -장점
@@ -373,10 +373,10 @@ CSS 선택자 종류
 부모 자식 관계
 : 특정 태그가 다른 태그를 내부에 갖는 형태.
 - 예)
-&amp;lt;header&amp;gt;
-&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
-&amp;lt;p&amp;gt;&amp;lt;/p&amp;gt;
-&amp;lt;/header&amp;gt;
+&lt;header&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/header&gt;
   - header는 부모 태그가 된다.
   - h1, p는 자식 태그가 된다.
   - h1, p는 동급이라서 형제 태그가 된다.
@@ -397,8 +397,8 @@ CSS의 우선순위를 결정하는 세 가지 요소
 : 더 구체적으로 작성된 선택자의 우선 순위가 높음(부모 태그까지 같이 적으면).
 3. 선택자
 : 선택자의 종류에 따라 우선 순위가 다름.
-: 타입 &amp;gt; 클래스 &amp;gt; 아이디
-: type &amp;lt; class &amp;lt; id 순으로 우선 순위가 높음
+: 타입 &gt; 클래스 &gt; 아이디
+: type &lt; class &lt; id 순으로 우선 순위가 높음
 - CSS의 우선 순위를 이용하면 원본 코드를 유지하며 CSS를 수정할 수 있음.
 
 1 / 1장 / 09. CSS 주요 속성
@@ -488,10 +488,10 @@ background
 1 / 2장 / 02. block 요소 inline 요소
 
 block
-- &amp;lt;header&amp;gt;, &amp;lt;div&amp;gt;, &amp;lt;p&amp;gt;, &amp;lt;h&amp;gt; 등.
+- &lt;header&gt;, &lt;div&gt;, &lt;p&gt;, &lt;h&gt; 등.
 
 inline
-- &amp;lt;a&amp;gt;, &amp;lt;span&amp;gt; 등
+- &lt;a&gt;, &lt;span&gt; 등
 - width, height, margin-top, margin-bottom 적용 불가.
 
 1 / 2장 / 03. 마진 병합 현상
@@ -519,8 +519,8 @@ inline
   .next{float: left;}
     - left 클래스 요소 옆에 next 클래스 요소가 나란히 정렬됨.
 - 해당 속성이 적용된 영역의 크기보다 부모의 크기가 작다면?
-  -&amp;gt; 줄바꿈이 되어 레이아웃이 틀어진다.
-  -&amp;gt; 이런 특성을 활용해 의도한 레이아웃을 만들기도 한다.
+  -&gt; 줄바꿈이 되어 레이아웃이 틀어진다.
+  -&gt; 이런 특성을 활용해 의도한 레이아웃을 만들기도 한다.
 - clear 속성
   : 이 속성이 적용된 태그부터 플롯 속성을 제거해준다.
   - 플롯 속성을 사용했다면 거의 항상 따라오는 속성.
@@ -538,7 +538,7 @@ inline
 
 인라인 콘텐츠의 높이를 중앙 정렬 시켜주는 방법
 : 콘텐츠의 line-height 속성을 콘텐츠가 담겨 있는 공간의 높이와 같은 값으로 지정함.
-  -&amp;gt; y축 중앙 정렬이 됨.
+  -&gt; y축 중앙 정렬이 됨.
 
 요소들 간의 공백 없애기
 - 인라인 요소들 간에도 미세하게 공백이 들어간다. 이것은 인라인 요소의 태생적 속성이기 떄문에 *로 해결이 안 됨.
@@ -546,6 +546,7 @@ inline
 
 img 요소 공백 없애기
 - 이미지 태그는 태생적으로 이미지 밑에 미세한 공백을 갖고 있음. 그 공백을 제거해주기 위해 vertical-align: middle; 속성을 디폴트 값으로 넣어주는 게 좋음.
+            
 </pre>
         </div>
           <!-- 사이드바 -->

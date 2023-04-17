@@ -35,14 +35,15 @@
           <pre class="pre_text">
 1-1-4(230302)
 
-&lt;transform&gt;
+실시간 이론 강의
+
+* transeform
 
 CSS엔 두 가지 속성이 있다.
+1. 레이아웃에 영향을 주는 속성
+-&gt; 거의 대부분의 속성
 
-  1. 레이아웃에 영향을 주는 속성
-  -&gt; 거의 대부분의 속성
-
-  2. 레이아웃에 영향을 주지 않는 속성
+2. 레이아웃에 영향을 주지 않는 속성
   - transform이 적용된 대상은 기본적인 레이아웃이 확정된 후에 랜더링되기 때문에 레이아웃에 변형을 주지 않는다.
     -&gt; 기존에 레이아웃에 배치되어 있는 대상과 겹쳐지는 형태가 나타날 수도 있다.
   - transform-origin 속성을 이용해 이 부분을 조정할 수 있다.
@@ -60,38 +61,37 @@ CSS엔 두 가지 속성이 있다.
 - display 속성들은 기본적으로 레이아웃에 영향을 미친다고 보면 된다.
 
 transform 속성은 무한히 붙여 쓸 수 있다.
-  - 예)
-  transform: translate(100px, 100px) rotate(50deg);
-  - 순차적으로 작동할 때는 뒤에 입력한 속성이 우선 순위를 갖는다.
-    - 예로 든 경우에는 rotate가 먼저 작동.
-  - 먼저 변형을 하고 이동시키는 게 좀 더 편하다.
 
-- 바깥과 호버 안에 공통적으로 존재하는 속성에 각기 다른 속성값을 입력하면?
+- 예)
+transform: translate(100px, 100px) rotate(50deg);
+- 순차적으로 작동할 때는 뒤에 입력한 속성이 우선 순위를 갖는다.
+  - 예로 든 경우에는 rotate가 먼저 작동.
+- 먼저 변형을 하고 이동시키는 게 좀 더 편하다.
+
+바깥과 호버 안에 공통적으로 존재하는 속성에 각기 다른 속성값을 입력하면?
 : 호버 상태일 때는 안쪽 속성이 적용, 호버 상태가 끝나면 바깥쪽 속성이 적용된다.
-  - 동작 원리를 생각해보면 이해할 수 있다. 호버는 기존 속성에 덮어 씌우는 것, 즉 우선 순위가 높다.
+
   - 예)
-  duration: 1s;
-  selector:hover{duration: 100ms;}
+duration: 1s;
+selector:hover{duration: 100ms;}
   : 호버 시 지속 시간 0.1초, 아닐 시 1초가 적용된다.
+  - 동작 원리를 생각해보면 이해할 수 있다. 호버는 기존 속성에 덮어 씌우는 것, 즉 우선 순위가 높다.
 
-&lt;transition&gt;
+* transition
 
-- transition-property에 여러 속성을 입력할 때의 작동
+transition-property에 여러 속성을 입력할 때의 작동
 : 여러 속성 사이에 ','가 없으면 동시에 작동한다.
-  - 예) transition-property: background-color, width;
-  : 배경색과 가로폭이 동시에 변한다.
-  - 순차적으로 작동하게 하려면 작동 시간, 딜레이를 적절히 각각 입력해줘야 함.
-    - 예)
-    transition-property: background-color, width;
-    transition-duration: 1s, 1s;
-    transition-delay: 0s, 1s;
 
-&lt;animation&gt;
+- 예) transition-property: background-color, width;
+: 배경색과 가로폭이 동시에 변한다.
 
-overflow: hidden;
-: 콘텐츠가 바깥 컨테이너의 경계를 넘어서면 콘텐츠를 감춘다.
+- 순차적으로 작동하게 하려면 작동 시간, 딜레이를 적절히 각각 입력해줘야 함.
+  - 예)
+  transition-property: background-color, width;
+  transition-duration: 1s, 1s;
+  transition-delay: 0s, 1s;
 
-animation-play-state: running;
+* animation
 
 @keyframes {
 from, to {transform: translate(0, 0)}
@@ -105,18 +105,24 @@ from, to {transform: translate(0, 0)}
 
 애니메이션 중첩 방법
 : 여러 종류의 애니메이션이 동시에 중첩되어 작동하게 하는 방법.
-  1. 애니매이션에서 변경하려는 속성이 중복되지 않을 때
-  : 애니매이션의 개수만큼 @keyframes 구문을 작성해준다.
-  2. 중복될 때.
-  : 중첩할 애니메이션의 개수만큼 대상을 div로 감싸 그 div에 애니매이션을 적용해준다.
+  
+1. 애니매이션에서 변경하려는 속성이 중복되지 않을 때
+: 애니매이션의 개수만큼 @keyframes 구문을 작성해준다.
+  
+2. 중복될 때.
+: 중첩할 애니메이션의 개수만큼 대상을 div로 감싸 그 div에 애니매이션을 적용해준다.
 
-&lt;별책 부록&gt;
+* 별책 부록
 
 잘하는 프로그래머
 : 적절한 도구를 쓸 줄 아는.
 
 클론 코딩도 좋다.
-: 하지만 직접 뭔가를 창조해내보는 것도 좋다.
+: 하지만 직접 뭔가를 창조해내보는 걸 더 추천.
+: 물론 클론 코딩도 좋다.
+
+overflow: hidden;
+: 콘텐츠가 바깥 컨테이너의 경계를 넘어서면 콘텐츠를 감춘다.
           </pre>
           </div>
           <!-- 사이드바 -->

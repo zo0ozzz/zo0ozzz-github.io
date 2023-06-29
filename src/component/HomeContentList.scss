@@ -1,0 +1,31 @@
+.home-contentList_container {
+  width: 900px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc(870px / 4));
+  grid-gap: 10px;
+  justify-content: center;
+
+  margin: 10px auto 0 auto;
+
+  .contentList {
+    padding: 5px;
+
+    border: 1px solid;
+
+    cursor: pointer;
+
+    .subject {
+      font-weight: bold;
+    }
+
+    .date {
+      display: block;
+
+      font-size: 70%;
+      text-align: right;
+
+      margin-top: 10px;
+    }
+  }
+}

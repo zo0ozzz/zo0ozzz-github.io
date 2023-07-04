@@ -1,15 +1,37 @@
 import "./App.scss";
-import { PageHeader } from "./component/PageHeader";
-import { HomeHellow } from "./component/HomeHellow";
-import { HomeContentList } from "./component/HomeContentList";
-// import { MonthList } from "./component/MonthList";
+import { Route, Routes } from "react-router-dom";
+import { PageHeader } from "./component/common/PageHeader";
+import { PageFooter } from "./component/common/PageFooter";
+import { HomeHellow } from "./component/home/HomeHellow";
+import { HomeContentList } from "./component/home/HomeContentList";
+import { Post } from "./component/posts/Post";
 
 function App() {
   return (
     <>
-      <PageHeader />
-      <HomeHellow />
-      <HomeContentList />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <PageHeader />
+              <HomeHellow />
+              <HomeContentList />
+              <PageFooter />
+            </>
+          }
+        />
+        <Route
+          path="/posts/:id"
+          element={
+            <>
+              <PageHeader />
+              <Post />
+              <PageFooter />
+            </>
+          }
+        />
+      </Routes>
     </>
   );
 }

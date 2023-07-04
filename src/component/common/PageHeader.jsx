@@ -25,7 +25,7 @@ export function PageHeader() {
   return (
     <>
       <header className="page-header">
-        <Link to="#" className="link">
+        <Link to="/" className="link">
           <p className="page-header-name">{pageName}</p>
         </Link>
         <div />

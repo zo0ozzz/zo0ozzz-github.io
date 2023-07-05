@@ -1,0 +1,32 @@
+.page-header {
+  width: 900px;
+
+  padding: 10px 0;
+
+  margin: 10px auto 0 auto;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+
+  border-bottom: 1px solid;
+
+  // @include devBorder;
+
+  .page-header-name {
+    font-weight: bold;
+
+    // @include devBorder;
+  }
+
+  .page-header-nav {
+    ul {
+      // @include devBorder;
+
+      li {
+        display: inline-block;
+
+        // @include devBorder;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import "./Post.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { HTMLRenderer } from "../common/HTMLRenderer";
 
@@ -7,6 +7,7 @@ export function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
+  const textarea = useRef(null);
 
   useEffect(() => {
     fetch("http://localhost:9999/data/" + id)
@@ -14,7 +15,7 @@ export function Post() {
       .then((data) => {
         setPost(data);
       });
-  }, []);
+  }, [mode]);
 
   return (
     <>
@@ -24,6 +25,22 @@ export function Post() {
             <button
               className="editButton"
               onClick={() => {
+                const data = {
+                  body: textarea.current.value,
+                };
+
+                fetch("http://localhost:9999/data/" + id, {
+                  method: "PATCH",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((response) => response.status)
+                  .catch((error) => {
+                    console.log(error);
+                  });
+
                 setMode(false);
               }}
             >
@@ -43,7 +60,9 @@ export function Post() {
         <div className="subject">{post.title}</div>
         <div className="content">
           {mode ? (
-            <textarea class="textarea">{post.body}</textarea>
+            <textarea class="textarea" ref={textarea}>
+              {post.body}
+            </textarea>
           ) : (
             <HTMLRenderer content={post.body} />
           )}

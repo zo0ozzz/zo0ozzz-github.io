@@ -25,8 +25,14 @@ export function Post() {
             <button
               className="editButton"
               onClick={() => {
+                const bodyValue = textarea.current.value.replaceAll(
+                  /\n/g,
+                  "<br />"
+                );
+                console.log(bodyValue);
+
                 const data = {
-                  body: textarea.current.value,
+                  body: bodyValue,
                 };
 
                 fetch("http://localhost:9999/data/" + id, {
@@ -36,12 +42,13 @@ export function Post() {
                   },
                   body: JSON.stringify(data),
                 })
-                  .then((response) => response.status)
+                  .then((response) => {
+                    console.log("status: ", response.status);
+                    setMode(false);
+                  })
                   .catch((error) => {
-                    console.log(error);
+                    console.log("error: ", error);
                   });
-
-                setMode(false);
               }}
             >
               확인
@@ -60,9 +67,11 @@ export function Post() {
         <div className="subject">{post.title}</div>
         <div className="content">
           {mode ? (
-            <textarea class="textarea" ref={textarea}>
-              {post.body}
-            </textarea>
+            <textarea
+              class="textarea"
+              ref={textarea}
+              defaultValue={post.body}
+            />
           ) : (
             <HTMLRenderer content={post.body} />
           )}

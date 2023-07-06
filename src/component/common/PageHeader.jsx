@@ -14,11 +14,9 @@ export function PageHeader() {
 
   const pageNavList = pageNav.map(([navName, navLink], index) => {
     return (
-      <>
-        <Link to={navLink} className="link" key={index}>
-          <li>{navName}</li>
-        </Link>
-      </>
+      <Link to={navLink} className="link" key={index}>
+        <li>{navName}</li>
+      </Link>
     );
   });
 

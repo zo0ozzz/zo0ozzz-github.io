@@ -25,10 +25,13 @@ export function Post() {
             <button
               className="editButton"
               onClick={() => {
-                const bodyValue = textarea.current.value.replaceAll(
-                  /\n/g,
-                  "<br />"
-                );
+                // const bodyValue = textarea.current.value.replaceAll(
+                //   /\n/g,
+                //   "<br />"
+                // );
+
+                const bodyValue = htmlEncode(textarea.current.value);
+
                 console.log(bodyValue);
 
                 const data = {

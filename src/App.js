@@ -9,29 +9,31 @@ import { Post } from "./component/posts/Post";
 function App() {
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <PageHeader />
-              <HomeHellow />
-              <HomeContentList />
-              <PageFooter />
-            </>
-          }
-        />
-        <Route
-          path="/posts/:id"
-          element={
-            <>
-              <PageHeader />
-              <Post />
-              <PageFooter />
-            </>
-          }
-        />
-      </Routes>
+      <div className="wrapper">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <PageHeader />
+                <HomeHellow />
+                <HomeContentList />
+                <PageFooter />
+              </>
+            }
+          />
+          <Route
+            path="/posts/:id"
+            element={
+              <>
+                <PageHeader />
+                <Post />
+                <PageFooter />
+              </>
+            }
+          />
+        </Routes>
+      </div>
     </>
   );
 }

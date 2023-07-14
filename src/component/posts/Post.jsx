@@ -25,14 +25,7 @@ export function Post() {
             <button
               className="editButton"
               onClick={() => {
-                // const bodyValue = textarea.current.value.replaceAll(
-                //   /\n/g,
-                //   "<br />"
-                // );
-
-                const bodyValue = htmlEncode(textarea.current.value);
-
-                console.log(bodyValue);
+                const bodyValue = textarea.current.value.replace(/^\s+/g, "");
 
                 const data = {
                   body: bodyValue,
@@ -74,6 +67,12 @@ export function Post() {
               class="textarea"
               ref={textarea}
               defaultValue={post.body}
+              // rows={1}
+              onChange={() => {
+                textarea.current.style.height = "auto";
+                textarea.current.style.height =
+                  textarea.current.scrolHeight + "px";
+              }}
             />
           ) : (
             <HTMLRenderer content={post.body} />

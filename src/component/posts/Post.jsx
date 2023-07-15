@@ -3,14 +3,22 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { HTMLRenderer } from "../common/HTMLRenderer";
 // ckEditor
+// import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
+// import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
 
 export function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
   const postBodyData = useRef(post.body);
+  // const editorConfig = {
+  //   placehoder: "zo0ozzz",
+  //   plugins: [Bold, Code],
+  //   toolbar: ["Bold", "Code"],
+  // };
 
   useEffect(() => {
     fetch("http://localhost:9999/data/" + id)
@@ -70,6 +78,7 @@ export function Post() {
             <>
               <CKEditor
                 editor={ClassicEditor}
+                // config={editorConfig}
                 data={post.body}
                 onReady={(editor) => {
                   // You can store the "editor" and use when it is needed.
@@ -86,7 +95,6 @@ export function Post() {
                   // console.log("Focus.", editor);
                 }}
               />
-              {/* <EEE /> */}
             </>
           ) : (
             // <textarea

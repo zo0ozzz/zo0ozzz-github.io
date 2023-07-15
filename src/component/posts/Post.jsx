@@ -68,7 +68,6 @@ export function Post() {
         <div className="content">
           {mode ? (
             <>
-              <h2>Using CKEditor 5 build in React</h2>
               <CKEditor
                 editor={ClassicEditor}
                 data={post.body}
@@ -87,6 +86,7 @@ export function Post() {
                   // console.log("Focus.", editor);
                 }}
               />
+              {/* <EEE /> */}
             </>
           ) : (
             // <textarea

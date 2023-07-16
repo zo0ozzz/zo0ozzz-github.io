@@ -1,20 +1,18 @@
 import "./Post.scss";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { HTMLRenderer } from "../common/HTMLRenderer";
-//quill
+// editor
 import Editor from "../common/Editor.jsx";
-// ckEditor
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import Custom from "ckeditor5-custom-build";
+// rederer
+import HTMLRenderer from "../common/HTMLRenderer";
 
 export function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
-  const postBodyData = useRef(post.body);
-  console.log(postBodyData.current);
+
+  const editPostContent = (content) =>
+    setPost((prev) => ({ ...prev, body: content }));
 
   useEffect(() => {
     fetch("http://localhost:9999/data/" + id)
@@ -32,8 +30,7 @@ export function Post() {
             <button
               className="editButton"
               onClick={() => {
-                const bodyValue = postBodyData.current;
-                // const bodyValue = textarea.current.value.replace(/\t/g, "");
+                const bodyValue = post.body;
 
                 const data = {
                   body: bodyValue,
@@ -72,42 +69,9 @@ export function Post() {
         <div className="content">
           {mode ? (
             <>
-              {/* <CKEditor
-                editor={ClassicEditor}
-                data={post.body}
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                  postBodyData.current = editor.getData();
-                  // console.log({ event, editor });
-                }}
-                onBlur={(event, editor) => {
-                  // console.log("Blur.", editor);
-                }}
-                onFocus={(event, editor) => {
-                  // console.log("Focus.", editor);
-                }}
-              /> */}
-              <Editor
-                onChange={(editor) => {
-                  editor;
-                }}
-              />
+              <Editor initialValue={post.body} onChange={editPostContent} />
             </>
           ) : (
-            // <textarea
-            //   class="textarea"
-            //   ref={textarea}
-            //   defaultValue={post.body}
-            //   rows={10}
-            //   onChange={() => {
-            //     textarea.current.style.height = "auto";
-            //     textarea.current.style.height =
-            //       textarea.current.scrollHeight + "px";
-            //   }}
-            // />
             <HTMLRenderer content={post.body} />
           )}
         </div>

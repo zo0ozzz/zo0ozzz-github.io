@@ -2,22 +2,19 @@ import "./Post.scss";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { HTMLRenderer } from "../common/HTMLRenderer";
-// ckEditor
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import Custom from "ckeditor5-custom-build";
-// draft.js
+//quill
 import Editor from "../common/Editor.jsx";
+// ckEditor
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import Custom from "ckeditor5-custom-build";
 
 export function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
   const postBodyData = useRef(post.body);
-  // const editorConfig = {
-  //   placehoder: "zo0ozzz",
-  //   plugins: [Bold, Code],
-  //   toolbar: ["Bold", "Code"],
-  // };
+  console.log(postBodyData.current);
 
   useEffect(() => {
     fetch("http://localhost:9999/data/" + id)
@@ -76,8 +73,7 @@ export function Post() {
           {mode ? (
             <>
               {/* <CKEditor
-                editor={Custom}
-                // config={editorConfig}
+                editor={ClassicEditor}
                 data={post.body}
                 onReady={(editor) => {
                   // You can store the "editor" and use when it is needed.
@@ -94,7 +90,11 @@ export function Post() {
                   // console.log("Focus.", editor);
                 }}
               /> */}
-              <Editor />
+              <Editor
+                onChange={(editor) => {
+                  editor;
+                }}
+              />
             </>
           ) : (
             // <textarea

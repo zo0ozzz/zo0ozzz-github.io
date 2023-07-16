@@ -1,34 +1,9 @@
 import { useState } from "react";
-import { EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-const ControlledEditor = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+export default function Editor({ handleOnChange }) {
+  const [value, setValue] = useState("");
 
-  const onEditorStateChange = (newEditorState) => {
-    setEditorState(newEditorState);
-  };
-
-  return (
-    <Editor
-      wrapperClassName="wrapper-class"
-      editorClassName="editor-class"
-      toolbarClassName="toolbar-class"
-      // wrapperStyle={<wrapperStyleObject>}
-      // editorStyle={<editorStyleObject>}
-      // toolbarStyle={<toolbarStyleObject>}
-      editorState={editorState}
-      onEditorStateChange={onEditorStateChange}
-      toolbar={{
-        inline: { inDropdown: true },
-        list: { inDropdown: true },
-        textAlign: { inDropdown: true },
-        link: { inDropdown: true },
-        history: { inDropdown: true },
-      }}
-    />
-  );
-};
-
-export default ControlledEditor;
+  return <ReactQuill theme="snow" value={value} onChange={handleOnChange} />;
+}

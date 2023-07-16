@@ -3,11 +3,10 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { HTMLRenderer } from "../common/HTMLRenderer";
 // ckEditor
-// import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
-// import Code from "@ckeditor/ckeditor5-basic-styles/src/code";
+import Custom from "ckeditor5-custom-build";
+// draft.js
+import Editor from "../common/Editor.jsx";
 
 export function Post() {
   const { id } = useParams();
@@ -76,8 +75,8 @@ export function Post() {
         <div className="content">
           {mode ? (
             <>
-              <CKEditor
-                editor={ClassicEditor}
+              {/* <CKEditor
+                editor={Custom}
                 // config={editorConfig}
                 data={post.body}
                 onReady={(editor) => {
@@ -94,7 +93,8 @@ export function Post() {
                 onFocus={(event, editor) => {
                   // console.log("Focus.", editor);
                 }}
-              />
+              /> */}
+              <Editor />
             </>
           ) : (
             // <textarea

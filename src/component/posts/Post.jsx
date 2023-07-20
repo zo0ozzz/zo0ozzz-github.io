@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 // editor
 import Editor from "../common/Editor.jsx";
 // rederer
+import Viewer from "../common/Viewer";
 import HTMLRenderer from "../common/HTMLRenderer";
 
 export function Post() {
@@ -72,7 +73,11 @@ export function Post() {
               <Editor initialValue={post.body} onChange={editPostContent} />
             </>
           ) : (
-            <HTMLRenderer content={post.body} />
+            <>
+              <Viewer content={post.body} />
+              <hr />
+              <HTMLRenderer content={post.body} />
+            </>
           )}
         </div>
       </div>

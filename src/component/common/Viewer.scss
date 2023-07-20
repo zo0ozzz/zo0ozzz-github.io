@@ -1,0 +1,57 @@
+.Viewer {
+  font-size: 13px !important;
+
+  // .ql-bubble .ql-editor h1 {
+  //   // font-size: 2em;
+  //   font-size: inherit;
+  // }
+  // .ql-bubble .ql-editor h2 {
+  //   font-size: 1.5em;
+  //   font-size: inherit;
+  // }
+  // .ql-bubble .ql-editor h3 {
+  //   font-size: 1.17em;
+  //   font-size: inherit;
+  // }
+  // .ql-bubble .ql-editor h4 {
+  //   font-size: 1em;
+  // }
+  // .ql-bubble .ql-editor h5 {
+  //   font-size: 0.83em;
+  // }
+  // .ql-bubble .ql-editor h6 {
+  //   font-size: 0.67em;
+  // }
+  .ql-bubble .ql-editor a {
+    text-decoration: underline;
+  }
+  .ql-bubble .ql-editor blockquote {
+    border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+  }
+  .ql-bubble .ql-editor code,
+  .ql-bubble .ql-editor pre {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+  }
+  .ql-bubble .ql-editor pre {
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+  }
+  .ql-bubble .ql-editor code {
+    font-size: 85%;
+    padding: 2px 4px;
+  }
+  .ql-bubble .ql-editor pre.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+  }
+  .ql-bubble .ql-editor img {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,240 @@
+// * 폰트명 *
+
+// 폰트명 버튼 크기
+.ql-snow .ql-picker.ql-font {
+  width: auto;
+}
+// 폰트명 버튼 옆에 화살표
+.ql-snow .ql-picker.ql-font svg {
+  display: none;
+}
+// 툴바상에 표시되는 이름
+.ql-snow .ql-picker.ql-font .ql-picker-label::before,
+// 옵션상에 표시되는 이름
+.ql-snow .ql-picker.ql-font .ql-picker-item::before {
+  content: "기본";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="sans-serif"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="sans-serif"]::before {
+  content: "sans-serif";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="serif"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="serif"]::before {
+  content: "serif";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="monospace"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="monospace"]::before {
+  content: "monospace";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="굴림"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="굴림"]::before {
+  content: "굴림";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="ibmPlexMono"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="ibmPlexMono"]::before {
+  content: "ibm plex mono";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="sans-serif"]::before {
+  font-family: sans-serif;
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="serif"]::before {
+  font-family: serif;
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="monospace"]::before {
+  font-family: monospace;
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="굴림"]::before {
+  font-family: "굴림";
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="ibmPlexMono"]::before {
+  font-family: "ibm plex mono";
+}
+
+// * 폰트 사이즈 *
+
+// 폰트 사이즈 버튼
+.ql-snow .ql-picker.ql-size {
+  width: auto;
+}
+// 폰트 사이즈 버튼 옆에 화살표
+.ql-snow .ql-picker.ql-size svg {
+  display: none;
+}
+
+// 툴바상에 표시되는 이름
+// 옵션상에 표시되는 이름
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item::before {
+  content: "기본";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="small"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
+  content: "Small";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="large"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
+  content: "Large";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="huge"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="huge"]::before {
+  content: "Huge";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
+  font-size: 10px;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
+  font-size: 18px;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="huge"]::before {
+  font-size: 32px;
+}
+
+// * 폰트명 & 폰트 사이즈 버튼 라벨 *
+
+// 폰트명 라벨
+.ql-font .ql-picker-label {
+  padding: 0;
+  margin: 0 10px 0 0;
+}
+// 폰트 사이즈 라벨
+.ql-size .ql-picker-label {
+  padding: 0;
+  margin: 0 10px 0 0;
+}
+
+// * 코드 *
+
+.ql-snow .ql-editor code,
+.ql-snow .ql-editor pre {
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
+.ql-snow .ql-editor pre {
+  white-space: pre-wrap;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 20px 20px;
+}
+.ql-snow .ql-editor code {
+  font-size: 90%;
+  font-family: "ibm plex mono", "굴림";
+  padding: 2px 4px;
+}
+.ql-snow .ql-editor pre.ql-syntax {
+  font-family: "ibm plex mono", "굴림";
+  color: #0b0;
+  background-color: black;
+  // color: black;
+  // background-color: whitesmoke;
+  overflow: visible;
+  border-radius: 0px;
+
+  // * hljs *
+
+  // styles/base16/green-screen.css
+  .hljs {
+    color: #0b0;
+    background: #010;
+  }
+  .hljs ::selection,
+  .hljs::selection {
+    background-color: #050;
+    color: #0b0;
+  }
+  .hljs-comment {
+    // color: #070;
+    color: white;
+  }
+  .hljs-tag {
+    // color: #090;
+    color: #0b0;
+  }
+  .hljs-operator,
+  .hljs-punctuation,
+  .hljs-subst {
+    color: #0b0;
+  }
+  .hljs-operator {
+    opacity: 0.7;
+  }
+  .hljs-bullet,
+  .hljs-deletion,
+  .hljs-name,
+  .hljs-selector-tag,
+  .hljs-template-variable,
+  .hljs-variable {
+    // color: #070;
+    color: #0b0;
+  }
+  .hljs-attr,
+  .hljs-link,
+  .hljs-literal,
+  .hljs-number,
+  .hljs-symbol,
+  .hljs-variable.constant_ {
+    // color: #090;
+    color: #0b0;
+  }
+  .hljs-class .hljs-title,
+  .hljs-title,
+  .hljs-title.class_ {
+    // color: #070;
+    color: #0b0;
+  }
+  .hljs-strong {
+    font-weight: 700;
+    // color: #070;
+    color: #0b0;
+  }
+  .hljs-addition,
+  .hljs-code,
+  .hljs-string,
+  .hljs-title.class_.inherited__ {
+    // color: #0b0;
+    color: #0b0;
+  }
+  .hljs-built_in,
+  .hljs-doctag,
+  .hljs-keyword.hljs-atrule,
+  .hljs-quote,
+  .hljs-regexp {
+    // color: #050;
+    color: #0b0;
+  }
+  .hljs-attribute,
+  .hljs-function .hljs-title,
+  .hljs-section,
+  .hljs-title.function_,
+  .ruby .hljs-property {
+    // color: #090;
+    color: #0b0;
+  }
+  .diff .hljs-meta,
+  .hljs-keyword,
+  .hljs-template-tag,
+  .hljs-type {
+    color: #0b0;
+  }
+  .hljs-emphasis {
+    color: #0b0;
+    font-style: italic;
+  }
+  .hljs-meta,
+  .hljs-meta .hljs-keyword,
+  .hljs-meta .hljs-string {
+    // color: #050;
+    color: #0b0;
+  }
+  .hljs-meta .hljs-keyword,
+  .hljs-meta-keyword {
+    font-weight: 700;
+  }
+  pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+  }
+  code.hljs {
+    padding: 3px 5px;
+  }
+}

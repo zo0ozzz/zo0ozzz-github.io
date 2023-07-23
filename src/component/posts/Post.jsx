@@ -2,10 +2,15 @@ import "./Post.scss";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 // editor
-import Editor from "../common/Editor.jsx";
-// rederer
-import Viewer from "../common/Viewer";
+import Editor from "../../lib/Quill/editor/Editor.jsx";
+// viewer
+import Viewer from "../../lib/Quill/viewer/Viewer";
 import HTMLRenderer from "../common/HTMLRenderer";
+// import "highlight.js/styles/base16/green-screen.css";
+// import "highlight.js/scss/gradient-light.scss";
+// import "highlight.js/scss/grayscale.scss";
+// import "highlight.js/scss/idea.scss";
+// import "highlight.js/scss/intellij-light.scss";
 
 export function Post() {
   const { id } = useParams();
@@ -75,8 +80,7 @@ export function Post() {
           ) : (
             <>
               <Viewer content={post.body} />
-              <hr />
-              <HTMLRenderer content={post.body} />
+              {/* <HTMLRenderer content={post.body} /> */}
             </>
           )}
         </div>

@@ -5,12 +5,6 @@ import { useParams } from "react-router-dom";
 import Editor from "../../lib/Quill/editor/Editor.jsx";
 // viewer
 import Viewer from "../../lib/Quill/viewer/Viewer";
-import HTMLRenderer from "../common/HTMLRenderer";
-// import "highlight.js/styles/base16/green-screen.css";
-// import "highlight.js/scss/gradient-light.scss";
-// import "highlight.js/scss/grayscale.scss";
-// import "highlight.js/scss/idea.scss";
-// import "highlight.js/scss/intellij-light.scss";
 
 export function Post() {
   const { id } = useParams();

@@ -153,8 +153,8 @@ $matrix3: #003b00;
   //   color: $matrix1;
   // }
   .hljs-comment {
-    // color: $matrix2;
-    color: rgb(150, 150, 150);
+    color: $matrix2;
+    // color: rgb(150, 150, 150);
     font-style: italic;
   }
   // .hljs-tag {
@@ -243,10 +243,10 @@ $matrix3: #003b00;
   // import, export, function, return 등등
   {
     font-weight: bold;
-    color: $matrix2;
+    color: $matrix1;
   }
   .hljs-title.function_,
-  // funtion 이름
+  // 함수 이름
   .hljs-name
   // 태그 이름
   {
@@ -257,14 +257,6 @@ $matrix3: #003b00;
   // 프로퍼티
   {
     font-weight: bold;
-    font-style: italic;
-    color: $matrix2;
-  }
-  // .hljs-params,
-  // 매개 변수
-  .hljs-string
-  // 프로퍼티 값
-  {
-    font-style: italic;
+    color: $matrix1;
   }
 }

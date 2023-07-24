@@ -153,8 +153,8 @@ $matrix3: #003b00;
   //   color: $matrix1;
   // }
   .hljs-comment {
-    color: $matrix2;
-    // color: rgb(150, 150, 150);
+    // color: $matrix2;
+    color: rgb(150, 150, 150);
     font-style: italic;
   }
   // .hljs-tag {
@@ -243,7 +243,7 @@ $matrix3: #003b00;
   // import, export, function, return 등등
   {
     font-weight: bold;
-    color: $matrix1;
+    color: $matrix2;
   }
   .hljs-title.function_,
   // 함수 이름

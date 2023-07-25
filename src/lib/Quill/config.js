@@ -2,6 +2,7 @@ import { Quill } from "react-quill";
 import hljs from "../hljs/hljs.js";
 
 const Font = Quill.import("formats/font");
+
 Font.whitelist = [
   false,
   "굴림",
@@ -10,6 +11,7 @@ Font.whitelist = [
   "serif",
   "monospace",
 ];
+
 Quill.register(Font, true);
 
 // const Size = Quill.import("formats/size");
@@ -21,6 +23,7 @@ export const editorModulesConfig = {
   // syntax: true,
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
+    // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
   },
   toolbar: {
     container: [
@@ -28,7 +31,7 @@ export const editorModulesConfig = {
       { font: Font.whitelist },
       { size: [] },
       // { size: Size.whitelist },
-
+      "custom",
       "bold",
       "italic",
       "underline",
@@ -56,6 +59,11 @@ export const editorModulesConfig = {
 
       "clean",
     ],
+    handlers: {
+      custom: function () {
+        console.log(1);
+      },
+    },
   },
 };
 
@@ -66,6 +74,7 @@ export const viewerModulesConfig = {
   // syntax: true,
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
+    // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
   },
 };
 

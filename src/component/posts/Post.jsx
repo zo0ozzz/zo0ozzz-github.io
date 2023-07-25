@@ -10,6 +10,9 @@ export function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
+  const editorRef = useRef(null);
+
+  // console.log(editorRef.current.selection);
 
   const editPostContent = (content) =>
     setPost((prev) => ({ ...prev, body: content }));
@@ -21,6 +24,16 @@ export function Post() {
         setPost(data);
       });
   }, [mode]);
+
+  // useEffect(() => {
+  //   document.querySelectorAll("pre").forEach((el) => {
+  //     hljs.highlightElement(el);
+  //   });
+  // }, [post]);
+
+  // useEffect(() => {
+  //   console.log(editorRef.current);
+  // }, [editorRef.current]);
 
   return (
     <>
@@ -69,7 +82,11 @@ export function Post() {
         <div className="content">
           {mode ? (
             <>
-              <Editor initialValue={post.body} onChange={editPostContent} />
+              <Editor
+                ref={editorRef}
+                initialValue={post.body}
+                onChange={editPostContent}
+              />
             </>
           ) : (
             <>

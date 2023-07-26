@@ -1,4 +1,17 @@
 .wrapper-Editor {
+  position: relative;
+  border: 2px solid;
+
+  .buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+  }
+
   .ql-toolbar {
     border-color: black;
     padding: 0px !important;

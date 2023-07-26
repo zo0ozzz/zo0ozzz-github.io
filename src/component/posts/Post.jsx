@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Editor from "../../lib/Quill/editor/Editor.jsx";
 // viewer
 import Viewer from "../../lib/Quill/viewer/Viewer";
+import Test from "./Test.jsx";
 
 export function Post() {
   const { id } = useParams();
@@ -25,15 +26,12 @@ export function Post() {
       });
   }, [mode]);
 
-  // useEffect(() => {
-  //   document.querySelectorAll("pre").forEach((el) => {
-  //     hljs.highlightElement(el);
-  //   });
-  // }, [post]);
-
-  // useEffect(() => {
-  //   console.log(editorRef.current);
-  // }, [editorRef.current]);
+  const handleClick = (e) => {
+    console.log(e.target.tagName);
+    // if (e.target.tagName === "IMG") {
+    //   console.log(e.target);
+    // }
+  };
 
   return (
     <>
@@ -87,6 +85,7 @@ export function Post() {
                 initialValue={post.body}
                 onChange={editPostContent}
               />
+              <Test onClick={() => console.log(1)} />
             </>
           ) : (
             <>

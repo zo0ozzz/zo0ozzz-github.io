@@ -3,7 +3,7 @@ import { editorModulesConfig } from "../config.js";
 import "react-quill/dist/quill.snow.css";
 import "../common.scss";
 import "./Editor.scss";
-import { useState, useRef, forwardRef, useEffect } from "react";
+import { useState, useRef, forwardRef, useEffect, createElement } from "react";
 
 // export default function Editor({ initialValue, onChange }) {
 //   const [value, setValue] = useState(initialValue);
@@ -68,30 +68,57 @@ const Editor = forwardRef(({ initialValue, onChange }, ref) => {
       e.preventDefault();
 
       if (e.target.tagName === "IMG") {
-        // const button = document.createElement("button");
+        // const newSize = prompt("변경할 가로 사이즈를 입력하세요.", "300");
 
-        // button.append("300");
-
-        const button = document.createElement("button");
-        button.classList.add("버튼");
-
-        e.target.insertAdjacentElement("afterend", button);
-        // ref.current.editor.root.append(box);
-
-        // const answer = prompt("사이즈를 입력하세요.");
-
-        // if (answer === "300") {
-        //   e.target.classList.remove("삼백", "오백");
-        //   e.target.classList.add("삼백");
-        // } else if (answer === "500") {
-        //   e.target.classList.remove("삼백", "오백");
-        //   e.target.classList.add("오백");
-        // } else {
-        //   console.log("없는 입력");
+        // if (!isNaN(newSize)) {
+        //   e.target.style.width = `${Number(newSize)}px`;
         // }
+
+        // const newHTML = document.querySelector(".ql-editor").innerHTML;
+
+        // handleChange(newHTML);
+
+        // let count = 0;
+
+        // if(count === 0) {
+        //   const toolbar = document.querySelector(".ql-formats");
+
+        //   const button1 = document.createElement("button");
+        //   const button2 = document.createElement('button');
+        //   button1.innerHTML = "300";
+        //   button2.innerHTMl = '500';
+
+        //   toolbar.insertAdjacentElement("beforeend", button1);
+
+        // }
+        // e.target.insertAdjacentHTML("afterend", button);
+        // parent.insertAdjacentHTML("beforeend", button);
+
+        // setButtonState(!buttonState);
+
+        // e.target.insertAdjacentElement("afterbegin", button);
+
+        // const button = document.createElement("button");
+        // parent.insertAdjacentElement("beforeend", button);
+        // parent.append(button);
+        // ref.current.editor.root.append(box);
+        const answer = prompt("사이즈를 입력하세요.");
+        if (answer === "300") {
+          e.target.classList.remove("삼백", "오백");
+          e.target.classList.add("삼백");
+        } else if (answer === "500") {
+          e.target.classList.remove("삼백", "오백");
+          e.target.classList.add("오백");
+        } else {
+          console.log("없는 입력");
+        }
+
+        const newHTML = document.querySelector(".ql-editor").innerHTML;
+
+        setValue(newHTML);
       }
 
-      console.log("콘솔: ", e.target);
+      console.log("콘솔: ", ref.current);
     };
 
     ref.current.editor.root.addEventListener("click", handleClick);
@@ -100,11 +127,13 @@ const Editor = forwardRef(({ initialValue, onChange }, ref) => {
   return (
     <>
       <div className="wrapper-Editor">
-        <div className="buttons">
-          <button className="버튼">300</button>
-          <button className="버튼">500</button>
-          <button className="버튼">원래</button>
-        </div>
+        {buttonState ? (
+          <div className="buttons">
+            <button className="버튼">300</button>
+            <button className="버튼">500</button>
+            <button className="버튼">원래</button>
+          </div>
+        ) : null}
         <ReactQuill
           value={value}
           onChange={handleChange}

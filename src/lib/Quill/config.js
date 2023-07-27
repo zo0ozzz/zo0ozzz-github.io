@@ -22,8 +22,9 @@ Quill.register(Font, true);
 export const editorModulesConfig = {
   // syntax: true,
   syntax: {
-    highlight: (text) => hljs.highlightAuto(text).value,
+    // highlight: (text) => hljs.highlightAuto(text).value,
     // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
+    highlight: true,
   },
   toolbar: {
     container: [

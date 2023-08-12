@@ -90,16 +90,10 @@ export const editorModulesConfig = {
         // const alt = "Quill Cloud";
         // const url = "https://quilljs.com/0.20/assets/images/cloud.png";
         const range = this.quill.getSelection(true);
-        const isImage = this.quill.getContents(range).ops[0]?.insert;
+        const content = this.quill.getContents(range).ops[0]?.insert;
 
-        if (isImage.image || isImage.imageResizer1) {
-          console.log(111);
-          // const alt =
-          //   this.quill.getContents(range).ops[0].insert.imageResizer1.alt;
-          const src =
-            this.quill.getContents(range).ops[0].insert.imageResizer1.src;
-
-          console.log(this.quill.getContents(range));
+        if (content.image || content.imageResizer1) {
+          const src = content.image || content.imageResizer1?.src;
 
           // const format = this.quill.getFormat(range);
 
@@ -109,9 +103,10 @@ export const editorModulesConfig = {
 
           // 실제로는 alt과 url을 받아와서 할당해주면 됨.
           // url은 이미지를 올리고 서버에서 url로 받아오면 될 듯.
+          this.quill.deleteText(range);
           this.quill.insertText(range.index, "\n", Quill.sources.USER);
           this.quill.insertEmbed(
-            range.index + 1,
+            range.index,
             "imageResizer1",
             {
               // alt: alt,
@@ -119,7 +114,7 @@ export const editorModulesConfig = {
             },
             Quill.sources.USER
           );
-          this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+          this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
         } else {
           // console.log(1111);
         }

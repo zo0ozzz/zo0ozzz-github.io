@@ -23,7 +23,7 @@ const Editor = forwardRef(({ initialValue, onChange }, ref) => {
     setSelection(range);
 
     // console.log(range);
-    // console.log(editor.getContents(range).ops[0]);
+    // console.log(editor.getContents(range));
   };
 
   return (

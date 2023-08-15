@@ -1,6 +1,7 @@
 import "./Post.scss";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { api } from "../../lib/axios/axios.js";
 // editor
 import Editor from "../../lib/Quill/editor/Editor.jsx";
 // viewer
@@ -12,6 +13,7 @@ export function Post() {
   const [post, setPost] = useState({});
   const [mode, setMode] = useState(false);
   const editorRef = useRef(null);
+  console.log(api);
 
   // console.log(editorRef.current.selection);
 
@@ -47,8 +49,9 @@ export function Post() {
                   body: bodyValue,
                 };
 
-                fetch("http://localhost:9999/data/" + id, {
-                  method: "PATCH",
+                // fetch("http://localhost:9999/data/" + id, {
+                fetch("http://localhost:5000/post/" + id, {
+                  method: "POST",
                   headers: {
                     "Content-Type": "application/json",
                   },

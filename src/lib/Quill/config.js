@@ -13,11 +13,10 @@ Font.whitelist = [
   "monospace",
 ];
 
-class ImageResizer1 extends BlockEmbed {
+class Image extends BlockEmbed {
   static create(value) {
-    let node = super.create();
+    const node = super.create();
 
-    // node.setAttribute("alt", value.alt);
     node.setAttribute("src", value.src);
 
     return node;
@@ -25,7 +24,25 @@ class ImageResizer1 extends BlockEmbed {
 
   static value(node) {
     return {
-      // alt: node.getAttribute("alt"),
+      src: node.getAttribute("src"),
+    };
+  }
+}
+
+Image.blotName = "image";
+Image.tagName = "img";
+
+class ImageResizer1 extends BlockEmbed {
+  static create(value) {
+    const node = super.create();
+
+    node.setAttribute("src", value.src);
+
+    return node;
+  }
+
+  static value(node) {
+    return {
       src: node.getAttribute("src"),
     };
   }
@@ -36,15 +53,11 @@ ImageResizer1.tagName = "img";
 ImageResizer1.className = "imageResizer1";
 
 Quill.register(Font, true);
+Quill.register(Image, true);
 Quill.register(ImageResizer1, true);
-
-// const Size = Quill.import("formats/size");
-// Size.whitelist = ["10", false, "11"];
-// Quill.register(Size, true);
 
 // * modules
 export const editorModulesConfig = {
-  // syntax: true,
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
     // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
@@ -75,6 +88,7 @@ export const editorModulesConfig = {
       "code-block",
       "link",
       "image",
+      "imageResizer1",
 
       { list: "ordered" },
       { list: "bullet" },
@@ -83,28 +97,90 @@ export const editorModulesConfig = {
       { indent: "+1" },
 
       "clean",
-      "imageResizer1",
     ],
     handlers: {
-      imageResizer1: function () {
-        // const alt = "Quill Cloud";
-        // const url = "https://quilljs.com/0.20/assets/images/cloud.png";
+      image: function () {
         const range = this.quill.getSelection(true);
-        const content = this.quill.getContents(range).ops[0]?.insert;
 
-        if (content.image || content.imageResizer1) {
-          const src = content.image || content.imageResizer1?.src;
+        const input = document.createElement("input");
+        input.setAttribute("name", "image");
+        input.setAttribute("type", "file");
+        // input.setAttribute("multiple", true);
+        input.click();
 
-          // const format = this.quill.getFormat(range);
+        input.addEventListener("change", (e) => {
+          e.preventDefault();
 
-          // console.log(format);
-          // quill 에디터에서 셀렉된 상태의 인덱스와 레인지를 가져옴.
-          // true는 왜 쓰는지 모르겠음.
+          const file = e.target.files[0];
 
-          // 실제로는 alt과 url을 받아와서 할당해주면 됨.
-          // url은 이미지를 올리고 서버에서 url로 받아오면 될 듯.
+          if (file) {
+            const formData = new FormData();
+
+            formData.append("image", file);
+
+            // 파일 여러 개
+            // for (let item of files) {
+            //   formData.append("image", item);
+            // }
+
+            fetch("http://localhost:5000/image/", {
+              method: "POST",
+
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                const url = data.url;
+
+                console.log(url);
+
+                this.quill.insertEmbed(
+                  range.index,
+                  "image",
+                  { src: url },
+                  Quill.sources.USER
+                );
+                // this.quill.insertText(
+                //   range.index + 1,
+                //   "\n",
+                //   Quill.sources.USER
+                // );
+                this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+              })
+              .catch((error) => console.error(error));
+          }
+
+          //   const reader = new FileReader();
+
+          //   if (file) {
+          //     reader.readAsDataURL(file);
+          //   }
+
+          //   reader.onload = () => {
+          //     // 읽기가 성공하면 reader.result에 변환된 이미지의 url이 할당됨.
+          //     const url = reader.result;
+
+          //     this.quill.insertEmbed(
+          //       range.index,
+          //       "image",
+          //       { src: url },
+          //       Quill.sources.USER
+          //     );
+          //     this.quill.insertText(range.index + 1, "\n", Quill.sources.USER);
+          //     this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+          //   };
+        });
+      },
+      imageResizer1: function () {
+        const range = this.quill.getSelection(true);
+
+        const insert = this.quill.getContents(range).ops[0]?.insert;
+        // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
+
+        if (insert?.image || insert?.imageResizer1) {
+          const src = insert.image?.src || insert.imageResizer1.src;
+
           this.quill.deleteText(range);
-          this.quill.insertText(range.index, "\n", Quill.sources.USER);
           this.quill.insertEmbed(
             range.index,
             "imageResizer1",
@@ -115,13 +191,8 @@ export const editorModulesConfig = {
             Quill.sources.USER
           );
           this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-        } else {
-          // console.log(1111);
         }
       },
-      // ddd: function () {
-      //   this.quill.format("bold", true);
-      // },
     },
   },
 };
@@ -153,7 +224,7 @@ export const formats = [
   "indent",
   "link",
   "image",
+  "imageResizer1",
   "code",
   "code-block",
-  "imageResizer1",
 ];

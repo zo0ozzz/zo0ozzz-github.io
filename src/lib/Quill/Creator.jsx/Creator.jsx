@@ -14,6 +14,9 @@ const Editor = forwardRef(({ initialValue, onChange }, ref) => {
   const handleChange = (content, delta, source, editor) => {
     setValue(content);
     onChange(content);
+
+    console.log(source);
+    console.log("내용 변경 감지");
   };
 
   const handleChangeSelection = (range, source, editor) => {

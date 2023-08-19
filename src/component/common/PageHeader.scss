@@ -19,6 +19,12 @@
   }
 
   .page-header-nav {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-right: 10px;
+    }
     ul {
       // @include devBorder;
 

@@ -6,10 +6,6 @@ import "./Viewer.scss";
 import { useEffect } from "react";
 
 export default function QuillViewer({ content }) {
-  // useEffect(() => {
-
-  // }, [])
-
   return (
     <>
       <div className="wrapper-Viewer">

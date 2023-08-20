@@ -7,11 +7,11 @@ import Editor from "../../lib/Quill/editor/Editor.jsx";
 // viewer
 import Viewer from "../../lib/Quill/viewer/Viewer";
 
-export function Edit() {
+export default function Edit() {
   const { _id } = useParams();
 
-  const initialMode = useLocation().pathname.split("/")[1];
-  const [mode, setMode] = useState(initialMode);
+  // const initialMode = useLocation().pathname.split("/")[1];
+  const [mode, setMode] = useState("");
   console.log(mode);
   // 게시물 번호
   const [post, setPost] = useState({});

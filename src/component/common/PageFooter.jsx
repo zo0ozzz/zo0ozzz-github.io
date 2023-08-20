@@ -1,6 +1,6 @@
 import "./PageFooter.scss";
 
-export function PageFooter() {
+export default function PageFooter() {
   return (
     <>
       <footer className="page-footer">

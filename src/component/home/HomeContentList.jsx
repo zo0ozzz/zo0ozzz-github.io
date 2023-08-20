@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export function HomeContentList() {
+export default function HomeContentList() {
   const [posts, setPosts] = useState([]);
 
   const postsList = posts.map((post, index) => {

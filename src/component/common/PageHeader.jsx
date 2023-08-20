@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { baseURL } from "../../urls.js";
 import api from "../../lib/axios/axios.js";
 
-export function PageHeader() {
+export default function PageHeader() {
   const pageHeaderData = {
     pageName: "zo0ozzz",
     pageNav: [

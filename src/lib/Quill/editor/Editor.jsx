@@ -3,24 +3,22 @@ import { editorModulesConfig } from "../config.js";
 import "react-quill/dist/quill.snow.css";
 import "../common.scss";
 import "./Editor.scss";
-import { useState, useRef, forwardRef, useEffect, createElement } from "react";
+import { useState, forwardRef, useEffect } from "react";
 
-const Editor = forwardRef(({ initialValue, onChange }, ref) => {
-  const [value, setValue] = useState(initialValue);
+const Editor = forwardRef(({ value, onChange }, ref) => {
+  // const [value, setValue] = useState(initialValue);
   const [selection, setSelection] = useState(null);
   const [buttonState, setButtonState] = useState(false);
-  const test = "test";
+
+  // console.log(value, initialValue);
 
   const handleChange = (content, delta, source, editor) => {
-    setValue(content);
+    // setValue(content);
     onChange(content);
   };
 
   const handleChangeSelection = (range, source, editor) => {
     setSelection(range);
-
-    // console.log(range);
-    // console.log(editor.getContents(range));
   };
 
   return (

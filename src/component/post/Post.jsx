@@ -12,7 +12,7 @@ import Editor from "../../lib/Quill/editor/Editor.jsx";
 // viewer
 import Viewer from "../../lib/Quill/viewer/Viewer";
 
-export function Post() {
+export default function Post() {
   const { _id } = useParams();
   const [post, setPost] = useState({});
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export function Post() {
           <button
             className="editButton"
             onClick={() => {
-              navigate("/update" + _id);
+              navigate("/edit/" + _id);
             }}
           >
             수정

@@ -1,6 +1,6 @@
 import "./HomeHellow.scss";
 
-export function HomeHellow() {
+export default function HomeHellow() {
   return (
     <>
       <section className="home-hellow">

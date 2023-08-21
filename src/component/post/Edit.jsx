@@ -6,14 +6,11 @@ import api from "../../lib/axios/axios.js";
 import Editor from "../../lib/Quill/editor/Editor.jsx";
 
 export default function Edit() {
-  console.log(2);
   const { _id } = useParams();
-  // const postTitle = useRef("");
-  // const postContent = useRef("");
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
 
-  const editorRef = useRef(null);
+  const editorRef = useRef();
   const navigate = useNavigate();
 
   function editPostTitle(e) {
@@ -22,18 +19,11 @@ export default function Edit() {
     setPostTitle(value);
   }
 
-  function editPostContent(newContent) {
-    setPostContent((prev) => newContent);
-  }
-
   async function getPost() {
-    console.log(1);
     try {
       const response = await api.get("/post/" + _id);
       const status = response.status;
       const post = response.data;
-
-      console.log(post);
 
       if (status === 200) {
         setPostTitle(post.title);
@@ -53,19 +43,17 @@ export default function Edit() {
   return (
     <>
       <div className="posts">
-        {console.log(3)}
         <div className="bar">
           <button
             onClick={async () => {
               try {
                 const editedPost = {
-                  postTitle: postTitle.current,
-                  postContent: postContent.current,
+                  title: postTitle,
+                  content: postContent,
                 };
 
-                const response = await api.post("/post", editedPost);
+                const response = await api.patch("/post/" + _id, editedPost);
                 const status = response.status;
-                const _id = response.data._id;
 
                 if (status === 200) {
                   navigate("/posts/" + _id);
@@ -85,9 +73,9 @@ export default function Edit() {
         </div>
         <div className="content">
           <Editor
+            postContent={postContent}
+            setPostContent={setPostContent}
             ref={editorRef}
-            value={postContent}
-            onChange={editPostContent}
           />
         </div>
       </div>

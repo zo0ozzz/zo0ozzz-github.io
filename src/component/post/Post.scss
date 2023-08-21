@@ -12,8 +12,12 @@
     display: flex;
     justify-content: end;
 
-    .editButton {
+    button {
       margin-bottom: 10px;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
     }
   }
 
@@ -31,13 +35,6 @@
     margin-top: 10px;
 
     border: 1px solid;
-
-    .textarea {
-      width: 100%;
-
-      border: none;
-      resize: none;
-    }
   }
 }
 

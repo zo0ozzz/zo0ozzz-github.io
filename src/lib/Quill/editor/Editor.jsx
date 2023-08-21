@@ -1,41 +1,37 @@
 import ReactQuill from "react-quill";
-import { editorModulesConfig } from "../config.js";
+import { editorModulesConfig, viewerModulesConfig } from "../config.js";
 import "react-quill/dist/quill.snow.css";
 import "../common.scss";
 import "./Editor.scss";
 import { useState, forwardRef, useEffect } from "react";
 
-const Editor = forwardRef(({ value, onChange }, ref) => {
-  // const [value, setValue] = useState(initialValue);
-  const [selection, setSelection] = useState(null);
-  const [buttonState, setButtonState] = useState(false);
+const Editor = forwardRef(
+  ({ postContent, setPostContent, isViewer = null }, ref) => {
+    const handleChange = (content, delta, source, editor) => {
+      setPostContent(content);
+    };
 
-  // console.log(value, initialValue);
+    // const handleChangeSelection = (range, source, editor) => {
+    //   setSelection(range);
+    // };
 
-  const handleChange = (content, delta, source, editor) => {
-    // setValue(content);
-    onChange(content);
-  };
-
-  const handleChangeSelection = (range, source, editor) => {
-    setSelection(range);
-  };
-
-  return (
-    <>
-      <div className="wrapper-Editor">
-        <ReactQuill
-          value={value}
-          onChange={handleChange}
-          modules={editorModulesConfig}
-          theme={"snow"}
-          onChangeSelection={handleChangeSelection}
-          ref={ref}
-        />
-      </div>
-    </>
-  );
-});
+    return (
+      <>
+        <div className="wrapper-Editor">
+          <ReactQuill
+            value={postContent}
+            onChange={handleChange}
+            // onChangeSelection={handleChangeSelection}
+            modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+            readOnly={isViewer ? true : false}
+            ref={ref}
+            theme={"snow"}
+          />
+        </div>
+      </>
+    );
+  }
+);
 
 export default Editor;
 

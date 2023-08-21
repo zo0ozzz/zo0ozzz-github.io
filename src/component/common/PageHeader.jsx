@@ -4,6 +4,8 @@ import { baseURL } from "../../urls.js";
 import api from "../../lib/axios/axios.js";
 
 export default function PageHeader() {
+  const navigate = useNavigate();
+
   const pageHeaderData = {
     pageName: "zo0ozzz",
     pageNav: [
@@ -22,7 +24,9 @@ export default function PageHeader() {
     );
   });
 
-  const navigate = useNavigate();
+  function goCreate() {
+    navigate("/create");
+  }
 
   return (
     <>
@@ -54,21 +58,7 @@ export default function PageHeader() {
             >
               -
             </button>
-            <button
-              className="createButton"
-              onClick={async () => {
-                try {
-                  const response = await api.get("/create");
-                  const result = await response.data;
-
-                  const _id = result._id;
-
-                  navigate("/create/" + _id);
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
+            <button className="createButton" onClick={goCreate}>
               +
             </button>
           </div>

@@ -36,16 +36,14 @@ function App() {
             path="/edit/:_id"
             element={
               <>
-                {/* <Post /> */}
                 <Edit />
               </>
             }
           />
           <Route
-            path="/create/:_id"
+            path="/create"
             element={
               <>
-                {/* <Post /> */}
                 <Create />
               </>
             }

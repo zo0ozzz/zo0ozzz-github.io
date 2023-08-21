@@ -1,5 +1,5 @@
 import "./Create.scss";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 // quill editor
@@ -7,18 +7,14 @@ import Editor from "../../lib/Quill/editor/Editor.jsx";
 
 export default function Create() {
   const postTitle = useRef("");
-  const postContent = useRef("");
-  const editorRef = useRef(null);
+  const [postContent, setPostContent] = useState();
+  const editorRef = useRef();
   const navigate = useNavigate();
 
   function editPostTitle(e) {
-    const value = e.target.value;
+    const inputValue = e.target.value;
 
-    postTitle.current = value;
-  }
-
-  function editPostContent(newContent) {
-    postContent.current = newContent;
+    postTitle.current = inputValue;
   }
 
   return (
@@ -29,11 +25,9 @@ export default function Create() {
             onClick={async () => {
               try {
                 const newPost = {
-                  postTitle: postTitle.current,
-                  postContent: postContent.current,
+                  title: postTitle.current,
+                  content: postContent,
                 };
-
-                console.log(newPost);
 
                 const response = await api.post("/post", newPost);
                 const status = response.status;
@@ -57,9 +51,9 @@ export default function Create() {
         </div>
         <div className="content">
           <Editor
+            postContent={postContent}
+            setPostContent={setPostContent}
             ref={editorRef}
-            initialValue={postContent}
-            onChange={editPostContent}
           />
         </div>
       </div>

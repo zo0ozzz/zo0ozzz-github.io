@@ -1,5 +1,6 @@
 import { Quill } from "react-quill";
 import hljs from "../hljs/hljs.js";
+import api from "../axios/axios.js";
 
 const Font = Quill.import("formats/font");
 const BlockEmbed = Quill.import("blots/embed");
@@ -105,39 +106,33 @@ export const editorModulesConfig = {
         const input = document.createElement("input");
         input.setAttribute("name", "image");
         input.setAttribute("type", "file");
-        // input.setAttribute("multiple", true);
         input.click();
 
-        input.addEventListener("change", (e) => {
-          e.preventDefault();
+        input.addEventListener("change", async (e) => {
+          try {
+            e.preventDefault();
 
-          const file = e.target.files[0];
+            const file = e.target.files[0];
 
-          if (file) {
-            const formData = new FormData();
+            if (file) {
+              const formData = new FormData();
 
-            formData.append("image", file);
+              formData.append("image", file);
 
-            // 파일 여러 개
-            // for (let item of files) {
-            //   formData.append("image", item);
-            // }
+              // 파일 여러 개
+              // for (let item of files) {
+              //   formData.append("image", item);
+              // }
 
-            fetch("http://localhost:5000/image/", {
-              method: "POST",
+              const response = await api.post("/image", formData);
+              const status = response.status;
+              const imageURL = response.data.url;
 
-              body: formData,
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                const url = data.url;
-
-                console.log(url);
-
+              if (status === 200) {
                 this.quill.insertEmbed(
                   range.index,
                   "image",
-                  { src: url },
+                  { src: imageURL },
                   Quill.sources.USER
                 );
                 // this.quill.insertText(
@@ -146,8 +141,12 @@ export const editorModulesConfig = {
                 //   Quill.sources.USER
                 // );
                 this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-              })
-              .catch((error) => console.error(error));
+              } else {
+                console.log(status);
+              }
+            }
+          } catch (error) {
+            console.log(error);
           }
 
           //   const reader = new FileReader();

@@ -149,6 +149,7 @@ export const editorModulesConfig = {
             console.log(error);
           }
 
+          // 수정본
           //   const reader = new FileReader();
 
           //   if (file) {

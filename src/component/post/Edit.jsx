@@ -1,4 +1,4 @@
-import "./Edit.scss";
+import "./Post.scss";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";

@@ -7,6 +7,7 @@ import HomeContentList from "./component/home/HomeContentList";
 import Post from "./component/post/Post";
 import Edit from "./component/post/Edit";
 import Create from "./component/post/Create";
+import PostNew from "./component/post/PostNew";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
             path="/posts/:_id"
             element={
               <>
-                <Post />
+                <PostNew mode={"post"} />
+                {/* <Post /> */}
               </>
             }
           />
@@ -36,7 +38,9 @@ function App() {
             path="/edit/:_id"
             element={
               <>
-                <Edit />
+                <PostNew mode={"edit"} />
+
+                {/* <Edit /> */}
               </>
             }
           />
@@ -44,7 +48,8 @@ function App() {
             path="/create"
             element={
               <>
-                <Create />
+                <PostNew mode={"create"} />
+                {/* <Create /> */}
               </>
             }
           />

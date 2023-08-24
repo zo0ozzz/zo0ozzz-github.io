@@ -57,7 +57,21 @@ Quill.register(Font, true);
 Quill.register(Image, true);
 Quill.register(ImageResizer1, true);
 
-// * modules
+// * modules config
+
+// for viewer(post)
+export const viewerModulesConfig = {
+  // 툴바 X
+  toolbar: false,
+  // hljs 적용.
+  // syntax: true,
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+    // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
+  },
+};
+
+// for editor(edit & create)
 export const editorModulesConfig = {
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
@@ -67,9 +81,9 @@ export const editorModulesConfig = {
   toolbar: {
     container: [
       // { font: [] },
+      // { size: Size.whitelist },
       { font: Font.whitelist },
       { size: [] },
-      // { size: Size.whitelist },
       "custom",
       "bold",
       "italic",
@@ -194,17 +208,6 @@ export const editorModulesConfig = {
         }
       },
     },
-  },
-};
-
-export const viewerModulesConfig = {
-  // 툴바 X
-  toolbar: false,
-  // hljs 적용.
-  // syntax: true,
-  syntax: {
-    highlight: (text) => hljs.highlightAuto(text).value,
-    // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
   },
 };
 

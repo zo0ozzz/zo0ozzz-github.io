@@ -1,29 +1,31 @@
-import ReactQuill from "react-quill";
-import { editorModulesConfig, viewerModulesConfig } from "../config.js";
 import "react-quill/dist/quill.snow.css";
-import "../common.scss";
 import "./Editor.scss";
+import ReactQuill from "react-quill";
 import { forwardRef } from "react";
+import { viewerModulesConfig, editorModulesConfig } from "../config.js";
 
-const Editor = forwardRef(({ postContent, setPostContent }, ref) => {
-  const handleChange = (content) => {
-    setPostContent(content);
-  };
+const Editor = forwardRef(
+  ({ postContent, setPostContent, isViewer = false }, ref) => {
+    const handleChange = (content) => {
+      setPostContent(content);
+    };
 
-  return (
-    <>
-      <div className="wrapper-Editor">
-        <ReactQuill
-          value={postContent}
-          onChange={handleChange}
-          modules={editorModulesConfig}
-          ref={ref}
-          theme={"snow"}
-        />
-      </div>
-    </>
-  );
-});
+    return (
+      <>
+        <div className="wrapper-Editor">
+          <ReactQuill
+            modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+            readOnly={isViewer ? true : false}
+            value={postContent}
+            onChange={handleChange}
+            ref={ref}
+            theme={"snow"}
+          />
+        </div>
+      </>
+    );
+  }
+);
 
 export default Editor;
 

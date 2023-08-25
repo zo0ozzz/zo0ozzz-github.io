@@ -465,6 +465,42 @@ HOME은 홈 화면
 처음엔 로그인 버튼만
 로그인하면 => 새 글 작성, 블로그 관리, 로그아웃 버튼.
 
+***
 
 
-      
+function setPostTitle() {
+  useCallback(
+    (newPostTitle) =>
+      setPost((prevPost) => ({ ...prevPost, title: newPostTitle })),
+    [setPost]
+  );
+}
+
+- 리액트 훅은 이런 식으로 선언하면 안 됨.
+  - 컴포넌트의 최상위 위치에서만 선언해야 하기 때문.
+  - 이러면 안 됨.
+    function MyComponent() {
+    if (someCondition) {
+      const [state, setState] = useState(0); // 에러! 조건문 내부에서 Hook 사용
+    }
+
+    for (let i = 0; i < someArray.length; i++) {
+      useEffect(() => { /* ... */ }); // 에러! 반복문 내부에서 Hook 사용
+    }
+
+    function nestedFunction() {
+      const [state, setState] = useState(0); // 에러! 중첩된 함수 내부에서 Hook 사용
+    }
+
+    // ...
+    }
+
+  - 아 hook은 리액트에서 정해놓은 실행 순서가 있는데 조건문, 중첩, 반복 등에 포함되어 있으면 그 순서가 임의로 조작되어버려서 꼬이는구나
+  - 네, 맞습니다. React의 Hook은 컴포넌트가 렌더링될 때마다 동일한 순서로 호출되어야 합니다. 이 규칙을 지키지 않으면 React가 내부적으로 Hook의 상태를 올바르게 추적하지 못하게 됩니다.
+
+예를 들어, 조건문 내에서 Hook을 사용하면 그 Hook은 조건에 따라 호출되거나 호출되지 않을 수 있습니다. 이렇게 되면 React는 각 렌더링 사이에서 Hook의 상태를 올바르게 연결할 수 없습니다.
+
+또한 반복문, 중첩된 함수 등에서도 비슷한 문제가 발생합니다. 이런 경우에는 동일한 Hook이 여러 번 호출될 수 있거나, 반복문이나 함수의 실행 횟수에 따라서 다른 순서로 호출될 수 있습니다.
+
+따라서 모든 React Hook은 컴포넌트 함수 본문의 최상위 레벨에서만 호출해야 하며, 그렇지 않으면 에러가 발생합니다. 이는 React 팀이 정한 Hook 사용 규칙 중 하나입니다.
+

@@ -4,10 +4,10 @@ import PageHeader from "./component/common/PageHeader";
 import PageFooter from "./component/common/PageFooter";
 import HomeHellow from "./component/home/HomeHellow";
 import HomeContentList from "./component/home/HomeContentList";
+// import PostViewer from "./component/post/PostReader";
+// import PostEditor from "./component/post/PostEditor";
+// import PostCreator from "./component/post/PostCreator";
 import Post from "./component/post/Post";
-import Edit from "./component/post/Edit";
-import Create from "./component/post/Create";
-import PostNew from "./component/post/PostNew";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
             path="/posts/:_id"
             element={
               <>
-                <PostNew mode={"post"} />
+                <Post mode={"view"} />
                 {/* <Post /> */}
               </>
             }
@@ -38,7 +38,7 @@ function App() {
             path="/edit/:_id"
             element={
               <>
-                <PostNew mode={"edit"} />
+                <Post mode={"edit"} />
 
                 {/* <Edit /> */}
               </>
@@ -48,7 +48,7 @@ function App() {
             path="/create"
             element={
               <>
-                <PostNew mode={"create"} />
+                <Post mode={"create"} />
                 {/* <Create /> */}
               </>
             }

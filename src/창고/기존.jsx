@@ -1,11 +1,11 @@
 import "./Edit.scss";
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../lib/axios/axios.js";
+import api from "../lib/axios/axios.js";
 // editor
-import Editor from "../../lib/Quill/editor/Editor.jsx";
+import Editor from "../lib/Quill/Quill.jsx";
 // viewer
-import Viewer from "../../lib/Quill/viewer/Viewer";
+import Viewer from "./viewer/Viewer";
 
 export default function Edit() {
   const { _id } = useParams();

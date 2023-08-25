@@ -1,33 +1,69 @@
 import "react-quill/dist/quill.snow.css";
-import "./Editor.scss";
+import "./Quill.scss";
 import ReactQuill from "react-quill";
-import { forwardRef } from "react";
-import { viewerModulesConfig, editorModulesConfig } from "../config.js";
+import { forwardRef, useRef, useEffect } from "react";
+import { viewerModulesConfig, editorModulesConfig } from "./quillConfig.js";
 
-const Editor = forwardRef(
-  ({ postContent, setPostContent, isViewer = false }, ref) => {
-    const handleChange = (content) => {
-      setPostContent(content);
-    };
+function Quill({ postContent, setPostContent, isViewer = false }) {
+  const quillRef = useRef();
 
-    return (
-      <>
-        <div className="wrapper-Editor">
-          <ReactQuill
-            modules={isViewer ? viewerModulesConfig : editorModulesConfig}
-            readOnly={isViewer ? true : false}
-            value={postContent}
-            onChange={handleChange}
-            ref={ref}
-            theme={"snow"}
-          />
-        </div>
-      </>
-    );
-  }
-);
+  const handleChangeContent = (newContent) => {
+    setPostContent(newContent);
+  };
 
-export default Editor;
+  useEffect(() => {
+    const quillInstance = quillRef.current;
+
+    console.log(quillInstance);
+  }, []);
+
+  return (
+    <>
+      <div className="wrapper-Quill">
+        <ReactQuill
+          modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+          readOnly={isViewer ? true : false}
+          value={postContent}
+          onChange={handleChangeContent}
+          ref={quillRef}
+          theme={"snow"}
+        />
+      </div>
+    </>
+  );
+}
+
+export default Quill;
+
+// const Quill = forwardRef(
+//   ({ postContent, setPostContent, isViewer = false }, ref) => {
+//     const handleChangeContent = (newContent) => {
+//       setPostContent(newContent);
+//     };
+
+//     useEffect(() => {
+//       const quillInstance = ref.current.getEditor();
+
+//     }, []);
+
+//     return (
+//       <>
+//         <div className="wrapper-Quill">
+//           <ReactQuill
+//             modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+//             readOnly={isViewer ? true : false}
+//             value={postContent}
+//             onChange={handleChangeContent}
+//             ref={ref}
+//             theme={"snow"}
+//           />
+//         </div>
+//       </>
+//     );
+//   }
+// );
+
+// export default Quill;
 
 // export default function Editor({ initialValue, onChange }) {
 //   const [value, setValue] = useState(initialValue);

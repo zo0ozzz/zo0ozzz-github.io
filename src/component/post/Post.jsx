@@ -1,102 +1,70 @@
 import "./Post.scss";
-import { useState, useEffect, useRef } from "react";
-import {
-  useParams,
-  useLocation,
-  useNavigate,
-  redirect,
-} from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-// editor
-import Editor from "../../lib/Quill/editor/Editor.jsx";
-// viewer
-import Viewer from "../../lib/Quill/viewer/Viewer";
+import PostViewer from "./PostViewer";
+import PostEditor from "./PostEditor";
+import PostCreator from "./PostCreator";
 
-export default function Post() {
+export default function Post({ mode }) {
   const { _id } = useParams();
-  const [post, setPost] = useState({});
-  const navigate = useNavigate();
-  const editorRef = useRef();
-
-  // handler function
-  function goEdit() {
-    navigate("/edit/" + _id);
-  }
-
-  async function deletePost() {
-    const answer = prompt("게시물을 삭제하시겠습니까?");
-
-    if (answer === null) {
-      return;
-    }
-
-    try {
-      const response = await api.delete("/post/" + _id);
-      const status = response.status;
-      console.log(status);
-
-      if (status === 200) {
-        alert("삭제 완료");
-
-        navigate("/");
-      } else {
-        console.log(status);
-      }
-    } catch (error) {
-      alert("삭제 실패(통신 오류)");
-
-      console.log(error);
-    }
-  }
-
-  function setPostContent(newContent) {
-    return (prev) => ({ ...prev, content: newContent });
-  }
-
-  // useEffect function
-  const getPost = async () => {
-    try {
-      const response = await api.get("/post/" + _id);
-      // const isOk = response.statusText;
-      const status = response.status;
-      const post = response.data;
-
-      if (status === 200) {
-        setPost(post);
-      } else {
-        console.log("get, /post:id 요청 실패", "status: ", status);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getPost();
-  }, []);
 
   return (
     <>
-      <div className="posts">
-        <div className="bar">
-          <button className="editButton" onClick={goEdit}>
-            수정
-          </button>
-          <button className="deleteButton" onClick={deletePost}>
-            삭제
-          </button>
-        </div>
-
-        <div className="title">{post.title}</div>
-        <div className="content">
-          <Editor
-            postContent={post.content}
-            setPostContent={setPostContent}
-            isViewer={true}
-            ref={editorRef}
-          />
-        </div>
+      <div className="post">
+        {
+          {
+            view: <PostViewer _id={_id} />,
+            edit: <PostEditor _id={_id} />,
+            create: <PostCreator />,
+          }[mode]
+        }
       </div>
     </>
   );
 }
+
+// async function patchPost() {
+//   try {
+//     const editedPost = {
+//       title: postTitle,
+//       content: postContent,
+//     };
+
+//     const response = await api.patch("/post/" + _id, editedPost);
+//     const status = response.status;
+
+//     if (status === 200) {
+//       goPost(_id);
+//     } else {
+//       console.log("status: ", status);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// async function postPost() {
+//   try {
+//     const newPost = {
+//       title: postTitle.current,
+//       content: postContent,
+//     };
+
+//     const response = await api.post("/post", newPost);
+//     const status = response.status;
+//     const _id = response.data._id;
+
+//     if (status === 200) {
+//       goPost(_id);
+//     } else {
+//       console.log("status: ", status);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// function goPost(_id) {
+//   navigate("/posts/" + _id);
+// }

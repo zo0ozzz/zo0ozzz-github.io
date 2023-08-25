@@ -1,7 +1,6 @@
 import ReactQuill from "react-quill";
-import { viewerModulesConfig } from "../config.js";
+// import { viewerModulesConfig } from "../../lib/Quill/editor/quillConfig.js";
 import "react-quill/dist/quill.snow.css";
-import "../common.scss";
 import "./Viewer.scss";
 import { useEffect } from "react";
 
@@ -11,7 +10,7 @@ export default function QuillViewer({ content }) {
       <div className="wrapper-Viewer">
         <ReactQuill
           value={content}
-          modules={viewerModulesConfig}
+          // modules={viewerModulesConfig}
           theme={"snow"}
           readOnly={true}
         />

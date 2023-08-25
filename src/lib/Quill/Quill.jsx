@@ -1,290 +1,333 @@
 import "react-quill/dist/quill.snow.css";
 import "./Quill.scss";
-import { forwardRef, useRef, useEffect, useState } from "react";
+import {
+  forwardRef,
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import ReactQuill, { Quill } from "react-quill";
 import hljs from "../hljs/hljs.js";
 import api from "../axios/axios.js";
-// import { viewerModulesConfig, editorModulesConfig } from "./quillConfig.js";
+import { viewerModulesConfig, editorModulesConfig } from "./quillConfig.js";
 
-function QuillEditor({ postContent, setPostContent, isViewer = false }) {
-  const [ModuleConfig, setModuleConfig] = useState({});
-  const quillRef = useRef();
+// function QuillEditor({ postContent, setPostContent, isViewer = false }) {
+//   const quillRef = useRef(null);
 
-  const handleChangeContent = (newContent) => {
-    setPostContent(newContent);
-  };
+//   const handleChangeContent = (newContent) => {
+//     setPostContent(newContent);
+//   };
 
-  useEffect(() => {
-    if (!quillRef.current) return;
+//   // const modules = {
+//   //   syntax: {
+//   //     highlight: (code) => hljs.highlightAuto(code).value,
+//   //   },
+//   //   toolbar: false,
+//   // };
 
-    const quillInstance = quillRef.current.getEditor();
+//   const modules = useMemo(() => {
+//     if (isViewer) {
+//       return {
+//         syntax: {
+//           highlight: (code) => hljs.highlightAuto(code).value,
+//         },
+//         toolbar: false,
+//       };
+//     } else {
+//       const Font = Quill.import("formats/font");
+//       const BlockEmbed = Quill.import("blots/embed");
 
-    const Font = Quill.import("formats/font");
-    const BlockEmbed = Quill.import("blots/embed");
+//       Font.whitelist = [
+//         false,
+//         "굴림",
+//         "ibmPlexMono",
+//         "sans-serif",
+//         "serif",
+//         "monospace",
+//       ];
 
-    Font.whitelist = [
-      false,
-      "굴림",
-      "ibmPlexMono",
-      "sans-serif",
-      "serif",
-      "monospace",
-    ];
+//       class Image extends BlockEmbed {
+//         static create(value) {
+//           const node = super.create();
 
-    class Image extends BlockEmbed {
-      static create(value) {
-        const node = super.create();
+//           node.setAttribute("src", value.src);
 
-        node.setAttribute("src", value.src);
+//           return node;
+//         }
 
-        return node;
-      }
+//         static value(node) {
+//           return {
+//             src: node.getAttribute("src"),
+//           };
+//         }
+//       }
 
-      static value(node) {
-        return {
-          src: node.getAttribute("src"),
-        };
-      }
-    }
+//       Image.blotName = "image";
+//       Image.tagName = "img";
 
-    Image.blotName = "image";
-    Image.tagName = "img";
+//       class ImageResizer1 extends BlockEmbed {
+//         static create(value) {
+//           const node = super.create();
 
-    class ImageResizer1 extends BlockEmbed {
-      static create(value) {
-        const node = super.create();
+//           node.setAttribute("src", value.src);
 
-        node.setAttribute("src", value.src);
+//           return node;
+//         }
 
-        return node;
-      }
+//         static value(node) {
+//           return {
+//             src: node.getAttribute("src"),
+//           };
+//         }
+//       }
 
-      static value(node) {
-        return {
-          src: node.getAttribute("src"),
-        };
-      }
-    }
+//       return {
+//         syntax: {
+//           highlight: (code) => hljs.highlightAuto(code).value,
+//         },
+//         toolbar: {
+//           container: [
+//             // { font: [] },
+//             // { size: Size.whitelist },
+//             { font: Font.whitelist },
+//             { size: [] },
+//             "custom",
+//             "bold",
+//             "italic",
+//             "underline",
+//             "strike",
 
-    ImageResizer1.blotName = "imageResizer1";
-    ImageResizer1.tagName = "img";
-    ImageResizer1.className = "imageResizer1";
+//             { color: [] },
+//             { background: [] },
 
-    Quill.register(Font, true);
-    Quill.register(Image, true);
-    Quill.register(ImageResizer1, true);
+//             { align: null },
+//             { align: "center" },
+//             { align: "right" },
+//             { align: "justify" },
 
-    // if (isViewer) {
-    //   const viewerModuleConfig = {
-    //     toolbar: false,
-    //     syntax: {
-    //       highlight: (text) => hljs.highlightAuto(text).value,
-    //     },
-    //   };
+//             "blockquote",
+//             "code",
+//             "code-block",
+//             "link",
+//             "image",
+//             "imageResizer1",
 
-    //   setModuleConfig(viewerModuleConfig);
+//             { list: "ordered" },
+//             { list: "bullet" },
 
-    //   return;
-    // }
+//             { indent: "-1" },
+//             { indent: "+1" },
 
-    // if (!isViewer) {
-    //   const editorModulesConfig = {
-    //     syntax: {
-    //       highlight: (text) => hljs.highlightAuto(text).value,
-    //       // highlight: (text) => hljs.highlight(text, { language: "javascript" }).value,
-    //       // highlight: true,
-    //     },
-    //     toolbar: {
-    //       container: [
-    //         // { font: [] },
-    //         // { size: Size.whitelist },
-    //         { font: Font.whitelist },
-    //         { size: [] },
-    //         "custom",
-    //         "bold",
-    //         "italic",
-    //         "underline",
-    //         "strike",
+//             "clean",
+//           ],
+//           handlers: {
+//             image: function () {
+//               const range = this.quill.getSelection(true);
 
-    //         { color: [] },
-    //         { background: [] },
+//               const input = document.createElement("input");
+//               input.setAttribute("name", "image");
+//               input.setAttribute("type", "file");
+//               input.click();
 
-    //         { align: null },
-    //         { align: "center" },
-    //         { align: "right" },
-    //         { align: "justify" },
+//               input.addEventListener("change", async (e) => {
+//                 try {
+//                   e.preventDefault();
 
-    //         "blockquote",
-    //         "code",
-    //         "code-block",
-    //         "link",
-    //         "image",
-    //         "imageResizer1",
+//                   const file = e.target.files[0];
 
-    //         { list: "ordered" },
-    //         { list: "bullet" },
+//                   if (file) {
+//                     const formData = new FormData();
 
-    //         { indent: "-1" },
-    //         { indent: "+1" },
+//                     formData.append("image", file);
 
-    //         "clean",
-    //       ],
-    //       handlers: {
-    //         image: function () {
-    //           const range = quillInstance.getSelection(true);
+//                     // 파일 여러 개
+//                     // for (let item of files) {
+//                     //   formData.append("image", item);
+//                     // }
 
-    //           const input = document.createElement("input");
-    //           input.setAttribute("name", "image");
-    //           input.setAttribute("type", "file");
-    //           input.click();
+//                     const response = await api.post("/image", formData);
+//                     const status = response.status;
+//                     const imageURL = response.data.url;
 
-    //           input.addEventListener("change", async (e) => {
-    //             try {
-    //               e.preventDefault();
+//                     if (status === 200) {
+//                       this.quill.insertEmbed(
+//                         range.index,
+//                         "image",
+//                         { src: imageURL },
+//                         Quill.sources.USER
+//                       );
+//                       // this.quill.insertText(
+//                       //   range.index + 1,
+//                       //   "\n",
+//                       //   Quill.sources.USER
+//                       // );
+//                       this.quill.setSelection(
+//                         range.index + 1,
+//                         Quill.sources.SILENT
+//                       );
+//                     } else {
+//                       console.log(status);
+//                     }
+//                   }
+//                 } catch (error) {
+//                   console.log(error);
+//                 }
 
-    //               const file = e.target.files[0];
+//                 // 수정본
+//                 //   const reader = new FileReader();
 
-    //               if (file) {
-    //                 const formData = new FormData();
+//                 //   if (file) {
+//                 //     reader.readAsDataURL(file);
+//                 //   }
 
-    //                 formData.append("image", file);
+//                 //   reader.onload = () => {
+//                 //     // 읽기가 성공하면 reader.result에 변환된 이미지의 url이 할당됨.
+//                 //     const url = reader.result;
 
-    //                 // 파일 여러 개
-    //                 // for (let item of files) {
-    //                 //   formData.append("image", item);
-    //                 // }
+//                 //     this.quill.insertEmbed(
+//                 //       range.index,
+//                 //       "image",
+//                 //       { src: url },
+//                 //       Quill.sources.USER
+//                 //     );
+//                 //     this.quill.insertText(range.index + 1, "\n", Quill.sources.USER);
+//                 //     this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+//                 //   };
+//               });
+//             },
+//             imageResizer1: function () {
+//               const range = this.quill.getSelection(true);
 
-    //                 const response = await api.post("/image", formData);
-    //                 const status = response.status;
-    //                 const imageURL = response.data.url;
+//               const insert = this.quill.getContents(range).ops[0]?.insert;
+//               // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
 
-    //                 if (status === 200) {
-    //                   quillInstance.insertEmbed(
-    //                     range.index,
-    //                     "image",
-    //                     { src: imageURL },
-    //                     quillInstance.sources.USER
-    //                   );
-    //                   // quillInstance.insertText(
-    //                   //   range.index + 1,
-    //                   //   "\n",
-    //                   //   quillInstance.sources.USER
-    //                   // );
-    //                   quillInstance.setSelection(
-    //                     range.index + 1,
-    //                     quillInstance.sources.SILENT
-    //                   );
-    //                 } else {
-    //                   console.log(status);
-    //                 }
-    //               }
-    //             } catch (error) {
-    //               console.log(error);
-    //             }
+//               if (insert?.image || insert?.imageResizer1) {
+//                 const src = insert.image?.src || insert.imageResizer1.src;
 
-    //             // 수정본
-    //             //   const reader = new FileReader();
+//                 this.quill.deleteText(range);
+//                 this.quill.insertEmbed(
+//                   range.index,
+//                   "imageResizer1",
+//                   {
+//                     // alt: alt,
+//                     src: src,
+//                   },
+//                   Quill.sources.USER
+//                 );
+//                 this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+//               }
+//             },
+//           },
+//         },
+//       };
+//     }
+//   }, [isViewer]);
 
-    //             //   if (file) {
-    //             //     reader.readAsDataURL(file);
-    //             //   }
+//   return (
+//     <>
+//       <div className="wrapper-Quill">
+//         <ReactQuill
+//           // modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+//           modules={modules}
+//           readOnly={isViewer ? true : false}
+//           value={postContent}
+//           onChange={handleChangeContent}
+//           ref={quillRef}
+//           theme={"snow"}
+//         />
+//       </div>
+//     </>
+//   );
+// }
 
-    //             //   reader.onload = () => {
-    //             //     // 읽기가 성공하면 reader.result에 변환된 이미지의 url이 할당됨.
-    //             //     const url = reader.result;
+// export default QuillEditor;
 
-    //             //     quillInstance.insertEmbed(
-    //             //       range.index,
-    //             //       "image",
-    //             //       { src: url },
-    //             //       quillInstance.sources.USER
-    //             //     );
-    //             //     quillInstance.insertText(range.index + 1, "\n", quillInstance.sources.USER);
-    //             //     quillInstance.setSelection(range.index + 2, quillInstance.sources.SILENT);
-    //             //   };
-    //           });
-    //         },
-    //         imageResizer1: function () {
-    //           const range = quillInstance.getSelection(true);
+// const Font = Quill.import("formats/font");
+// const BlockEmbed = Quill.import("blots/embed");
 
-    //           const insert = quillInstance.getContents(range).ops[0]?.insert;
-    //           // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
+// Font.whitelist = [
+//   false,
+//   "굴림",
+//   "ibmPlexMono",
+//   "sans-serif",
+//   "serif",
+//   "monospace",
+// ];
 
-    //           if (insert?.image || insert?.imageResizer1) {
-    //             const src = insert.image?.src || insert.imageResizer1.src;
+// class Image extends BlockEmbed {
+//   static create(value) {
+//     const node = super.create();
 
-    //             quillInstance.deleteText(range);
-    //             quillInstance.insertEmbed(
-    //               range.index,
-    //               "imageResizer1",
-    //               {
-    //                 // alt: alt,
-    //                 src: src,
-    //               },
-    //               quillInstance.sources.USER
-    //             );
-    //             quillInstance.setSelection(
-    //               range.index + 1,
-    //               quillInstance.sources.SILENT
-    //             );
-    //           }
-    //         },
-    //       },
-    //     },
-    //   };
+//     node.setAttribute("src", value.src);
 
-    //   setModuleConfig(editorModulesConfig);
-    // }
-  }, []);
+//     return node;
+//   }
 
-  return (
-    <>
-      <div className="wrapper-Quill">
-        <ReactQuill
-          // modules={isViewer ? viewerModulesConfig : editorModulesConfig}
-          modules={ModuleConfig}
-          readOnly={isViewer ? true : false}
-          value={postContent}
-          onChange={handleChangeContent}
-          ref={quillRef}
-          theme={"snow"}
-        />
-      </div>
-    </>
-  );
-}
+//   static value(node) {
+//     return {
+//       src: node.getAttribute("src"),
+//     };
+//   }
+// }
+
+// Image.blotName = "image";
+// Image.tagName = "img";
+
+// class ImageResizer1 extends BlockEmbed {
+//   static create(value) {
+//     const node = super.create();
+
+//     node.setAttribute("src", value.src);
+
+//     return node;
+//   }
+
+//   static value(node) {
+//     return {
+//       src: node.getAttribute("src"),
+//     };
+//   }
+// }
+
+// ImageResizer1.blotName = "imageResizer1";
+// ImageResizer1.tagName = "img";
+// ImageResizer1.className = "imageResizer1";
+
+// Quill.register(Font, true);
+// Quill.register(Image, true);
+// Quill.register(ImageResizer1, true);
+
+// https://mingeesuh.tistory.com/entry/Quill-React-%EC%97%90%EB%94%94%ED%84%B0-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EB%B0%8F-%EC%82%AC%EC%9D%B4%EC%A6%88-%EC%A1%B0%EC%A0%88
+
+const QuillEditor = forwardRef(
+  ({ postContent, setPostContent, isViewer = false }, ref) => {
+    const handleChangeContent = (newContent) => {
+      setPostContent(newContent);
+    };
+
+    useEffect(() => {}, []);
+
+    return (
+      <>
+        <div className="wrapper-Quill">
+          <ReactQuill
+            // modules={isViewer ? viewerModulesConfig : editorModulesConfig}
+            // modules={modules}
+            readOnly={isViewer ? true : false}
+            value={postContent}
+            onChange={handleChangeContent}
+            ref={ref}
+            theme={"snow"}
+          />
+        </div>
+      </>
+    );
+  }
+);
 
 export default QuillEditor;
-
-// const Quill = forwardRef(
-//   ({ postContent, setPostContent, isViewer = false }, ref) => {
-//     const handleChangeContent = (newContent) => {
-//       setPostContent(newContent);
-//     };
-
-//     useEffect(() => {
-//       const quillInstance = ref.current.getEditor();
-
-//     }, []);
-
-//     return (
-//       <>
-//         <div className="wrapper-Quill">
-//           <ReactQuill
-//             modules={isViewer ? viewerModulesConfig : editorModulesConfig}
-//             readOnly={isViewer ? true : false}
-//             value={postContent}
-//             onChange={handleChangeContent}
-//             ref={ref}
-//             theme={"snow"}
-//           />
-//         </div>
-//       </>
-//     );
-//   }
-// );
-
-// export default Quill;
 
 // export default function Editor({ initialValue, onChange }) {
 //   const [value, setValue] = useState(initialValue);

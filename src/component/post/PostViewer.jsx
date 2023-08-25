@@ -15,7 +15,7 @@ import Viewer from "../../창고/viewer/Viewer.jsx";
 export default function PostViewer({ _id }) {
   const [post, setPost] = useState({ title: "", content: "" });
   const navigate = useNavigate();
-  // const editorRef = useRef();
+  const editorRef = useRef(null);
 
   const setPostContent = useCallback((newPostContent) => {
     setPost((oldPost) => {
@@ -102,7 +102,7 @@ export default function PostViewer({ _id }) {
             postContent={post.content}
             setPostContent={setPostContent}
             isViewer={true}
-            // ref={editorRef}
+            ref={editorRef}
           />
         </div>
       </div>

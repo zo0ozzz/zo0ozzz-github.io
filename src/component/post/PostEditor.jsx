@@ -90,7 +90,7 @@ export default function PostEditor({ _id }) {
           <Editor
             postContent={post.content}
             setPostContent={setPostContent}
-            // ref={editorRef}
+            ref={editorRef}
           />
         </div>
       </div>

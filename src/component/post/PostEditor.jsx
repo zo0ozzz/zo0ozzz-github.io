@@ -1,28 +1,27 @@
-import "./Post.scss";
+import "./PostCommon.scss";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import Editor from "../../lib/Quill/Quill.jsx";
+import QuillEditor from "../../lib/Quill/Quill.jsx";
 
-export default function PostEditor({ _id }) {
+export default function PostEditor({ _id, mode }) {
   const [post, setPost] = useState({ title: "", content: "" });
-  console.log(post);
-  const editorRef = useRef();
+  const editorRef = useRef(null);
   const navigate = useNavigate();
+  const target = useRef(null);
 
   // set state func
   const setPostTitle = useCallback(
     (newPostTitle) =>
       setPost((prevPost) => ({ ...prevPost, title: newPostTitle })),
-    [setPost]
+    []
   );
 
   const setPostContent = useCallback((newPostContent) =>
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }), [setPost])
+    setPost((prevPost) => ({ ...prevPost, content: newPostContent }), [])
   );
 
   // event handle func
-
   async function handleClickCompleteEditButton() {
     try {
       const editedPost = post;
@@ -32,6 +31,24 @@ export default function PostEditor({ _id }) {
 
       if (status === 200) {
         navigate("/posts/" + _id);
+      } else {
+        console.log("status: ", status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleClickCompleteCreateButton() {
+    try {
+      const newPost = post;
+
+      const response = await api.post("/post", newPost);
+      const status = response.status;
+      const newPost_id = response.data._id;
+
+      if (status === 200) {
+        navigate("/posts/" + newPost_id);
       } else {
         console.log("status: ", status);
       }
@@ -65,29 +82,70 @@ export default function PostEditor({ _id }) {
   }
 
   useEffect(() => {
-    getPost();
+    if (mode === "create") {
+      setPost((prevPost) => ({ ...prevPost, title: "", content: "" }));
+
+      return;
+    }
+
+    if (mode === "edit") getPost();
+  }, [mode]);
+
+  useEffect(() => {
+    // const quill = editorRef.current.getEditor();
+    // quill.on("selection-change", () => {
+    //   console.log("click!");
+    // });
+    // 이미지 클릭을 감지하는 api가 없어서 자체 api로는 힘듦.
+
+    const editorBody = document.querySelector(".ql-editor");
+
+    editorBody.addEventListener("click", (e) => {
+      const target = e.target;
+
+      const instance = editorRef.current.getEditor();
+      console.log(instance);
+
+      if (target.tagName === "IMG") {
+        // let range = new Range();
+        // range.setStart(target, 0);
+        // console.log(range);
+        // console.log(document.getSelection(range));
+        // const selection = document.;
+        // console.log(selection);
+      }
+    });
   }, []);
 
   return (
     <>
-      <div className="posts">
+      <div className="wrapper-postEditor">
         <div className="bar">
-          <button
-            className={"completeEditButton"}
-            onClick={(e) => handleClickCompleteEditButton(e)}
-          >
-            등록
-          </button>
+          {mode === "edit" ? (
+            <button
+              className={"completeEditButton"}
+              onClick={handleClickCompleteEditButton}
+            >
+              수정 완료
+            </button>
+          ) : mode === "create" ? (
+            <button
+              className={"completeCreateButton"}
+              onClick={handleClickCompleteCreateButton}
+            >
+              등록
+            </button>
+          ) : null}
         </div>
         <div className="title">
           <input
             type="text"
             value={post.title}
-            onChange={handleChangePostTitleInput}
+            onChange={(e) => handleChangePostTitleInput(e)}
           />
         </div>
         <div className="content">
-          <Editor
+          <QuillEditor
             postContent={post.content}
             setPostContent={setPostContent}
             ref={editorRef}

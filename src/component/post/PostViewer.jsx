@@ -1,27 +1,21 @@
 import "./Post.scss";
 import { useState, useCallback, useEffect, useRef } from "react";
-import {
-  useParams,
-  useLocation,
-  useNavigate,
-  redirect,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 // editor
-import Quill from "../../lib/Quill/Quill.jsx";
+import QuillEditor from "../../lib/Quill/Quill.jsx";
 // viewer
-import Viewer from "../../창고/viewer/Viewer.jsx";
 
 export default function PostViewer({ _id }) {
   const [post, setPost] = useState({ title: "", content: "" });
   const navigate = useNavigate();
-  const editorRef = useRef(null);
+  const viewerRef = useRef(null);
 
   const setPostContent = useCallback((newPostContent) => {
-    setPost((oldPost) => {
+    setPost((prevPost) => {
       console.log("setPostContent 재생성");
 
-      return { ...oldPost, content: newPostContent };
+      return { ...prevPost, content: newPostContent };
     });
   }, []);
 
@@ -98,11 +92,11 @@ export default function PostViewer({ _id }) {
 
         <div className="title">{post.title}</div>
         <div className="content">
-          <Quill
+          <QuillEditor
             postContent={post.content}
             setPostContent={setPostContent}
             isViewer={true}
-            ref={editorRef}
+            ref={viewerRef}
           />
         </div>
       </div>

@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import PostViewer from "./PostViewer";
 import PostEditor from "./PostEditor";
-import PostCreator from "./PostCreator";
 
 export default function Post({ mode }) {
   const { _id } = useParams();
@@ -12,13 +11,7 @@ export default function Post({ mode }) {
   return (
     <>
       <div className="post">
-        {
-          {
-            view: <PostViewer _id={_id} />,
-            edit: <PostEditor _id={_id} />,
-            create: <PostCreator />,
-          }[mode]
-        }
+        {mode ? <PostEditor _id={_id} mode={mode} /> : <PostViewer _id={_id} />}
       </div>
     </>
   );

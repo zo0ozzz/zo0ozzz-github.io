@@ -29,8 +29,7 @@ function App() {
             path="/posts/:_id"
             element={
               <>
-                <Post mode={"view"} />
-                {/* <Post /> */}
+                <Post />
               </>
             }
           />
@@ -39,8 +38,6 @@ function App() {
             element={
               <>
                 <Post mode={"edit"} />
-
-                {/* <Edit /> */}
               </>
             }
           />
@@ -49,7 +46,6 @@ function App() {
             element={
               <>
                 <Post mode={"create"} />
-                {/* <Create /> */}
               </>
             }
           />

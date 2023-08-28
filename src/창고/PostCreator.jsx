@@ -1,9 +1,9 @@
-// import "./Post.scss";
+import "./PostCommon.scss";
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../lib/axios/axios.js";
+import api from "../lib/axios/axios.js";
 // quill editor
-import Editor from "../../lib/Quill/Quill.jsx";
+import Editor from "../lib/Quill/Quill.jsx";
 
 export default function PostCreator() {
   const [post, setPost] = useState({ title: "", content: "" });
@@ -48,7 +48,7 @@ export default function PostCreator() {
 
   return (
     <>
-      <div className="posts">
+      <div className="wrapper-postCreator">
         <div className="bar">
           <button
             className={"completeCreateButton"}
@@ -64,7 +64,7 @@ export default function PostCreator() {
           <Editor
             postContent={post.content}
             setPostContent={setPostContent}
-            // ref={editorRef}
+            ref={editorRef}
           />
         </div>
       </div>

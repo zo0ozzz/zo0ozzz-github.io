@@ -92,29 +92,14 @@ export default function PostEditor({ _id, mode }) {
   }, [mode]);
 
   useEffect(() => {
-    // const quill = editorRef.current.getEditor();
-    // quill.on("selection-change", () => {
-    //   console.log("click!");
+    // const editorBody = document.querySelector(".ql-editor");
+    // editorBody.addEventListener("click", (e) => {
+    //   const target = e.target;
+    //   const instance = editorRef.current.getEditor();
+    //   console.log(instance);
+    //   if (target.tagName === "IMG") {
+    //   }
     // });
-    // 이미지 클릭을 감지하는 api가 없어서 자체 api로는 힘듦.
-
-    const editorBody = document.querySelector(".ql-editor");
-
-    editorBody.addEventListener("click", (e) => {
-      const target = e.target;
-
-      const instance = editorRef.current.getEditor();
-      console.log(instance);
-
-      if (target.tagName === "IMG") {
-        // let range = new Range();
-        // range.setStart(target, 0);
-        // console.log(range);
-        // console.log(document.getSelection(range));
-        // const selection = document.;
-        // console.log(selection);
-      }
-    });
   }, []);
 
   return (

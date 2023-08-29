@@ -111,6 +111,16 @@ const QuillEditor = forwardRef(
           const node = super.create();
 
           node.setAttribute("src", value.src);
+          node.addEventListener("click", (e) => {
+            const targetParentNode = e.target.parentNode;
+
+            const resizeButton1 = document.createElement("button");
+            resizeButton1.textContent = "button";
+
+            targetParentNode.insertAdjacentElement("beforeEnd", resizeButton1);
+
+            console.log(1);
+          });
 
           return node;
         }

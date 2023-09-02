@@ -91,16 +91,7 @@ export default function PostEditor({ _id, mode }) {
     if (mode === "edit") getPost();
   }, [mode]);
 
-  useEffect(() => {
-    // const editorBody = document.querySelector(".ql-editor");
-    // editorBody.addEventListener("click", (e) => {
-    //   const target = e.target;
-    //   const instance = editorRef.current.getEditor();
-    //   console.log(instance);
-    //   if (target.tagName === "IMG") {
-    //   }
-    // });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

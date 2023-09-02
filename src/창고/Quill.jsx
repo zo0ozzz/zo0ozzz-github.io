@@ -1,3 +1,4 @@
+// imageBox 블랏 폐기
 import "react-quill/dist/quill.snow.css";
 import "./Quill.scss";
 import { createElement, forwardRef, useEffect, useMemo, useState } from "react";
@@ -12,9 +13,7 @@ const QuillEditor = forwardRef(
       console.log("감지");
     };
 
-    const handleChangeSelection = (newSelection) => {
-      console.log("newSelection", newSelection);
-    };
+    const handleChangeSelection = () => {};
 
     const Font = Quill.import("formats/font");
     const BlockEmbed = Quill.import("blots/block/embed");
@@ -92,8 +91,8 @@ const QuillEditor = forwardRef(
                   "code-block",
                   "link",
                   "image",
-                  "imageResizer300",
-                  "imageResizer500",
+                  "imageResizer1",
+                  "imageBox",
 
                   { list: "ordered" },
                   { list: "bullet" },
@@ -110,25 +109,28 @@ const QuillEditor = forwardRef(
 
     useEffect(() => {
       if (!ref.current) return;
-
-      const quillInstance = ref.current.getEditor();
       class Image extends BlockEmbed {
         static create(value) {
           const node = super.create();
 
-          node.setAttribute("src", value.src);
+          // node.addEventListener("click", (e) => {
+          //   const target = e.target;
+          //   const findResult = Quill.find(target, false);
+          //   const index = ref.current.getEditor().getIndex(findResult);
+          //   ref.current.getEditor().setSelection(index, 1);
+          // });
 
-          // 이미지를 클릭하면 해당 이미지가 selection 되게 작업.
-          // - 이미지의 크기를 조정하려면 해당 요소를 selection 해야 하는데 클릭만으로는 quill에서 감지를 못 했음.
-          // - dom 요소로 quill의 요소를 선택해는 방법을 고민하고 별 시도를 다 해보다가 어이없게도 find 메서드를 발견.
-          //  - 역시 설명서에 답이 있었다.. 설명서를 잘 읽자.
           node.addEventListener("click", (e) => {
             const target = e.target;
-            const findedByDOM = Quill.find(target, false);
-            const elementIndex = quillInstance.getIndex(findedByDOM);
-            quillInstance.setSelection(elementIndex, 1);
+
+            const resizeButton1 = document.createElement("input");
+            resizeButton1.setAttribute("type", "button");
+            resizeButton1.setAttribute("value", "button");
+            console.log(1);
+            target.append(resizeButton1);
           });
 
+          node.setAttribute("src", value.src);
           return node;
         }
 
@@ -141,18 +143,12 @@ const QuillEditor = forwardRef(
 
       Image.blotName = "image";
       Image.tagName = "img";
-      class ImageResizer300 extends BlockEmbed {
+
+      class ImageResizer1 extends BlockEmbed {
         static create(value) {
           const node = super.create();
-          node.setAttribute("src", value.src);
-          node.style.width = "300px";
 
-          node.addEventListener("click", (e) => {
-            const target = e.target;
-            const findedByDOM = Quill.find(target, false);
-            const elementIndex = quillInstance.getIndex(findedByDOM);
-            quillInstance.setSelection(elementIndex, 1);
-          });
+          node.setAttribute("src", value.src);
 
           return node;
         }
@@ -164,89 +160,59 @@ const QuillEditor = forwardRef(
         }
       }
 
-      ImageResizer300.blotName = "imageResizer300";
-      ImageResizer300.tagName = "img";
+      ImageResizer1.blotName = "imageResizer1";
+      ImageResizer1.tagName = "img";
+      ImageResizer1.className = "imageResizer1";
 
-      class ImageResizer500 extends BlockEmbed {
+      class ImageBox extends BlockEmbed {
         static create(value) {
           const node = super.create();
-          node.setAttribute("src", value.src);
-          node.style.width = "500px";
-          console.log(500);
+          node.style.border = "1px solid";
 
-          node.addEventListener("click", (e) => {
-            const target = e.target;
-            const findedByDOM = Quill.find(target, false);
-            const elementIndex = quillInstance.getIndex(findedByDOM);
-            quillInstance.setSelection(elementIndex, 1);
-          });
+          const wrapper = document.createElement("div");
+          wrapper.style.border = "1px solid";
+          wrapper.classList.add("wrapper");
 
+          const image = document.createElement("img");
+          image.setAttribute("src", value.src);
+
+          wrapper.insertAdjacentElement("beforeEnd", image);
+
+          const buttonContainer = document.createElement("span");
+          buttonContainer.style.display = "none";
+          buttonContainer.style.position = "absolute";
+
+          const button = document.createElement("input");
+          button.setAttribute("type", "button");
+          button.setAttribute("value", "버튼");
+
+          buttonContainer.insertAdjacentElement("beforeEnd", button);
+          wrapper.insertAdjacentElement("beforeEnd", buttonContainer);
+
+          node.insertAdjacentElement("beforeEnd", wrapper);
           return node;
         }
 
         static value(node) {
-          return {
-            src: node.getAttribute("src"),
-          };
+          const src = node.querySelector("img").getAttribute("src");
+          return { src: src };
         }
       }
 
-      ImageResizer500.blotName = "imageResizer500";
-      ImageResizer500.tagName = "img";
-
-      // ImageResizer300.className = "imageResizer1";
-
-      // class ImageBox extends BlockEmbed {
-      //   static create(value) {
-      //     const node = super.create();
-      //     node.style.border = "1px solid";
-
-      //     const wrapper = document.createElement("div");
-      //     wrapper.style.border = "1px solid";
-      //     wrapper.classList.add("wrapper");
-
-      //     const image = document.createElement("img");
-      //     image.setAttribute("src", value.src);
-
-      //     wrapper.insertAdjacentElement("beforeEnd", image);
-
-      //     const buttonContainer = document.createElement("span");
-      //     buttonContainer.style.display = "none";
-      //     buttonContainer.style.position = "absolute";
-
-      //     const button = document.createElement("input");
-      //     button.setAttribute("type", "button");
-      //     button.setAttribute("value", "버튼");
-
-      //     buttonContainer.insertAdjacentElement("beforeEnd", button);
-      //     wrapper.insertAdjacentElement("beforeEnd", buttonContainer);
-
-      //     node.insertAdjacentElement("beforeEnd", wrapper);
-      //     return node;
-      //   }
-
-      //   static value(node) {
-      //     const src = node.querySelector("img").getAttribute("src");
-      //     return { src: src };
-      //   }
-      // }
-
-      // ImageBox.blotName = "imageBox";
-      // ImageBox.tagName = "div";
-      // ImageBox.className = "imageBox";
+      ImageBox.blotName = "imageBox";
+      ImageBox.tagName = "div";
+      ImageBox.className = "imageBox";
 
       Quill.register(Font, true);
       Quill.register(Image, true);
-      Quill.register(ImageResizer300, true);
-      Quill.register(ImageResizer500, true);
-
-      // Quill.register(ImageBox, true);
+      Quill.register(ImageResizer1, true);
+      Quill.register(ImageBox, true);
 
       if (isViewer) return;
 
       if (!isViewer) {
         function handleClickImageButton() {
-          // const quillInstance = ref.current.getEditor();
+          const quillInstance = ref.current.getEditor();
           const range = quillInstance.getSelection(true);
 
           const input = document.createElement("input");
@@ -321,73 +287,114 @@ const QuillEditor = forwardRef(
           });
         }
 
-        function handleClickImageResizer300Button() {
+        function handleClickImageResizer1Button() {
+          const quillInstance = ref.current.getEditor();
+
           const range = quillInstance.getSelection(true);
-          console.log(quillInstance.getContents(range));
+
           const insert = quillInstance.getContents(range).ops[0]?.insert;
           // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
 
-          if (
-            insert?.image ||
-            insert?.imageResizer300 ||
-            insert?.imageResizer500
-          ) {
-            const src =
-              insert.image?.src ||
-              insert.imageResizer300?.src ||
-              insert.imageResizer500?.src;
+          if (insert?.image || insert?.imageResizer1) {
+            const src = insert.image?.src || insert.imageResizer1.src;
 
             quillInstance.deleteText(range);
             quillInstance.insertEmbed(
               range.index,
-              "imageResizer300",
+              "imageResizer1",
               {
+                // alt: alt,
                 src: src,
               },
               Quill.sources.USER
             );
             quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
-          } else {
-            console.log("선택한 요소는 이미지가 아닙니다.");
           }
         }
 
-        function handleClickImageResizer500Button() {
+        function handleClickImageBoxButton() {
+          const quillInstance = ref.current.getEditor();
           const range = quillInstance.getSelection(true);
-          console.log(quillInstance.getContents(range));
-          const insert = quillInstance.getContents(range).ops[0]?.insert;
-          // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
 
-          if (
-            insert?.image ||
-            insert?.imageResizer300 ||
-            insert?.imageResizer500
-          ) {
-            const src =
-              insert.image?.src ||
-              insert.imageResizer300?.src ||
-              insert.imageResizer500?.src;
+          const input = document.createElement("input");
+          input.setAttribute("name", "image");
+          input.setAttribute("type", "file");
+          input.click();
 
-            quillInstance.deleteText(range);
-            quillInstance.insertEmbed(
-              range.index,
-              "imageResizer500",
-              {
-                src: src,
-              },
-              Quill.sources.USER
-            );
-            quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
-          } else {
-            console.log("선택한 요소는 이미지가 아닙니다.");
-          }
+          input.addEventListener("change", async (e) => {
+            try {
+              e.preventDefault();
+
+              const file = e.target.files[0];
+
+              if (file) {
+                const formData = new FormData();
+
+                formData.append("image", file);
+
+                // 파일 여러 개
+                // for (let item of files) {
+                //   formData.append("image", item);
+                // }
+
+                const response = await api.post("/image", formData);
+                const status = response.status;
+                const imageURL = response.data.url;
+
+                if (status === 200) {
+                  quillInstance.insertEmbed(
+                    range.index,
+                    "imageBox",
+                    { src: imageURL },
+                    Quill.sources.USER
+                  );
+                  // quillInstance.insertText(
+                  //   range.index + 1,
+                  //   "\n",
+                  //   Quill.sources.USER
+                  // );
+                  quillInstance.setSelection(
+                    range.index + 1,
+                    Quill.sources.SILENT
+                  );
+                } else {
+                  console.log(status);
+                }
+              }
+            } catch (error) {
+              console.log(error);
+            }
+
+            // 수정본
+            //   const reader = new FileReader();
+
+            //   if (file) {
+            //     reader.readAsDataURL(file);
+            //   }
+
+            //   reader.onload = () => {
+            //     // 읽기가 성공하면 reader.result에 변환된 이미지의 url이 할당됨.
+            //     const url = reader.result;
+
+            //     quillInstance.insertEmbed(
+            //       range.index,
+            //       "image",
+            //       { src: url },
+            //       Quill.sources.USER
+            //     );
+            //     quillInstance.insertText(range.index + 1, "\n", Quill.sources.USER);
+            //     quillInstance.setSelection(range.index + 2, Quill.sources.SILENT);
+            //   };
+          });
         }
+
+        const quillInstance = ref.current.getEditor();
 
         const toolbar = quillInstance.getModule("toolbar");
 
+        toolbar.addHandler("imageResizer1", handleClickImageResizer1Button);
         toolbar.addHandler("image", handleClickImageButton);
-        toolbar.addHandler("imageResizer300", handleClickImageResizer300Button);
-        toolbar.addHandler("imageResizer500", handleClickImageResizer500Button);
+        toolbar.addHandler("imageBox", handleClickImageBoxButton);
       }
     }, [ref, isViewer]);
 

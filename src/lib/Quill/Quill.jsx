@@ -194,6 +194,35 @@ const QuillEditor = forwardRef(
       ImageResizer500.blotName = "imageResizer500";
       ImageResizer500.tagName = "img";
 
+      class ImageResizerFree extends BlockEmbed {
+        static create(value) {
+          const node = super.create();
+          node.setAttribute("src", value.src);
+          const answer = prompt("변경할 가로 너비(px)를 입력해주세요.");
+
+          node.style.width = "500px";
+          console.log(500);
+
+          node.addEventListener("click", (e) => {
+            const target = e.target;
+            const findedByDOM = Quill.find(target, false);
+            const elementIndex = quillInstance.getIndex(findedByDOM);
+            quillInstance.setSelection(elementIndex, 1);
+          });
+
+          return node;
+        }
+
+        static value(node) {
+          return {
+            src: node.getAttribute("src"),
+          };
+        }
+      }
+
+      ImageResizer500.blotName = "imageResizer500";
+      ImageResizer500.tagName = "img";
+
       // ImageResizer300.className = "imageResizer1";
 
       // class ImageBox extends BlockEmbed {

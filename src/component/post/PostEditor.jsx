@@ -3,6 +3,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
+import { Quill } from "react-quill";
 
 export default function PostEditor({ _id, mode }) {
   const [post, setPost] = useState({ title: "", content: "" });
@@ -91,7 +92,38 @@ export default function PostEditor({ _id, mode }) {
     if (mode === "edit") getPost();
   }, [mode]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const quillInstance = editorRef.current.getEditor();
+    const body = editorRef.current.getEditor().root;
+    body.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target.tagName === "IMG") {
+        const findedByDOM = Quill.find(target, false);
+        const elementIndex = quillInstance.getIndex(findedByDOM);
+        quillInstance.setSelection(elementIndex, 1);
+        const position = quillInstance.getBounds(elementIndex, 1);
+        console.log(position);
+
+        const resizeBox = document.querySelector("#resize");
+        // resizeBox.style.left = position.left + "px";
+        resizeBox.style.top = position.top + "px";
+        resizeBox.style.transform = "translate(-50%)";
+        resizeBox.style.left = "50%";
+
+        resizeBox.classList.remove("ql-hidden");
+      }
+    });
+    // const quillInstance = editorRef.current.getEditor();
+
+    // node.addEventListener("click", (e) => {
+    //   // const resizeTool = document.querySelector("#id");
+
+    //   const target = e.target;
+    //   const findedByDOM = Quill.find(target, false);
+    //   const elementIndex = quillInstance.getIndex(findedByDOM);
+    //   quillInstance.setSelection(elementIndex, 1);
+    // });
+  }, []);
 
   return (
     <>

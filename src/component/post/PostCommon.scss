@@ -10,4 +10,13 @@
     transform: translate(-50%);
     left: 50%;
   }
+
+  .ql-snow .ql-tooltip[data-mode="image"]::before {
+    content: "width(px):";
+  }
+  .ql-snow .ql-tooltip[data-mode="image"]::before {
+    content: "width(px):";
+    line-height: 26px;
+    margin-right: 8px;
+  }
 }

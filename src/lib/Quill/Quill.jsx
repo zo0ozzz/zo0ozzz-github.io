@@ -12,7 +12,7 @@ const QuillEditor = forwardRef(
       console.log("감지");
     };
 
-    const handleChangeSelection = (newSelection) => {
+    const handleChangeSelection = (newSelection, a, b, c) => {
       console.log("newSelection", newSelection);
     };
 
@@ -94,6 +94,7 @@ const QuillEditor = forwardRef(
                   "image",
                   "imageResizer300",
                   "imageResizer500",
+                  "imageResizerFree",
 
                   { list: "ordered" },
                   { list: "bullet" },
@@ -112,22 +113,47 @@ const QuillEditor = forwardRef(
       if (!ref.current) return;
 
       const quillInstance = ref.current.getEditor();
+
+      const div = document.createElement("div");
+      div.style.border = "1px solid";
+      div.style.padding = "2px";
+      div.classList.add("ql-tooltip");
+      div.classList.add("ql-editing");
+      div.classList.add("ql-hidden");
+      div.dataset.mode = "image";
+      div.id = "resize";
+
+      const sizeInput = document.createElement("input");
+      sizeInput.setAttribute("type", "text");
+      sizeInput.setAttribute("placeholder", "신사답게 입력해.");
+      const button1 = document.createElement("input");
+      button1.setAttribute("type", "button");
+      button1.setAttribute("value", "버튼1");
+      const button2 = document.createElement("input");
+      button2.setAttribute("type", "button");
+      button2.setAttribute("value", "버튼2");
+      div.insertAdjacentElement("beforeend", sizeInput);
+      div.insertAdjacentElement("beforeend", button1);
+      div.insertAdjacentElement("beforeend", button2);
+
+      quillInstance.addContainer(div);
       class Image extends BlockEmbed {
         static create(value) {
           const node = super.create();
-
           node.setAttribute("src", value.src);
-
           // 이미지를 클릭하면 해당 이미지가 selection 되게 작업.
           // - 이미지의 크기를 조정하려면 해당 요소를 selection 해야 하는데 클릭만으로는 quill에서 감지를 못 했음.
           // - dom 요소로 quill의 요소를 선택해는 방법을 고민하고 별 시도를 다 해보다가 어이없게도 find 메서드를 발견.
           //  - 역시 설명서에 답이 있었다.. 설명서를 잘 읽자.
-          node.addEventListener("click", (e) => {
-            const target = e.target;
-            const findedByDOM = Quill.find(target, false);
-            const elementIndex = quillInstance.getIndex(findedByDOM);
-            quillInstance.setSelection(elementIndex, 1);
-          });
+          // node.addEventListener("click", (e) => {
+
+          //   // const resizeTool = document.querySelector("#id");
+
+          //   const target = e.target;
+          //   const findedByDOM = Quill.find(target, false);
+          //   const elementIndex = quillInstance.getIndex(findedByDOM);
+          //   quillInstance.setSelection(elementIndex, 1);
+          // });
 
           return node;
         }
@@ -146,7 +172,6 @@ const QuillEditor = forwardRef(
           const node = super.create();
           node.setAttribute("src", value.src);
           node.style.width = "300px";
-
           node.addEventListener("click", (e) => {
             const target = e.target;
             const findedByDOM = Quill.find(target, false);
@@ -173,7 +198,6 @@ const QuillEditor = forwardRef(
           node.setAttribute("src", value.src);
           node.style.width = "500px";
           console.log(500);
-
           node.addEventListener("click", (e) => {
             const target = e.target;
             const findedByDOM = Quill.find(target, false);
@@ -193,15 +217,12 @@ const QuillEditor = forwardRef(
 
       ImageResizer500.blotName = "imageResizer500";
       ImageResizer500.tagName = "img";
-
       class ImageResizerFree extends BlockEmbed {
         static create(value) {
           const node = super.create();
           node.setAttribute("src", value.src);
-          const answer = prompt("변경할 가로 너비(px)를 입력해주세요.");
 
-          node.style.width = "500px";
-          console.log(500);
+          node.style.width = value.size;
 
           node.addEventListener("click", (e) => {
             const target = e.target;
@@ -216,93 +237,43 @@ const QuillEditor = forwardRef(
         static value(node) {
           return {
             src: node.getAttribute("src"),
+            size: node.style.width,
           };
         }
       }
 
-      ImageResizer500.blotName = "imageResizer500";
-      ImageResizer500.tagName = "img";
-
-      // ImageResizer300.className = "imageResizer1";
-
-      // class ImageBox extends BlockEmbed {
-      //   static create(value) {
-      //     const node = super.create();
-      //     node.style.border = "1px solid";
-
-      //     const wrapper = document.createElement("div");
-      //     wrapper.style.border = "1px solid";
-      //     wrapper.classList.add("wrapper");
-
-      //     const image = document.createElement("img");
-      //     image.setAttribute("src", value.src);
-
-      //     wrapper.insertAdjacentElement("beforeEnd", image);
-
-      //     const buttonContainer = document.createElement("span");
-      //     buttonContainer.style.display = "none";
-      //     buttonContainer.style.position = "absolute";
-
-      //     const button = document.createElement("input");
-      //     button.setAttribute("type", "button");
-      //     button.setAttribute("value", "버튼");
-
-      //     buttonContainer.insertAdjacentElement("beforeEnd", button);
-      //     wrapper.insertAdjacentElement("beforeEnd", buttonContainer);
-
-      //     node.insertAdjacentElement("beforeEnd", wrapper);
-      //     return node;
-      //   }
-
-      //   static value(node) {
-      //     const src = node.querySelector("img").getAttribute("src");
-      //     return { src: src };
-      //   }
-      // }
-
-      // ImageBox.blotName = "imageBox";
-      // ImageBox.tagName = "div";
-      // ImageBox.className = "imageBox";
+      ImageResizerFree.blotName = "imageResizerFree";
+      ImageResizerFree.tagName = "img";
 
       Quill.register(Font, true);
       Quill.register(Image, true);
       Quill.register(ImageResizer300, true);
       Quill.register(ImageResizer500, true);
-
-      // Quill.register(ImageBox, true);
+      Quill.register(ImageResizerFree, true);
 
       if (isViewer) return;
 
       if (!isViewer) {
         function handleClickImageButton() {
-          // const quillInstance = ref.current.getEditor();
           const range = quillInstance.getSelection(true);
-
           const input = document.createElement("input");
           input.setAttribute("name", "image");
           input.setAttribute("type", "file");
           input.click();
-
           input.addEventListener("change", async (e) => {
             try {
               e.preventDefault();
-
               const file = e.target.files[0];
-
               if (file) {
                 const formData = new FormData();
-
                 formData.append("image", file);
-
                 // 파일 여러 개
                 // for (let item of files) {
                 //   formData.append("image", item);
                 // }
-
                 const response = await api.post("/image", formData);
                 const status = response.status;
                 const imageURL = response.data.url;
-
                 if (status === 200) {
                   quillInstance.insertEmbed(
                     range.index,
@@ -326,7 +297,6 @@ const QuillEditor = forwardRef(
             } catch (error) {
               console.log(error);
             }
-
             // 수정본
             //   const reader = new FileReader();
 
@@ -350,65 +320,95 @@ const QuillEditor = forwardRef(
           });
         }
 
+        function getImageSrc(range) {
+          const imageBlots = [
+            "image",
+            "imageResizer300",
+            "imageResizer500",
+            "imageResizerFree",
+          ];
+          const content = quillInstance.getContents(range);
+          const isSelection = content.ops[0];
+          if (isSelection === null) {
+            console.log("선택한 요소가 없습니다.");
+            return;
+          }
+          const insert = content.ops[0]?.insert;
+          if (typeof insert !== "object") {
+            console.log("선택한 요소는 이미지가 아닙니다.");
+            return;
+          }
+          let imageBlotName = "";
+          for (let i = 0; i < imageBlots.length; i++) {
+            if (imageBlots[i] in insert) {
+              imageBlotName = imageBlots[i];
+              break;
+            }
+          }
+          const src = content.ops[0]?.insert[imageBlotName].src;
+
+          return src;
+        }
+
         function handleClickImageResizer300Button() {
           const range = quillInstance.getSelection(true);
-          console.log(quillInstance.getContents(range));
-          const insert = quillInstance.getContents(range).ops[0]?.insert;
-          // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
-
-          if (
-            insert?.image ||
-            insert?.imageResizer300 ||
-            insert?.imageResizer500
-          ) {
-            const src =
-              insert.image?.src ||
-              insert.imageResizer300?.src ||
-              insert.imageResizer500?.src;
-
+          const src = getImageSrc(range);
+          if (!src) {
+            return;
+          }
+          if (src) {
             quillInstance.deleteText(range);
             quillInstance.insertEmbed(
               range.index,
               "imageResizer300",
-              {
-                src: src,
-              },
+              { src: src },
               Quill.sources.USER
             );
             quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
-          } else {
-            console.log("선택한 요소는 이미지가 아닙니다.");
           }
         }
 
         function handleClickImageResizer500Button() {
           const range = quillInstance.getSelection(true);
-          console.log(quillInstance.getContents(range));
-          const insert = quillInstance.getContents(range).ops[0]?.insert;
-          // 선택된 요소가 없다면 ops에 빈 배열이 할당되어 있어서 ops[0]은 undifined가 반횐됨.
-
-          if (
-            insert?.image ||
-            insert?.imageResizer300 ||
-            insert?.imageResizer500
-          ) {
-            const src =
-              insert.image?.src ||
-              insert.imageResizer300?.src ||
-              insert.imageResizer500?.src;
-
+          const src = getImageSrc(range);
+          if (!src) {
+            return;
+          }
+          if (src) {
             quillInstance.deleteText(range);
             quillInstance.insertEmbed(
               range.index,
               "imageResizer500",
-              {
-                src: src,
-              },
+              { src: src },
+
               Quill.sources.USER
             );
             quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
-          } else {
-            console.log("선택한 요소는 이미지가 아닙니다.");
+          }
+        }
+
+        function handleClickImageResizerFreeButton() {
+          const answer = prompt("변경할 가로 너비(px)를 입력하세요.");
+          if (isNaN(Number(answer)) === true) {
+            console.log("입력값이 숫자가 아닙니다.");
+            return;
+          }
+          const size = Number(answer);
+
+          const range = quillInstance.getSelection(true);
+          const src = getImageSrc(range);
+          if (!src) {
+            return;
+          }
+          if (src) {
+            quillInstance.deleteText(range);
+            quillInstance.insertEmbed(
+              range.index,
+              "imageResizerFree",
+              { src: src, size: size + "px" },
+              Quill.sources.USER
+            );
+            quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
           }
         }
 
@@ -417,6 +417,10 @@ const QuillEditor = forwardRef(
         toolbar.addHandler("image", handleClickImageButton);
         toolbar.addHandler("imageResizer300", handleClickImageResizer300Button);
         toolbar.addHandler("imageResizer500", handleClickImageResizer500Button);
+        toolbar.addHandler(
+          "imageResizerFree",
+          handleClickImageResizerFreeButton
+        );
       }
     }, [ref, isViewer]);
 

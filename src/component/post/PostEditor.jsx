@@ -106,9 +106,9 @@ export default function PostEditor({ _id, mode }) {
 
         const resizeBox = document.querySelector("#resize");
         // resizeBox.style.left = position.left + "px";
-        resizeBox.style.top = position.top + "px";
         resizeBox.style.transform = "translate(-50%)";
         resizeBox.style.left = "50%";
+        resizeBox.style.top = position.bottom + 10 + "px";
 
         resizeBox.classList.remove("ql-hidden");
       }

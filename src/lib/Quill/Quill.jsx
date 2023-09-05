@@ -128,13 +128,13 @@ const QuillEditor = forwardRef(
       sizeInput.setAttribute("placeholder", "신사답게 입력해.");
       const button1 = document.createElement("input");
       button1.setAttribute("type", "button");
-      button1.setAttribute("value", "버튼1");
-      const button2 = document.createElement("input");
-      button2.setAttribute("type", "button");
-      button2.setAttribute("value", "버튼2");
+      button1.setAttribute("value", "변경");
+      // const button2 = document.createElement("input");
+      // button2.setAttribute("type", "button");
+      // button2.setAttribute("value", "버튼2");
       div.insertAdjacentElement("beforeend", sizeInput);
       div.insertAdjacentElement("beforeend", button1);
-      div.insertAdjacentElement("beforeend", button2);
+      // div.insertAdjacentElement("beforeend", button2);
 
       quillInstance.addContainer(div);
       class Image extends BlockEmbed {

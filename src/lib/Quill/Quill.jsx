@@ -211,9 +211,11 @@ const QuillEditor = forwardRef(
         const sizeInput = document.createElement("input");
         sizeInput.setAttribute("type", "text");
         sizeInput.setAttribute("placeholder", "신사답게 입력해.");
-        sizeInput.addEventListener("blur", () => {
-          div.classList.add("hidden");
-        });
+        // sizeInput.addEventListener("blur", () => {
+        //   console.log("블러");
+
+        //   div.classList.add("hidden");
+        // });
 
         const button1 = document.createElement("input");
         button1.setAttribute("type", "button");
@@ -247,25 +249,22 @@ const QuillEditor = forwardRef(
             const node = super.create();
             node.setAttribute("src", value.src);
 
-            // node.addEventListener("click", (e) => {
-            //   const target = e.target;
-            //   const findedByDOM = Quill.find(target, false);
-            //   const elementIndex = quillInstance.getIndex(findedByDOM);
-            //   quillInstance.setSelection(elementIndex, 1);
-            //   const position = quillInstance.getBounds(elementIndex, 1);
+            node.addEventListener("click", (e) => {
+              const target = e.target;
+              const findedByDOM = Quill.find(target, false);
+              const elementIndex = quillInstance.getIndex(findedByDOM);
+              quillInstance.setSelection(elementIndex, 1);
+              // const position = quillInstance.getBounds(elementIndex, 1);
 
-            // const editorBody = ref.current.getEditor().root;
-            // console.log(editorBody);
-            // const imageResizePrompt =
-            //   document.querySelector(".imageResizePrompt");
-            // console.log(imageResizePrompt);
+              // const imageResizePrompt =
+              //   document.querySelector(".imageResizePrompt");
 
-            // // resizeBox.style.left = position.left + "px";
-            // imageResizePrompt.style.transform = "translate(-50%)";
-            // imageResizePrompt.style.left = "50%";
-            // imageResizePrompt.style.top = position.bottom + 10 + "px";
+              // // imageResizePrompt.style.transform = "translate(-50%)";
+              // // imageResizePrompt.style.left = "50%";
+              // // imageResizePrompt.style.top = position.bottom + 10 + "px";
 
-            // imageResizePrompt.classList.toggle("hidden");
+              // imageResizePrompt.classList.toggle("hidden");
+            });
             // });
 
             // 이미지를 클릭하면 해당 이미지가 selection 되게 작업.
@@ -351,12 +350,12 @@ const QuillEditor = forwardRef(
 
             node.style.width = value.size;
 
-            node.addEventListener("click", (e) => {
-              const target = e.target;
-              const findedByDOM = Quill.find(target, false);
-              const elementIndex = quillInstance.getIndex(findedByDOM);
-              quillInstance.setSelection(elementIndex, 1);
-            });
+            // node.addEventListener("click", (e) => {
+            //   const target = e.target;
+            //   const findedByDOM = Quill.find(target, false);
+            //   const elementIndex = quillInstance.getIndex(findedByDOM);
+            //   quillInstance.setSelection(elementIndex, 1);
+            // });
 
             return node;
           }

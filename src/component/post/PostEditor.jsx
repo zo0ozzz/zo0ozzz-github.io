@@ -91,43 +91,91 @@ export default function PostEditor({ _id, mode }) {
     if (mode === "edit") getPost();
   }, [mode]);
 
-  useEffect(() => {
-    const quillInstance = editorRef.current.getEditor();
-    const editorBody = editorRef.current.getEditor().root;
-    console.log(editorBody);
-    // const editorBody = document.querySelector(".ql-editor");
-    // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
-    // 2. 사이즈 조정 박스가 보이게
-    editorBody.addEventListener("click", (e) => {
-      const target = e.target;
+  // useEffect(() => {
+  //   const quillInstance = editorRef.current.getEditor();
+  //   const editorBody = editorRef.current.getEditor().root;
+  //   // const editorBody = document.querySelector(".ql-editor");
+  //   // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
+  //   // 2. 사이즈 조정 박스가 보이게
+  //   editorBody.addEventListener("click", (e) => {
+  //     console.log("이미지 클릭");
+  //     const target = e.target;
 
-      if (target.tagName !== "IMG") return;
-      if (target.tagName === "IMG") {
-        const findedByDOM = Quill.find(target, false);
-        const elementIndex = quillInstance.getIndex(findedByDOM);
-        quillInstance.setSelection(elementIndex, 1);
+  //     if (target.tagName !== "IMG") return;
+  //     if (target.tagName === "IMG") {
+  //       const findedByDOM = Quill.find(target, false);
+  //       const index = quillInstance.getIndex(findedByDOM);
+  //       const range = { index: index, length: 1 };
 
-        const imageResizePrompt = document.querySelector(".imageResizePrompt");
-        const position = quillInstance.getBounds(elementIndex, 1);
-        imageResizePrompt.style.top = position.bottom + 10 + "px";
-        imageResizePrompt.classList.toggle("hidden");
-      }
+  //       const imageResizePrompt = document.querySelector(".imageResizePrompt");
+  //       const position = quillInstance.getBounds(index, 1);
+  //       imageResizePrompt.style.top = position.bottom + 10 + "px";
+  //       imageResizePrompt.classList.toggle("hidden");
 
-      const submitButton = document.querySelector("#button1");
-      submitButton.addEventListener("click", () => {
-        const inputValue = input.value;
-        const range = { index: elementIndex, length: 1 };
-        // handleClickImageResizerFreeButton(inputValue, range);
-        imageResizePrompt.classList.add("hidden");
-      });
+  //       const sizeInput = document.querySelector(
+  //         ".imageResizePrompt > input[type='text']"
+  //       );
 
-      const input = document.querySelector(
-        ".imageResizePrompt > input[type='text']"
-      );
+  //       const submitButton = document.querySelector("#button1");
+  //       submitButton.addEventListener("click", (e) => {
+  //         e.stopPropagation();
+  //         console.log("여기 왜 작동을 안 할까?");
+  //         const inputValue = sizeInput.value + "px";
+  //         const src = target.src;
 
-      input.focus();
-    });
-  }, []);
+  //         quillInstance.deleteText(range);
+  //         quillInstance.insertEmbed(
+  //           range.index,
+  //           "imageResizerFree",
+  //           { src: src, size: inputValue },
+  //           Quill.sources.USER
+  //         );
+  //         quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
+
+  //         imageResizePrompt.classList.add("hidden");
+  //       });
+
+  //       sizeInput.focus();
+  //     }
+  //   });
+
+  //   // const quillInstance = editorRef.current.getEditor();
+  //   // const editorBody = editorRef.current.getEditor().root;
+  //   // console.log(editorBody);
+  //   // // const editorBody = document.querySelector(".ql-editor");
+  //   // // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
+  //   // // 2. 사이즈 조정 박스가 보이게
+  //   // editorBody.addEventListener("click", (e) => {
+  //   //   const target = e.target;
+
+  //   //   if (target.tagName !== "IMG") return;
+  //   //   if (target.tagName === "IMG") {
+  //   //     const findedByDOM = Quill.find(target, false);
+  //   //     const elementIndex = quillInstance.getIndex(findedByDOM);
+
+  //   //     quillInstance.setSelection(elementIndex, 1);
+
+  //   //     const imageResizePrompt = document.querySelector(".imageResizePrompt");
+  //   //     const position = quillInstance.getBounds(elementIndex, 1);
+  //   //     imageResizePrompt.style.top = position.bottom + 10 + "px";
+  //   //     imageResizePrompt.classList.toggle("hidden");
+  //   //   }
+
+  //   //   const submitButton = document.querySelector("#button1");
+  //   //   submitButton.addEventListener("click", () => {
+  //   //     const inputValue = input.value;
+  //   //     const range = { index: elementIndex, length: 1 };
+  //   //     // handleClickImageResizerFreeButton(inputValue, range);
+  //   //     imageResizePrompt.classList.add("hidden");
+  //   //   });
+
+  //   //   const input = document.querySelector(
+  //   //     ".imageResizePrompt > input[type='text']"
+  //   //   );
+
+  //   //   input.focus();
+  //   // });
+  // }, []);
 
   return (
     <>

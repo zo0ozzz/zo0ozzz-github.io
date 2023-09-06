@@ -11,12 +11,34 @@
     left: 50%;
   }
 
-  .ql-snow .ql-tooltip[data-mode="image"]::before {
-    content: "width(px):";
+  img::selection {
+    // background-color: transparent;
   }
-  .ql-snow .ql-tooltip[data-mode="image"]::before {
-    content: "width(px):";
-    line-height: 26px;
-    margin-right: 8px;
+
+  .imageResizePrompt {
+    position: absolute;
+    transform: translate(-50%);
+    left: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+
+    padding: 3px;
+    border: 1px solid;
+
+    input {
+      margin-left: 3px;
+    }
+  }
+
+  .imageResizePrompt::before {
+    content: "변경할 너비(px):";
+  }
+
+  .hidden {
+    display: none;
   }
 }

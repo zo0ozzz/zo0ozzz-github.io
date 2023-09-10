@@ -211,13 +211,6 @@ const QuillEditor = forwardRef(
         // const sizeInput = document.createElement("input");
         // sizeInput.setAttribute("type", "text");
         // sizeInput.setAttribute("placeholder", "신사답게 입력해.");
-        // // sizeInput.addEventListener("focusout", () => {
-        // //   console.log("블러");
-
-        // //   div.classList.add("hidden");
-        // // });
-        // // 포커스아웃이나 블러는 키다운 이벤트라 키업 이벤트인 click보다 먼저 실행돼버림.
-        // // 그래서 버튼을 눌러도 해당 버튼의 기능이 실행되지 않았던 것.
 
         // const button1 = document.createElement("input");
         // button1.setAttribute("type", "button");

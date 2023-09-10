@@ -99,59 +99,28 @@ export default function PostEditor({ _id, mode }) {
 
     editorBody.addEventListener("click", (e) => {
       const target = e.target;
-
       const imageResizePrompt = document.querySelector(".imageResizePrompt");
-      if (imageResizePrompt) {
-        imageResizePrompt.remove();
+
+      const submitButton = document.querySelector("#button1");
+
+      if (target.tagName !== "IMG") {
+        imageResizePrompt.classList.add("hidden");
       }
 
-      if (target.tagName !== "IMG") return;
-
       if (target.tagName === "IMG") {
-        const div = document.createElement("div");
-        div.style.border = "1px solid";
-        div.style.padding = "2px";
-        div.classList.add("imageResizePrompt");
-
-        const input = document.createElement("input");
-        input.setAttribute("type", "text");
-        input.setAttribute("placeholder", "신사답게 입력해.");
-        input.id = "sizeInput";
-
-        const button1 = document.createElement("input");
-        button1.setAttribute("type", "button");
-        button1.setAttribute("value", "변경");
-        button1.id = "button1";
-
-        const button2 = document.createElement("input");
-        button2.setAttribute("type", "button");
-        button2.setAttribute("value", "300");
-        button2.id = "button2";
-
-        const button3 = document.createElement("input");
-        button3.setAttribute("type", "button");
-        button3.setAttribute("value", "500");
-        button3.id = "button3";
-
-        div.insertAdjacentElement("beforeend", input);
-        div.insertAdjacentElement("beforeend", button1);
-        div.insertAdjacentElement("beforeend", button2);
-        div.insertAdjacentElement("beforeend", button3);
-
-        quillInstance.addContainer(div);
-
         const findedByDOM = Quill.find(target, false);
         const index = quillInstance.getIndex(findedByDOM);
         const range = { index: index, length: 1 };
 
-        const imageResizePrompt = document.querySelector(".imageResizePrompt");
-        const sizeInput = document.querySelector("#sizeInput");
-        const submitButton = document.querySelector("#button1");
-
         const position = quillInstance.getBounds(index, 1);
         imageResizePrompt.style.top = position.bottom + 10 + "px";
+        imageResizePrompt.classList.toggle("hidden");
 
-        submitButton.addEventListener("click", () => {
+        const sizeInput = document.querySelector(
+          ".imageResizePrompt > input[type='text']"
+        );
+
+        function handleClickSubmitButton() {
           const inputValue = sizeInput.value + "px";
           const src = target.src;
 
@@ -164,8 +133,13 @@ export default function PostEditor({ _id, mode }) {
           );
           quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
 
-          imageResizePrompt.remove();
-        });
+          imageResizePrompt.classList.add("hidden");
+
+          submitButton.removeEventListener("click", handleClickSubmitButton);
+        }
+
+        submitButton.addEventListener("click", handleClickSubmitButton);
+        submitButton.removeEventListener("click", handleClickSubmitButton);
 
         sizeInput.focus();
       }
@@ -200,6 +174,14 @@ export default function PostEditor({ _id, mode }) {
           />
         </div>
         <div className="content">
+          {/* <div
+            className="resizeBox2"
+            ref={resizeBox2Ref}
+            style={{ display: isResizeBox2 ? "" : "none" }}
+          >
+            <input type="text" />
+            <button>변경</button>
+          </div> */}
           <QuillEditor
             postContent={post.content}
             setPostContent={setPostContent}

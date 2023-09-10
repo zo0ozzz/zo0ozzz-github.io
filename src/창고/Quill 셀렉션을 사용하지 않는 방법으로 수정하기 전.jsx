@@ -202,50 +202,50 @@ const QuillEditor = forwardRef(
       if (!isViewer) {
         const quillInstance = ref.current.getEditor();
 
-        // const div = document.createElement("div");
-        // div.style.border = "1px solid";
-        // div.style.padding = "2px";
-        // div.classList.add("imageResizePrompt");
-        // div.classList.add("hidden");
+        const div = document.createElement("div");
+        div.style.border = "1px solid";
+        div.style.padding = "2px";
+        div.classList.add("imageResizePrompt");
+        div.classList.add("hidden");
 
-        // const sizeInput = document.createElement("input");
-        // sizeInput.setAttribute("type", "text");
-        // sizeInput.setAttribute("placeholder", "신사답게 입력해.");
-        // // sizeInput.addEventListener("focusout", () => {
-        // //   console.log("블러");
+        const sizeInput = document.createElement("input");
+        sizeInput.setAttribute("type", "text");
+        sizeInput.setAttribute("placeholder", "신사답게 입력해.");
+        // sizeInput.addEventListener("focusout", () => {
+        //   console.log("블러");
 
-        // //   div.classList.add("hidden");
-        // // });
-        // // 포커스아웃이나 블러는 키다운 이벤트라 키업 이벤트인 click보다 먼저 실행돼버림.
-        // // 그래서 버튼을 눌러도 해당 버튼의 기능이 실행되지 않았던 것.
-
-        // const button1 = document.createElement("input");
-        // button1.setAttribute("type", "button");
-        // button1.setAttribute("value", "변경");
-        // button1.id = "button1";
-
-        // const button2 = document.createElement("input");
-        // button2.setAttribute("type", "button");
-        // button2.setAttribute("value", "300");
-        // button2.addEventListener("click", () => {
         //   div.classList.add("hidden");
-        //   handleClickImageResizer300Button();
         // });
+        // 포커스아웃이나 블러는 키다운 이벤트라 키업 이벤트인 click보다 먼저 실행돼버림.
+        // 그래서 버튼을 눌러도 해당 버튼의 기능이 실행되지 않았던 것.
 
-        // const button3 = document.createElement("input");
-        // button3.setAttribute("type", "button");
-        // button3.setAttribute("value", "500");
-        // button3.addEventListener("click", () => {
-        //   div.classList.add("hidden");
-        //   handleClickImageResizer500Button();
-        // });
+        const button1 = document.createElement("input");
+        button1.setAttribute("type", "button");
+        button1.setAttribute("value", "변경");
+        button1.id = "button1";
 
-        // div.insertAdjacentElement("beforeend", sizeInput);
-        // div.insertAdjacentElement("beforeend", button1);
-        // div.insertAdjacentElement("beforeend", button2);
-        // div.insertAdjacentElement("beforeend", button3);
+        const button2 = document.createElement("input");
+        button2.setAttribute("type", "button");
+        button2.setAttribute("value", "300");
+        button2.addEventListener("click", () => {
+          div.classList.add("hidden");
+          handleClickImageResizer300Button();
+        });
 
-        // quillInstance.addContainer(div);
+        const button3 = document.createElement("input");
+        button3.setAttribute("type", "button");
+        button3.setAttribute("value", "500");
+        button3.addEventListener("click", () => {
+          div.classList.add("hidden");
+          handleClickImageResizer500Button();
+        });
+
+        div.insertAdjacentElement("beforeend", sizeInput);
+        div.insertAdjacentElement("beforeend", button1);
+        div.insertAdjacentElement("beforeend", button2);
+        div.insertAdjacentElement("beforeend", button3);
+
+        quillInstance.addContainer(div);
         class Image extends BlockEmbed {
           static create(value) {
             const node = super.create();
@@ -257,6 +257,64 @@ const QuillEditor = forwardRef(
             } else {
               return node;
             }
+
+            // node.addEventListener("click", (e) => {
+            //   const target = e.target;
+            //   const findedByDOM = Quill.find(target, false);
+            //   const index = quillInstance.getIndex(findedByDOM);
+            //   const range = { index: index, length: 1 };
+            //   // quillInstance.setSelection(range);
+
+            //   const imageResizePrompt =
+            //     document.querySelector(".imageResizePrompt");
+            //   const position = quillInstance.getBounds(range);
+            //   imageResizePrompt.style.transform = "translate(-50%)";
+            //   imageResizePrompt.style.left = "50%";
+            //   imageResizePrompt.style.top = position.bottom + 10 + "px";
+            //   imageResizePrompt.classList.toggle("hidden");
+
+            //   const sizeInput = document.querySelector(
+            //     ".imageResizePrompt > input[type='text']"
+            //   );
+
+            //   const submitButton = document.querySelector("#button1");
+            //   submitButton.addEventListener("click", () => {
+            //     const inputValue = sizeInput.value + "px";
+            //     const src = target.src;
+
+            //     quillInstance.deleteText(range);
+            //     quillInstance.insertEmbed(
+            //       range.index,
+            //       "image",
+            //       { src: src, size: inputValue },
+            //       Quill.sources.USER
+            //     );
+            //     quillInstance.setSelection(
+            //       range.index + 1,
+            //       Quill.sources.SILENT
+            //     );
+
+            //     imageResizePrompt.classList.add("hidden");
+            //   });
+
+            //   sizeInput.focus();
+            // });
+
+            // 이미지를 클릭하면 해당 이미지가 selection 되게 작업.
+            // - 이미지의 크기를 조정하려면 해당 요소를 selection 해야 하는데 클릭만으로는 quill에서 감지를 못 했음.
+            // - dom 요소로 quill의 요소를 선택해는 방법을 고민하고 별 시도를 다 해보다가 어이없게도 find 메서드를 발견.
+            //  - 역시 설명서에 답이 있었다.. 설명서를 잘 읽자.
+            // node.addEventListener("click", (e) => {
+
+            //   // const resizeTool = document.querySelector("#id");
+
+            //   const target = e.target;
+            //   const findedByDOM = Quill.find(target, false);
+            //   const elementIndex = quillInstance.getIndex(findedByDOM);
+            //   quillInstance.setSelection(elementIndex, 1);
+            // });
+
+            // return node;
           }
 
           static value(node) {

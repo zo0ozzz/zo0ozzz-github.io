@@ -9,6 +9,8 @@ export default function PostEditor({ _id, mode }) {
   const [post, setPost] = useState({ title: "", content: "" });
   const editorRef = useRef(null);
   const navigate = useNavigate();
+  // const [isResizeBox2, setIsResizeBox2] = useState(false);
+  // const resizeBox2Ref = useRef(null);
 
   // set state func
   const setPostTitle = useCallback(
@@ -91,91 +93,124 @@ export default function PostEditor({ _id, mode }) {
     if (mode === "edit") getPost();
   }, [mode]);
 
-  // useEffect(() => {
-  //   const quillInstance = editorRef.current.getEditor();
-  //   const editorBody = editorRef.current.getEditor().root;
-  //   // const editorBody = document.querySelector(".ql-editor");
-  //   // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
-  //   // 2. 사이즈 조정 박스가 보이게
-  //   editorBody.addEventListener("click", (e) => {
-  //     console.log("이미지 클릭");
-  //     const target = e.target;
+  useEffect(() => {
+    const quillInstance = editorRef.current.getEditor();
+    const editorBody = editorRef.current.getEditor().root;
+    // const editorBody = document.querySelector(".ql-editor");
+    // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
+    // 2. 사이즈 조정 박스가 보이게
+    let count = 0;
 
-  //     if (target.tagName !== "IMG") return;
-  //     if (target.tagName === "IMG") {
-  //       const findedByDOM = Quill.find(target, false);
-  //       const index = quillInstance.getIndex(findedByDOM);
-  //       const range = { index: index, length: 1 };
+    editorBody.addEventListener("click", (e) => {
+      const target = e.target;
 
-  //       const imageResizePrompt = document.querySelector(".imageResizePrompt");
-  //       const position = quillInstance.getBounds(index, 1);
-  //       imageResizePrompt.style.top = position.bottom + 10 + "px";
-  //       imageResizePrompt.classList.toggle("hidden");
+      // const imageResizePrompt = document.querySelector(".imageResizePrompt");
 
-  //       const sizeInput = document.querySelector(
-  //         ".imageResizePrompt > input[type='text']"
-  //       );
+      // if (target.class !== "imageResizerPrompt") {
+      //   imageResizePrompt.classList.add("hidden");
+      // }
 
-  //       const submitButton = document.querySelector("#button1");
-  //       submitButton.addEventListener("click", (e) => {
-  //         e.stopPropagation();
-  //         console.log("여기 왜 작동을 안 할까?");
-  //         const inputValue = sizeInput.value + "px";
-  //         const src = target.src;
+      if (target.tagName !== "IMG") {
+        const imageResizePrompt = document.querySelector(".imageResizePrompt");
 
-  //         quillInstance.deleteText(range);
-  //         quillInstance.insertEmbed(
-  //           range.index,
-  //           "imageResizerFree",
-  //           { src: src, size: inputValue },
-  //           Quill.sources.USER
-  //         );
-  //         quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
+        if (imageResizePrompt) {
+          count--;
+          imageResizePrompt.remove();
+        } else {
+          return;
+        }
+      }
 
-  //         imageResizePrompt.classList.add("hidden");
-  //       });
+      if (target.tagName === "IMG") {
+        console.log("count", count);
+        if (count === 0) {
+          const div = document.createElement("div");
+          div.style.border = "1px solid";
+          div.style.padding = "2px";
+          div.classList.add("imageResizePrompt");
+          // div.classList.add("hidden");
 
-  //       sizeInput.focus();
-  //     }
-  //   });
+          const sizeInput = document.createElement("input");
+          sizeInput.setAttribute("type", "text");
+          sizeInput.setAttribute("placeholder", "신사답게 입력해.");
+          // sizeInput.addEventListener("focusout", () => {
+          //   console.log("블러");
 
-  //   // const quillInstance = editorRef.current.getEditor();
-  //   // const editorBody = editorRef.current.getEditor().root;
-  //   // console.log(editorBody);
-  //   // // const editorBody = document.querySelector(".ql-editor");
-  //   // // 1. 이미지가 클릭되면 해당 이미지가 셀렉션 되게
-  //   // // 2. 사이즈 조정 박스가 보이게
-  //   // editorBody.addEventListener("click", (e) => {
-  //   //   const target = e.target;
+          //   div.classList.add("hidden");
+          // });
+          // 포커스아웃이나 블러는 키다운 이벤트라 키업 이벤트인 click보다 먼저 실행돼버림.
+          // 그래서 버튼을 눌러도 해당 버튼의 기능이 실행되지 않았던 것.
 
-  //   //   if (target.tagName !== "IMG") return;
-  //   //   if (target.tagName === "IMG") {
-  //   //     const findedByDOM = Quill.find(target, false);
-  //   //     const elementIndex = quillInstance.getIndex(findedByDOM);
+          const button1 = document.createElement("input");
+          button1.setAttribute("type", "button");
+          button1.setAttribute("value", "변경");
+          button1.id = "button1";
 
-  //   //     quillInstance.setSelection(elementIndex, 1);
+          const button2 = document.createElement("input");
+          button2.setAttribute("type", "button");
+          button2.setAttribute("value", "300");
+          // button2.addEventListener("click", () => {
+          //   div.classList.add("hidden");
+          //   handleClickImageResizer300Button();
+          // });
 
-  //   //     const imageResizePrompt = document.querySelector(".imageResizePrompt");
-  //   //     const position = quillInstance.getBounds(elementIndex, 1);
-  //   //     imageResizePrompt.style.top = position.bottom + 10 + "px";
-  //   //     imageResizePrompt.classList.toggle("hidden");
-  //   //   }
+          const button3 = document.createElement("input");
+          button3.setAttribute("type", "button");
+          button3.setAttribute("value", "500");
+          // button3.addEventListener("click", () => {
+          //   div.classList.add("hidden");
+          //   handleClickImageResizer500Button();
+          // });
 
-  //   //   const submitButton = document.querySelector("#button1");
-  //   //   submitButton.addEventListener("click", () => {
-  //   //     const inputValue = input.value;
-  //   //     const range = { index: elementIndex, length: 1 };
-  //   //     // handleClickImageResizerFreeButton(inputValue, range);
-  //   //     imageResizePrompt.classList.add("hidden");
-  //   //   });
+          div.insertAdjacentElement("beforeend", sizeInput);
+          div.insertAdjacentElement("beforeend", button1);
+          div.insertAdjacentElement("beforeend", button2);
+          div.insertAdjacentElement("beforeend", button3);
 
-  //   //   const input = document.querySelector(
-  //   //     ".imageResizePrompt > input[type='text']"
-  //   //   );
+          quillInstance.addContainer(div);
+          count++;
+        }
 
-  //   //   input.focus();
-  //   // });
-  // }, []);
+        const imageResizePrompt = document.querySelector(".imageResizePrompt");
+
+        const findedByDOM = Quill.find(target, false);
+        const index = quillInstance.getIndex(findedByDOM);
+        const range = { index: index, length: 1 };
+
+        const position = quillInstance.getBounds(index, 1);
+        imageResizePrompt.style.top = position.bottom + 10 + "px";
+        // imageResizePrompt.classList.toggle("hidden");
+
+        const sizeInput = document.querySelector(
+          ".imageResizePrompt > input[type='text']"
+        );
+
+        const submitButton = document.querySelector("#button1");
+
+        function handleClickSubmitButton() {
+          const inputValue = sizeInput.value + "px";
+          const src = target.src;
+
+          quillInstance.deleteText(range);
+          quillInstance.insertEmbed(
+            range.index,
+            "image",
+            { src: src, size: inputValue },
+            Quill.sources.USER
+          );
+          quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
+
+          // imageResizePrompt.classList.add("hidden");
+
+          submitButton.removeEventListener("click", handleClickSubmitButton);
+        }
+
+        submitButton.addEventListener("click", handleClickSubmitButton);
+
+        sizeInput.focus();
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -205,6 +240,14 @@ export default function PostEditor({ _id, mode }) {
           />
         </div>
         <div className="content">
+          {/* <div
+            className="resizeBox2"
+            ref={resizeBox2Ref}
+            style={{ display: isResizeBox2 ? "" : "none" }}
+          >
+            <input type="text" />
+            <button>변경</button>
+          </div> */}
           <QuillEditor
             postContent={post.content}
             setPostContent={setPostContent}

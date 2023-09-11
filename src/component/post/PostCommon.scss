@@ -17,8 +17,8 @@
 
   .imageResizePrompt {
     position: absolute;
-    transform: translate(-50%);
-    left: 50%;
+    // transform: translate(-50%);
+    // left: 50%;
 
     display: flex;
     justify-content: center;
@@ -34,9 +34,9 @@
     }
   }
 
-  .imageResizePrompt::before {
-    content: "변경할 너비(px):";
-  }
+  // .imageResizePrompt::before {
+  //   content: "변경할 너비(px):";
+  // }
 
   .hidden {
     display: none;

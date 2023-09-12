@@ -16,6 +16,7 @@ export default function PostEditor({ _id, mode }) {
   const [location, setLocation] = useState({ x: "", y: "" });
   const sizeInputRef = useRef(null);
   console.log(location);
+  const submitButtonRef = useRef(null);
 
   const setPostTitle = useCallback(
     (newPostTitle) =>
@@ -45,8 +46,14 @@ export default function PostEditor({ _id, mode }) {
             const value = target.value;
             setSizeInputValue(value);
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              submitButtonRef.current.click();
+            }
+          }}
         />
         <input
+          ref={submitButtonRef}
           type="button"
           value="변경"
           id="button1"
@@ -186,40 +193,40 @@ export default function PostEditor({ _id, mode }) {
   useEffect(() => {
     const quillInstance = editorRef.current.getEditor();
     const editorBody = editorRef.current.getEditor().root;
+    let prevImage = null;
+    console.log(prevImage);
 
     editorBody.addEventListener("click", (e) => {
       const target = e.target;
 
       if (target.tagName !== "IMG") {
+        if (prevImage) {
+          prevImage.classList.remove("select");
+        }
         setIsHTML(false);
 
         return;
       }
 
       if (target.tagName === "IMG") {
+        if (prevImage !== null && prevImage !== target) {
+          prevImage = target;
+          prevImage.classList.remove("select");
+        }
+        target.classList.add("select");
         const findedByDOM = Quill.find(target, false);
         const index = quillInstance.getIndex(findedByDOM);
         const range = { index: index, length: 1 };
-        const x = target.style.left;
-        const y = target.style.left;
-        const width = target.style.width;
+        const bound = target.getBoundingClientRect();
         const src = target.src;
-        // const x = window.clientX;
-        // const y = window.clientY;
-
-        const dom = target.getBoundingClientRect();
-        console.log(dom);
-        // const image = event.target;
-        // const imageRect = image.getBoundingClientRect();
-        // const boxWidth = 100;
-        // const boxHeight = 100;
-        // const boxX = imageRect.left + (imageRect.width - boxWidth) / 2;
-        // const boxY = imageRect.top + (imageRect.height - boxHeight) / 2;
 
         setImageRange(range);
         setImageSrc(src);
-        setLocation({ x: dom.x + dom.left, y: dom.top + window.scrollY });
-        setSizeInputValue(width);
+        setLocation({
+          x: bound.left + (bound.width - 420) / 2 + window.scrollX,
+          y: bound.top + bound.height + window.scrollY + 10,
+        });
+        setSizeInputValue(bound.width);
         setIsHTML(false);
         setTimeout(() => {
           setIsHTML(true);
@@ -267,8 +274,8 @@ export default function PostEditor({ _id, mode }) {
             setPostContent={setPostContent}
             ref={editorRef}
           />
+          {isHTML ? html : null}
         </div>
-        {isHTML ? html : null}
       </div>
     </>
   );

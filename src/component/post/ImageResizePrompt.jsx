@@ -1,12 +1,16 @@
-export default function ImageResizePrompt() {
-  const [imageResize, setImageResize] = useState({
-    isPrompt: false,
-    src: "",
-    range: { index: 0, length: 0 },
-    inputValue: "",
-    position: { top: 0 },
-  });
+import "./PostEditor.scss";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../../lib/axios/axios.js";
+import QuillEditor from "../../lib/Quill/Quill.jsx";
+import { Quill } from "react-quill";
 
+export default function ImageResizePrompt({
+  editorRef,
+  imageResize,
+  setImageResize,
+  // imageResizeRef,
+}) {
   const imageResizeRef = useRef({
     prompt: null,
     input: null,
@@ -35,41 +39,6 @@ export default function ImageResizePrompt() {
     const value = target.value;
     setImageResize((prev) => ({ ...prev, inputValue: value }));
   };
-
-  useEffect(() => {
-    const quillInstance = editorRef.current.getEditor();
-    const editorBody = editorRef.current.getEditor().root;
-
-    editorBody.addEventListener("click", (e) => {
-      const target = e.target;
-
-      if (target.tagName !== "IMG") {
-        // setImageResize(false);
-        setImageResize((prev) => ({ ...prev, isPrompt: false }));
-
-        return;
-      }
-
-      if (target.tagName === "IMG") {
-        const findedByDOM = Quill.find(target, false);
-        const index = quillInstance.getIndex(findedByDOM);
-        const range = { index: index, length: 1 };
-        const imageBound = target.getBoundingClientRect();
-        const src = target.src;
-
-        setImageResize((prev) => ({
-          range: range,
-          src: src,
-          position: { top: imageBound.bottom + window.scrollY + 10 },
-          inputValue: imageBound.width,
-        }));
-
-        setTimeout(() => {
-          setImageResize((prev) => ({ ...prev, isPrompt: true }));
-        }, 0);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     if (imageResize.isPrompt === true) {

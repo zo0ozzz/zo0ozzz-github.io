@@ -12,11 +12,12 @@ export default function PostEditor({ _id, mode }) {
   const [isHTML, setIsHTML] = useState(false);
   const [isImageSrc, setImageSrc] = useState("");
   const [imageRange, setImageRange] = useState({});
-  const [sizeInputValue, setSizeInputValue] = useState("");
-  const [location, setLocation] = useState({ x: "", y: "" });
-  const sizeInputRef = useRef(null);
-  console.log(location);
-  const submitButtonRef = useRef(null);
+  const [imageResizeInputValue, setImageResizeInputValue] = useState("");
+  const [location, setLocation] = useState({ left: 0, top: 0 });
+  const imageResizeInputRef = useRef(null);
+  const imageResizeSubmitButtonRef = useRef(null);
+  const imageResizeCancleButtonRef = useRef(null);
+  const imageResizePromptRef = useRef(null);
 
   const setPostTitle = useCallback(
     (newPostTitle) =>
@@ -28,94 +29,122 @@ export default function PostEditor({ _id, mode }) {
     setPost((prevPost) => ({ ...prevPost, content: newPostContent }), [])
   );
 
+  const handleKeyDownImageReizeInput = (e) => {
+    if (e.key === "Enter") {
+      imageResizeSubmitButtonRef.current.click();
+
+      return;
+    }
+
+    if (e.key === "Escape") {
+      imageResizeCancleButtonRef.current.click();
+
+      return;
+    }
+  };
+
+  const handleChangeImageResizeInput = (e) => {
+    const target = e.target;
+    const value = target.value;
+    setImageResizeInputValue(value);
+  };
+
   const html = (
     <>
       <div
+        ref={imageResizePromptRef}
         className="imageResizePrompt"
-        style={{ left: `${location.x}px`, top: `${location.y}px` }}
+        style={{ top: `${location.top}px` }}
       >
-        <span>변경할 너비(px):</span>
-        <input
-          ref={sizeInputRef}
-          type="text"
-          placeholder="신사답게 입력해"
-          id="sizeInput"
-          value={sizeInputValue}
-          onChange={(e) => {
-            const target = e.target;
-            const value = target.value;
-            setSizeInputValue(value);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              submitButtonRef.current.click();
-            }
-          }}
-        />
-        <input
-          ref={submitButtonRef}
-          type="button"
-          value="변경"
-          id="button1"
-          onClick={() => {
-            const quillInstance = editorRef.current.getEditor();
-            quillInstance.deleteText(imageRange);
-            quillInstance.insertEmbed(
-              imageRange.index,
-              "image",
-              { src: isImageSrc, size: sizeInputValue + "px" },
-              Quill.sources.USER
-            );
-            quillInstance.setSelection(
-              imageRange.index + 1,
-              Quill.sources.SILENT
-            );
+        <div className="wrapper-imageResizeInputAndSubmitButton">
+          <span>변경할 너비(px):</span>
+          <input
+            ref={imageResizeInputRef}
+            type="text"
+            className="imageResizeInput"
+            value={imageResizeInputValue}
+            onChange={handleChangeImageResizeInput}
+            onKeyDown={handleKeyDownImageReizeInput}
+          />
+          <input
+            ref={imageResizeSubmitButtonRef}
+            type="button"
+            value="변경"
+            className="imageResizeSubmitButton"
+            onClick={() => {
+              const quillInstance = editorRef.current.getEditor();
+              quillInstance.deleteText(imageRange);
+              quillInstance.insertEmbed(
+                imageRange.index,
+                "image",
+                { src: isImageSrc, size: imageResizeInputValue + "px" },
+                Quill.sources.USER
+              );
+              // quillInstance.insertText(imageRange.index, "0");
+              quillInstance.insertText(imageRange.index + 1, "");
 
-            setIsHTML(false);
-          }}
-        />
-        <input
-          type="button"
-          value="300"
-          id="button2"
-          onClick={() => {
-            const quillInstance = editorRef.current.getEditor();
-            quillInstance.deleteText(imageRange);
-            quillInstance.insertEmbed(
-              imageRange.index,
-              "image",
-              { src: isImageSrc, size: 300 + "px" },
-              Quill.sources.USER
-            );
-            quillInstance.setSelection(
-              imageRange.index + 1,
-              Quill.sources.SILENT
-            );
+              // quillInstance.setSelection(
+              //   imageRange.index + 1,
+              //   Quill.sources.SILENT
+              // );
 
-            setIsHTML(false);
-          }}
-        />
-        <input
-          type="button"
-          value="500"
-          id="button3"
-          onClick={() => {
-            const quillInstance = editorRef.current.getEditor();
-            quillInstance.deleteText(imageRange);
-            quillInstance.insertEmbed(
-              imageRange.index,
-              "image",
-              { src: isImageSrc, size: 500 + "px" },
-              Quill.sources.USER
-            );
-            quillInstance.setSelection(
-              imageRange.index + 1,
-              Quill.sources.SILENT
-            );
+              setIsHTML(false);
+            }}
+          />
+          <input
+            ref={imageResizeCancleButtonRef}
+            type="button"
+            value="취소"
+            className="cancleButton"
+            onClick={() => {
+              setIsHTML(false);
+            }}
+          />
+        </div>
+        <span className="divider">|</span>
+        <div className="wrapper-imageResizeButtons">
+          <input
+            type="button"
+            value="300"
+            id="button2"
+            onClick={() => {
+              const quillInstance = editorRef.current.getEditor();
+              quillInstance.deleteText(imageRange);
+              quillInstance.insertEmbed(
+                imageRange.index,
+                "image",
+                { src: isImageSrc, size: 300 + "px" },
+                Quill.sources.USER
+              );
+              quillInstance.setSelection(
+                imageRange.index + 1,
+                Quill.sources.SILENT
+              );
 
-            setIsHTML(false);
-          }}
-        />
+              setIsHTML(false);
+            }}
+          />
+          <input
+            type="button"
+            value="500"
+            id="button3"
+            onClick={() => {
+              const quillInstance = editorRef.current.getEditor();
+              quillInstance.deleteText(imageRange);
+              quillInstance.insertEmbed(
+                imageRange.index,
+                "image",
+                { src: isImageSrc, size: 500 + "px" },
+                Quill.sources.USER
+              );
+              quillInstance.setSelection(
+                imageRange.index + 1,
+                Quill.sources.SILENT
+              );
+              setIsHTML(false);
+            }}
+          />
+        </div>
       </div>
     </>
   );
@@ -193,41 +222,31 @@ export default function PostEditor({ _id, mode }) {
   useEffect(() => {
     const quillInstance = editorRef.current.getEditor();
     const editorBody = editorRef.current.getEditor().root;
-    let prevImage = null;
-    console.log(prevImage);
 
     editorBody.addEventListener("click", (e) => {
       const target = e.target;
 
       if (target.tagName !== "IMG") {
-        if (prevImage) {
-          prevImage.classList.remove("select");
-        }
         setIsHTML(false);
 
         return;
       }
 
       if (target.tagName === "IMG") {
-        if (prevImage !== null && prevImage !== target) {
-          prevImage = target;
-          prevImage.classList.remove("select");
-        }
-        target.classList.add("select");
         const findedByDOM = Quill.find(target, false);
         const index = quillInstance.getIndex(findedByDOM);
         const range = { index: index, length: 1 };
-        const bound = target.getBoundingClientRect();
+        const imageBound = target.getBoundingClientRect();
         const src = target.src;
 
+        setIsHTML(false);
         setImageRange(range);
         setImageSrc(src);
         setLocation({
-          x: bound.left + (bound.width - 420) / 2 + window.scrollX,
-          y: bound.top + bound.height + window.scrollY + 10,
+          left: imageBound.left + imageBound.width / 2 + window.scrollX,
+          top: imageBound.bottom + window.scrollY + 10,
         });
-        setSizeInputValue(bound.width);
-        setIsHTML(false);
+        setImageResizeInputValue(imageBound.width);
         setTimeout(() => {
           setIsHTML(true);
         }, 0);
@@ -237,7 +256,7 @@ export default function PostEditor({ _id, mode }) {
 
   useEffect(() => {
     if (isHTML === true) {
-      sizeInputRef.current.focus();
+      imageResizeInputRef.current.focus();
     }
   }, [isHTML]);
 

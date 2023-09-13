@@ -6,9 +6,11 @@
   }
 
   img {
-    position: relative;
-    transform: translate(-50%);
-    left: 50%;
+    // position: relative;
+    display: inline-block;
+    // transform: translate(-50%);
+    // left: 50%;
+    margin: 0 auto;
   }
 
   img::selection {
@@ -22,10 +24,9 @@
   }
 
   .imageResizePrompt {
-    width: 420px;
     position: absolute;
-    // transform: translate(-50%);
-    // left: 50%;
+    transform: translate(-50%);
+    left: 50%;
 
     display: flex;
     justify-content: center;
@@ -33,17 +34,34 @@
 
     background-color: white;
 
-    padding: 3px;
+    padding: 5px 10px;
     border: 1px solid;
 
-    input {
-      margin-left: 3px;
+    .wrapper-imageResizeInputAndSubmitButton {
+      .imageResizeInput {
+        width: 70px;
+
+        margin-left: 5px;
+      }
+
+      .imageResizeSubmitButton {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+
+    .divider {
+      margin-left: 2px;
+    }
+
+    .wrapper-imageResizeButtons {
+      margin-left: 2px;
+
+      input + input {
+        margin-left: 5px;
+      }
     }
   }
-
-  // .imageResizePrompt::before {
-  //   content: "변경할 너비(px):";
-  // }
 
   .hidden {
     display: none;

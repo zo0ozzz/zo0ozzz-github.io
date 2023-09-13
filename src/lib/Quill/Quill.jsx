@@ -14,7 +14,6 @@ const QuillEditor = forwardRef(
 
     const handleChangeSelection = (newSelection, oldRange, source) => {
       console.log("newSelection", newSelection);
-
       // const imageResizePrompt = document.querySelector(".imageResizePrompt");
       // imageResizePrompt.classList.add("hidden");
     };
@@ -379,7 +378,7 @@ const QuillEditor = forwardRef(
                   //   Quill.sources.USER
                   // );
                   quillInstance.setSelection(
-                    range.index + 1,
+                    range.index + 2,
                     Quill.sources.SILENT
                   );
                 } else {

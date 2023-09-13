@@ -1,10 +1,8 @@
-import "./Post.scss";
+import "./PostViewer.scss";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-// editor
 import QuillEditor from "../../lib/Quill/Quill.jsx";
-// viewer
 
 export default function PostViewer({ _id }) {
   const [post, setPost] = useState({ title: "", content: "" });

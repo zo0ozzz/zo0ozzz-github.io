@@ -6,21 +6,8 @@
   }
 
   img {
-    // position: relative;
-    display: inline-block;
-    // transform: translate(-50%);
-    // left: 50%;
+    display: block;
     margin: 0 auto;
-  }
-
-  img::selection {
-    // background-color: transparent;
-  }
-
-  .select {
-    border: 2px solid;
-    // background-color: black;
-    // opacity: 0.5;
   }
 
   .imageResizePrompt {
@@ -61,13 +48,5 @@
         margin-left: 5px;
       }
     }
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  .resizeBox2 {
-    position: absolute;
   }
 }

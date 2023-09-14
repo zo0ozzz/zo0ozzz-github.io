@@ -89,9 +89,9 @@ const QuillEditor = forwardRef(
                   "code-block",
                   "link",
                   "image",
-                  "imageResizer300",
-                  "imageResizer500",
-                  "imageResizerFree",
+                  // "imageResizer300",
+                  // "imageResizer500",
+                  // "imageResizerFree",
 
                   { list: "ordered" },
                   { list: "bullet" },

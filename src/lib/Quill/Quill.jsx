@@ -70,7 +70,6 @@ const QuillEditor = forwardRef(
                   // { size: Size.whitelist },
                   { font: Font.whitelist },
                   { size: [] },
-                  "custom",
                   "bold",
                   "italic",
                   "underline",
@@ -115,13 +114,19 @@ const QuillEditor = forwardRef(
           static create(value) {
             const node = super.create();
             node.setAttribute("src", value.src);
+            if (value.size) {
+              node.style.width = value.size;
 
-            return node;
+              return node;
+            } else {
+              return node;
+            }
           }
 
           static value(node) {
             return {
               src: node.getAttribute("src"),
+              size: node.style.width,
             };
           }
         }

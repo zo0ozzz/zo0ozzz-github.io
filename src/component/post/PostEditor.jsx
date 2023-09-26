@@ -17,9 +17,6 @@ export default function PostEditor({ _id, mode }) {
     inputValue: "",
     position: { top: 0 },
   });
-  const [title, setTitle] = useState("");
-
-  const setTitle = (e) => setTitle(e.) 
 
   const setPostTitle = useCallback(
     (newPostTitle) =>
@@ -170,11 +167,7 @@ export default function PostEditor({ _id, mode }) {
             value={post.title}
             onChange={(e) => handleChangePostTitleInput(e)}
             onKeyDown={(e) => handleKeyDownPostTitleInput(e)}
-            maxLength="50"
           />
-        </div>
-        <div className="test" contenteditable="true">
-          퍄퍄퍄
         </div>
         <div className="content">
           <QuillEditor

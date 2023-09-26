@@ -1,14 +1,12 @@
 .wrapper-postEditor {
-  .test {
-    width: 100%;
-    border: 1px solid;
-    margin-top: 10px;
-    padding: 5px;
-  }
-
   .title {
     input {
       width: 100%;
+
+      font-family: "ibm plex mono", "굴림";
+      font-weight: bold;
+      font-size: 13px;
+
       border: none;
     }
   }

@@ -87,8 +87,9 @@ export default function PostViewer({ _id }) {
             삭제
           </button>
         </div>
-
-        <div className="title">{post.title}</div>
+        <div className="title">
+          <div className="titleContent">{post.title}</div>
+        </div>
         <div className="content">
           <QuillEditor
             postContent={post.content}

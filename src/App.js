@@ -32,7 +32,7 @@ function App() {
             }
           />
           <Route
-            path="/search/:searchString"
+            path="/search"
             element={
               <>
                 <HomeHellow />

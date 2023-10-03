@@ -4,19 +4,19 @@ import "./Bar.scss";
 
 function Bar({ sortName, setSortName }) {
   const [selectValue, setSelectValue] = useState("");
-  const searchInputRef = useRef(null);
   const navigate = useNavigate();
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   const handleClickSearchButton = (e) => {
     e.preventDefault();
 
-    const ref = searchInputRef.current;
-    const value = ref.value;
+    navigate("/search?searchString=" + searchInputValue);
+  };
 
-    console.log(value);
+  const handleChangeSearchInput = (e) => {
+    const value = e.target.value;
 
-    navigate("/search?searchString=" + value);
-    // navigate("/search");
+    setSearchInputValue(value);
   };
 
   const handleChangeSelect = (e) => {
@@ -38,7 +38,8 @@ function Bar({ sortName, setSortName }) {
             type="text"
             id="search"
             autoComplete="off"
-            ref={searchInputRef}
+            value={searchInputValue}
+            onChange={handleChangeSearchInput}
           />
           <input type="submit" value="확인" onClick={handleClickSearchButton} />
         </form>

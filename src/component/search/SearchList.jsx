@@ -1,10 +1,13 @@
 import "./SearchList.scss";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function SearchList() {
+export default function SearchList({ sortName, setSortName }) {
   const [posts, setPosts] = useState([]);
+  const location = useLocation();
+  const searchString = location.search.split("=")[1];
+  console.log(searchString);
 
   const postsList = posts.map((post, index) => {
     return (
@@ -17,9 +20,9 @@ export default function SearchList() {
     );
   });
 
-  async function getPosts() {
+  async function getAllPosts() {
     try {
-      const response = await api.get("/search/:searchString");
+      const response = await api.get("/search?searchString=" + searchString);
       const status = response.status;
       let posts = response.data;
 
@@ -43,33 +46,31 @@ export default function SearchList() {
     }
   }
 
-  // function sortPosts() {
-  //   if (sortName === "최신순") {
-  //     const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
+  function sortPosts() {
+    if (sortName === "최신순") {
+      const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
 
-  //     setPosts(sortedPosts);
+      setPosts(sortedPosts);
 
-  //     return;
-  //   }
+      return;
+    }
 
-  //   if (sortName === "오래된 순") {
-  //     const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
+    if (sortName === "오래된 순") {
+      const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
 
-  //     setPosts(sortedPosts);
+      setPosts(sortedPosts);
 
-  //     return;
-  //   }
-  // }
+      return;
+    }
+  }
 
-  // useEffect(() => {
-  //   getAllPosts();
-  // }, []);
+  useEffect(() => {
+    getAllPosts();
+  }, [searchString]);
 
-  // useEffect(() => {
-  //   sortPosts();
-  // }, [sortName]);
+  useEffect(() => {
+    sortPosts();
+  }, [sortName]);
 
-  return (
-    <>{/* <main className="home-contentList_container">{postsList}</main> */}</>
-  );
+  return <>{<main className="home-contentList_container">{postsList}</main>}</>;
 }

@@ -1,4 +1,4 @@
-import "./PostEditor.scss";
+import "./ImageResizePrompt.scss";
 import { useRef, useEffect } from "react";
 import { Quill } from "react-quill";
 

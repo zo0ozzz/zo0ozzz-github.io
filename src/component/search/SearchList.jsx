@@ -1,13 +1,11 @@
-import "./HomeContentList.scss";
+import "./SearchList.scss";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function HomeContentList({ sortName, setSortName }) {
+export default function SearchList() {
   const [posts, setPosts] = useState([]);
-  // const sortingName = useRef('최신순');
 
-  console.log(sortName);
   const postsList = posts.map((post, index) => {
     return (
       <Link to={"/posts/" + post._id} className="link" key={index}>
@@ -19,9 +17,9 @@ export default function HomeContentList({ sortName, setSortName }) {
     );
   });
 
-  async function getAllPosts() {
+  async function getPosts() {
     try {
-      const response = await api.get("/post");
+      const response = await api.get("/search/:searchString");
       const status = response.status;
       let posts = response.data;
 
@@ -45,35 +43,33 @@ export default function HomeContentList({ sortName, setSortName }) {
     }
   }
 
-  function sortPosts() {
-    if (sortName === "최신순") {
-      const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
+  // function sortPosts() {
+  //   if (sortName === "최신순") {
+  //     const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
 
-      setPosts(sortedPosts);
+  //     setPosts(sortedPosts);
 
-      return;
-    }
+  //     return;
+  //   }
 
-    if (sortName === "오래된 순") {
-      const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
+  //   if (sortName === "오래된 순") {
+  //     const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
 
-      setPosts(sortedPosts);
+  //     setPosts(sortedPosts);
 
-      return;
-    }
-  }
+  //     return;
+  //   }
+  // }
 
-  useEffect(() => {
-    getAllPosts();
-  }, []);
+  // useEffect(() => {
+  //   getAllPosts();
+  // }, []);
 
-  useEffect(() => {
-    sortPosts();
-  }, [sortName]);
+  // useEffect(() => {
+  //   sortPosts();
+  // }, [sortName]);
 
   return (
-    <>
-      <main className="home-contentList_container">{postsList}</main>
-    </>
+    <>{/* <main className="home-contentList_container">{postsList}</main> */}</>
   );
 }

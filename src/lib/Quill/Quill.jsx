@@ -80,8 +80,8 @@ const QuillEditor = forwardRef(
 
                   { align: null },
                   { align: "center" },
-                  { align: "right" },
-                  { align: "justify" },
+                  // { align: "right" },
+                  // { align: "justify" },
 
                   "blockquote",
                   "code",

@@ -1,3 +1,5 @@
+// @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 html,
 body,
 div,
@@ -82,8 +84,8 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: "ibm plex mono", "굴림";
-  font-size: 13px;
+  font-family: "IBM Plex Mono", "굴림", monospace;
+  font-size: 11px;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -130,4 +132,18 @@ table {
 .link {
   text-decoration: none;
   color: inherit;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 900px;
+  margin: 0 auto;
+
+  height: 100vh;
+
+  .empty {
+    flex-grow: 1;
+  }
 }

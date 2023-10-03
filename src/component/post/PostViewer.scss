@@ -2,10 +2,30 @@
   .title {
     display: flex;
     justify-content: center;
+
+    font-weight: bold;
+
+    padding: 5px 15px;
+
+    border: 1px solid;
   }
 
-  img {
-    display: block;
-    margin: 0 auto;
+  .ql-container {
+    padding: 5px 10px;
+    border: 1px solid black !important;
+    margin-top: 5px;
+
+    .ql-editor {
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+
+      .ql-syntax {
+        width: 90%;
+
+        margin: 0 auto;
+      }
+    }
   }
 }

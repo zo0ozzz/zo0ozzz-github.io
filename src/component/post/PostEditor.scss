@@ -1,57 +1,65 @@
 .wrapper-postEditor {
   .title {
+    display: flex;
+    justify-content: center;
+
+    padding: 5px;
+
+    border: 1px solid;
+
     input {
       width: 100%;
 
-      font-family: "ibm plex mono", "굴림";
+      font: inherit;
+      // form 관련된 요소는 폰트 상속이 안 된다고 한다!
       font-weight: bold;
-      font-size: 13px;
-
-      border: none;
     }
   }
 
-  img {
-    display: block;
-    margin: 0 auto;
-  }
-
-  .imageResizePrompt {
-    position: absolute;
-    transform: translate(-50%);
-    left: 50%;
-
+  .ql-toolbar {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: white;
+    padding: 0;
+    border: 1px solid black;
+    margin: 0;
+    margin-top: 5px;
 
+    .ql-formats {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0;
+
+      * {
+        padding: 2px;
+        margin: 0;
+      }
+    } 
+  }
+
+  .ql-container {
     padding: 5px 10px;
     border: 1px solid;
 
-    .wrapper-imageResizeInputAndSubmitButton {
-      .imageResizeInput {
-        width: 70px;
+    .ql-editor {
+      .ql-syntax {
+        width: 90%;
 
-        margin-left: 5px;
+        margin: 0 auto;
+
+        span {
+          font: inherit;
+        }
       }
 
-      .imageResizeSubmitButton {
-        margin-left: 5px;
-        margin-right: 5px;
-      }
-    }
+      img {
+        display: block;
+        margin: 0 auto;
 
-    .divider {
-      margin-left: 2px;
-    }
-
-    .wrapper-imageResizeButtons {
-      margin-left: 2px;
-
-      input + input {
-        margin-left: 5px;
+        cursor: pointer;
       }
     }
   }

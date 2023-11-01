@@ -3,17 +3,35 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function HomeContentList({ sortName, setSortName }) {
+export default function HomeContentList({ sortName }) {
   const [posts, setPosts] = useState([]);
-  // const sortingName = useRef('최신순');
 
-  console.log(sortName);
   const postsList = posts.map((post, index) => {
+    function convertDate(dateString) {
+      // date는 12자리(년월일시분초) 숫자로 된 문자열
+
+      const year = dateString[0] + dateString[1];
+      const month = dateString[2] + dateString[3];
+      const date = dateString[4] + dateString[5];
+      const hours = dateString[6] + dateString[7];
+      const minutes = dateString[8] + dateString[9];
+      const seconds = dateString[10] + dateString[11];
+
+      // const year = dateString.slice(0, 2);
+      // const month = dateString.slice(2, 4);
+      // const date = dateString.slice(4, 6);
+      // const hours = dateString.slice(6, 8);
+      // const minutes = dateString.slice(8, 10);
+      // const seconds = dateString.slice(10, 12);
+
+      return `${year}. ${month}. ${date}. / ${hours}:${minutes}:${seconds}`;
+    }
+
     return (
       <Link to={"/posts/" + post._id} className="link" key={index}>
         <section className="contentList">
           <h2 className="subject">{post.title}</h2>
-          <time className="date">{post.date}</time>
+          <time className="date">{convertDate(post.date)}</time>
         </section>
       </Link>
     );

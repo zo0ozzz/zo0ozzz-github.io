@@ -5,13 +5,17 @@ import api from "../../lib/axios/axios.js";
 import PostViewer from "./PostViewer";
 import PostEditor from "./PostEditor";
 
-export default function Post({ mode }) {
+export default function Post({ mode, categories }) {
   const { _id } = useParams();
 
   return (
     <>
       <div className="post">
-        {mode ? <PostEditor _id={_id} mode={mode} /> : <PostViewer _id={_id} />}
+        {mode ? (
+          <PostEditor _id={_id} mode={mode} categories={categories} />
+        ) : (
+          <PostViewer _id={_id} />
+        )}
       </div>
     </>
   );

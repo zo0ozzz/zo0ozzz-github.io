@@ -16,6 +16,12 @@
     }
   }
 
+  .categorySelector {
+    text-align: right;
+
+    margin-top: 5px;
+  }
+
   .ql-toolbar {
     display: flex;
     justify-content: center;
@@ -37,7 +43,7 @@
         padding: 2px;
         margin: 0;
       }
-    } 
+    }
   }
 
   .ql-container {

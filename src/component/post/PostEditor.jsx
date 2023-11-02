@@ -6,8 +6,9 @@ import QuillEditor from "../../lib/Quill/Quill.jsx";
 import { Quill } from "react-quill";
 import ImageResizePrompt from "./ImageResizePrompt";
 
-export default function PostEditor({ _id, mode }) {
-  const [post, setPost] = useState({ title: "", content: "" });
+export default function PostEditor({ _id, mode, categories }) {
+  const [post, setPost] = useState({ title: "", category: "", content: "" });
+  const [categoryName, setCategoryName] = useState("");
   const editorRef = useRef(null);
   const navigate = useNavigate();
   const [imageResize, setImageResize] = useState({
@@ -22,6 +23,10 @@ export default function PostEditor({ _id, mode }) {
     (newPostTitle) =>
       setPost((prevPost) => ({ ...prevPost, title: newPostTitle })),
     []
+  );
+
+  const setPostCategory = useCallback((newPostCategory) =>
+    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }))
   );
 
   const setPostContent = useCallback((newPostContent) =>
@@ -63,7 +68,7 @@ export default function PostEditor({ _id, mode }) {
     }
   }
 
-  async function handleChangePostTitleInput(e) {
+  function handleChangePostTitleInput(e) {
     const newPostTitle = e.target.value;
 
     setPostTitle(newPostTitle);
@@ -79,6 +84,13 @@ export default function PostEditor({ _id, mode }) {
     }
   }
 
+  const handleChangeCategoryName = (e) => {
+    const categoryName = e.target.value;
+
+    setCategoryName(categoryName);
+    setPostCategory(categoryName);
+  };
+
   // mount func
   async function getPost() {
     try {
@@ -89,6 +101,8 @@ export default function PostEditor({ _id, mode }) {
       if (status === 200) {
         setPostTitle(post.title);
         setPostContent(post.content);
+        setPostCategory(post.category);
+        setCategoryName(post.category);
       } else {
         console.log("get, /post:id 요청 실패", "status: ", status);
       }
@@ -99,7 +113,12 @@ export default function PostEditor({ _id, mode }) {
 
   useEffect(() => {
     if (mode === "create") {
-      setPost((prevPost) => ({ ...prevPost, title: "", content: "" }));
+      setPost((prevPost) => ({
+        ...prevPost,
+        title: "",
+        content: "",
+        category: "",
+      }));
 
       return;
     }
@@ -168,6 +187,24 @@ export default function PostEditor({ _id, mode }) {
             onChange={(e) => handleChangePostTitleInput(e)}
             onKeyDown={(e) => handleKeyDownPostTitleInput(e)}
           />
+        </div>
+        <div className="categorySelector">
+          <label htmlFor="categorySelector">카테고리: </label>
+          <select
+            name=""
+            id="categorySelector"
+            value={categoryName}
+            onChange={handleChangeCategoryName}
+          >
+            <option selected="true" value=""></option>
+            {categories.map((item, index) => {
+              return (
+                <option id={index} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className="content">
           <QuillEditor

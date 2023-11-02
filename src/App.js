@@ -2,15 +2,18 @@ import "./App.scss";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import PageHeader from "./component/common/PageHeader";
-import PageFooter from "./component/common/PageFooter";
 import HomeHellow from "./component/home/HomeHellow";
+import Bar from "./component/common/Bar";
+import Category from "./component/category/Category";
 import HomeContentList from "./component/home/HomeContentList";
 import SearchList from "./component/search/SearchList";
-import Bar from "./component/common/Bar";
 import Post from "./component/post/Post";
+import PageFooter from "./component/common/PageFooter";
 
 function App() {
   const [sortName, setSortName] = useState("최신순");
+  // const [categories, setCategories] = useState(["블로그", "기타"]);
+  const categories = ["블로그", "기타", "뿅뿅뿅"];
 
   return (
     <>
@@ -24,6 +27,7 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
+                <Category categories={categories} />
                 <HomeContentList
                   sortName={sortName}
                   setSortName={setSortName}
@@ -37,7 +41,8 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <SearchList />
+                <Category categories={categories} />
+                <SearchList sortName={sortName} />
               </>
             }
           />
@@ -53,7 +58,7 @@ function App() {
             path="/edit/:_id"
             element={
               <>
-                <Post mode={"edit"} />
+                <Post mode={"edit"} categories={categories} />
               </>
             }
           />
@@ -61,7 +66,7 @@ function App() {
             path="/create"
             element={
               <>
-                <Post mode={"create"} />
+                <Post mode={"create"} categories={categories} />
               </>
             }
           />

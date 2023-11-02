@@ -15,6 +15,12 @@
 
     cursor: pointer;
 
+    .number {
+      text-align: right;
+
+      margin-top: 5px;
+    }
+
     .subject {
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -32,15 +38,9 @@
     .date {
       display: block;
 
-      font-size: 70%;
       text-align: right;
 
-      margin-top: 10px;
+      margin-top: 5px;
     }
   }
-}
-
-.ddd {
-  background-color: black;
-  color: white;
 }

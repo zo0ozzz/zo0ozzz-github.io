@@ -8,13 +8,29 @@ export default function SearchList({ sortName }) {
   const location = useLocation();
   const searchString = decodeURIComponent(location.search.split("=")[1]);
   console.log(searchString);
+  console.log(sortName);
 
   const postsList = posts.map((post, index) => {
+    function convertDate(dateString) {
+      // date는 12자리(년월일시분초) 숫자로 된 문자열
+
+      const year = dateString.slice(2, 4);
+      const month = dateString.slice(4, 6);
+      const date = dateString.slice(6, 8);
+      const day = dateString.slice(8, 9);
+      const hours = dateString.slice(9, 11);
+      const minutes = dateString.slice(11, 13);
+      const seconds = dateString.slice(13, 15);
+
+      return `${year}. ${month}. ${date}. (${day}) ${hours}:${minutes}:${seconds}`;
+    }
+
     return (
       <Link to={"/posts/" + post._id} className="link" key={index}>
         <section className="contentList">
           <h2 className="subject">{post.title}</h2>
-          <time className="date">{post.date}</time>
+          <div className="number">no.{post.number}</div>
+          <time className="date">{convertDate(post.createDate)}</time>
         </section>
       </Link>
     );

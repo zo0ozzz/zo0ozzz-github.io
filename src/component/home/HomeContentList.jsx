@@ -1,17 +1,16 @@
 import "./HomeContentList.scss";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function HomeContentList({
-  sortName,
-  selectedCategory,
-  setSelectedCategory,
-}) {
-  console.log(selectedCategory);
+export default function HomeContentList({ sortName }) {
+  const { selectedCategory } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchString = searchParams.get("searchString");
+  console.log(searchParams);
 
   const [posts, setPosts] = useState([]);
-  console.log("posts", posts);
 
   const postsList = posts.map((post, index) => {
     function convertDate(dateString) {
@@ -67,10 +66,9 @@ export default function HomeContentList({
 
   async function getCategoryPosts() {
     try {
-      const response = await api.get("/post?category=" + selectedCategory);
+      const response = await api.get("/post/categories/" + selectedCategory);
       const status = response.status;
       let categoryPosts = response.data;
-      console.log(status);
 
       if (status === 200) {
         if (sortName === "오래된 순") {
@@ -88,6 +86,34 @@ export default function HomeContentList({
         );
 
         setPosts(sortedPosts);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getSearchPosts() {
+    try {
+      const response = await api.get(
+        "/post/search?searchString=" + searchString
+      );
+      const status = response.status;
+      let posts = response.data;
+
+      if (status === 200) {
+        if (sortName === "오래된 순") {
+          const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
+
+          setPosts(sortedPosts);
+
+          return;
+        }
+
+        const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
+
+        setPosts(sortedPosts);
+      } else {
+        console.log("get, /post 요청 실패", "status: ", status);
       }
     } catch (error) {
       console.log(error);
@@ -113,14 +139,25 @@ export default function HomeContentList({
   }
 
   useEffect(() => {
-    if (selectedCategory !== "") {
+    if (!selectedCategory && !searchString) {
+      getAllPosts();
+
+      return;
+    }
+
+    if (selectedCategory) {
       getCategoryPosts();
 
       return;
-    } else {
-      getAllPosts();
     }
-  }, [selectedCategory]);
+
+    if (searchString) {
+      console.log("반응");
+      getSearchPosts();
+
+      return;
+    }
+  }, [selectedCategory, searchString]);
 
   useEffect(() => {
     sortPosts();

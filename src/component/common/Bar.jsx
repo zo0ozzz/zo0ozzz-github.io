@@ -6,6 +6,7 @@ function Bar({ sortName, setSortName }) {
   const [selectValue, setSelectValue] = useState("");
   const navigate = useNavigate();
   const [searchInputValue, setSearchInputValue] = useState("");
+  console.log(searchInputValue);
 
   const handleClickSearchButton = (e) => {
     e.preventDefault();

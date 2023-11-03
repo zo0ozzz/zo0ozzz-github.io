@@ -38,7 +38,9 @@ export default function SearchList({ sortName }) {
 
   async function getAllPosts() {
     try {
-      const response = await api.get("/search?searchString=" + searchString);
+      const response = await api.get(
+        "/post/search?searchString=" + searchString
+      );
       const status = response.status;
       let posts = response.data;
 

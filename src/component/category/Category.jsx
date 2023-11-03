@@ -7,14 +7,14 @@ export default function ({
   selectedCategory,
   setSelectedCategory,
 }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const categoryList = categories.map((category, index) => {
     return (
       <li
         key={index}
         onClick={() => {
-          setSelectedCategory(category);
+          navigate("/categories/" + category);
         }}
       >
         {category}(0)
@@ -28,7 +28,7 @@ export default function ({
         분류:
         <li
           onClick={() => {
-            setSelectedCategory("");
+            navigate("/");
           }}
         >
           전체(0)

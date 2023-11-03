@@ -19,7 +19,6 @@ function App() {
     <>
       <div className="wrapper">
         <PageHeader />
-
         <Routes>
           <Route
             path="/"
@@ -41,8 +40,9 @@ function App() {
               </>
             }
           />
-          {/* <Route
-            path="/category?="
+          <Route
+            path="/categories/:selectedCategory"
+            // 이걸 쿼리 스트링으로 보내면 뒤에 추가를 안 해줘도 됨!
             element={
               <>
                 <HomeHellow />
@@ -60,7 +60,7 @@ function App() {
                 />
               </>
             }
-          /> */}
+          />
           <Route
             path="/search"
             element={
@@ -68,7 +68,13 @@ function App() {
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
                 <Category categories={categories} />
-                <SearchList sortName={sortName} />
+                {/* <SearchList sortName={sortName} /> */}
+                <HomeContentList
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  sortName={sortName}
+                  setSortName={setSortName}
+                />
               </>
             }
           />

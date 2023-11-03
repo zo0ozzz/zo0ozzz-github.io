@@ -3,8 +3,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function HomeContentList({ sortName }) {
+export default function HomeContentList({
+  sortName,
+  selectedCategory,
+  setSelectedCategory,
+}) {
+  console.log(selectedCategory);
+
   const [posts, setPosts] = useState([]);
+  console.log("posts", posts);
 
   const postsList = posts.map((post, index) => {
     function convertDate(dateString) {
@@ -58,6 +65,35 @@ export default function HomeContentList({ sortName }) {
     }
   }
 
+  async function getCategoryPosts() {
+    try {
+      const response = await api.get("/post?category=" + selectedCategory);
+      const status = response.status;
+      let categoryPosts = response.data;
+      console.log(status);
+
+      if (status === 200) {
+        if (sortName === "오래된 순") {
+          const sortedPosts = [...categoryPosts].sort(
+            (a, b) => a.number - b.number
+          );
+
+          setPosts(sortedPosts);
+
+          return;
+        }
+
+        const sortedPosts = [...categoryPosts].sort(
+          (a, b) => b.number - a.number
+        );
+
+        setPosts(sortedPosts);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function sortPosts() {
     if (sortName === "최신순") {
       const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
@@ -77,8 +113,14 @@ export default function HomeContentList({ sortName }) {
   }
 
   useEffect(() => {
-    getAllPosts();
-  }, []);
+    if (selectedCategory !== "") {
+      getCategoryPosts();
+
+      return;
+    } else {
+      getAllPosts();
+    }
+  }, [selectedCategory]);
 
   useEffect(() => {
     sortPosts();

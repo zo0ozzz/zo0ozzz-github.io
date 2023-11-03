@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Category.scss";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,12 +8,19 @@ export default function ({
   setSelectedCategory,
 }) {
   const navigate = useNavigate();
+  const [isActive1, setisActive1] = useState(false);
+
+  // const categoryClass = isActive ? "active" : null;
 
   const categoryList = categories.map((category, index) => {
+    const [isActive2, setisActive2] = useState(false);
+
     return (
       <li
+        className={isActive2 ? "active" : null}
         key={index}
         onClick={() => {
+          setisActive2(true);
           navigate("/categories/" + category);
         }}
       >
@@ -22,11 +29,13 @@ export default function ({
     );
   });
 
+  useEffect(() => {}, []);
+
   return (
-    <div className="category">
+    <div className="categoryList">
       <ul>
-        분류:
         <li
+          className="category"
           onClick={() => {
             navigate("/");
           }}

@@ -8,7 +8,6 @@ export default function HomeContentList({ sortName }) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchString = searchParams.get("searchString");
-  console.log(searchParams);
 
   const [posts, setPosts] = useState([]);
 
@@ -98,6 +97,7 @@ export default function HomeContentList({ sortName }) {
         "/post/search?searchString=" + searchString
       );
       const status = response.status;
+      console.log(status);
       let posts = response.data;
 
       if (status === 200) {
@@ -165,6 +165,10 @@ export default function HomeContentList({ sortName }) {
 
   return (
     <>
+      {searchString ? (
+        <span className="postList-info">검색어: {searchString}</span>
+      ) : null}
+
       <main className="home-contentList_container">{postsList}</main>
     </>
   );

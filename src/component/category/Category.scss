@@ -1,11 +1,15 @@
-.category {
-  // border: 1px solid;
-
+.categoryList {
   margin-top: 10px;
 
   li {
     display: inline-block;
 
     margin-right: 5px;
+
+    cursor: pointer;
+  }
+
+  .active {
+    font-weight: bold;
   }
 }

@@ -1,5 +1,5 @@
 import "./App.scss";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import PageHeader from "./component/common/PageHeader";
 import HomeHellow from "./component/home/HomeHellow";
@@ -9,10 +9,13 @@ import HomeContentList from "./component/home/HomeContentList";
 import SearchList from "./component/search/SearchList";
 import Post from "./component/post/Post";
 import PageFooter from "./component/common/PageFooter";
+// import setting from "./setting.js";
 
 function App() {
   const [sortName, setSortName] = useState("최신순");
   const categories = ["블로그", "기타", "뿅뿅뿅"];
+  // const categories = setting.categories;
+  // const categories = useMemo(() => ["블로그", "기타", "뿅뿅뿅"], []);
 
   return (
     <>

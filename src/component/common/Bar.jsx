@@ -6,7 +6,6 @@ function Bar({ sortName, setSortName }) {
   const [selectValue, setSelectValue] = useState("");
   const navigate = useNavigate();
   const [searchInputValue, setSearchInputValue] = useState("");
-  console.log(searchInputValue);
 
   const handleClickSearchButton = (e) => {
     e.preventDefault();
@@ -31,8 +30,8 @@ function Bar({ sortName, setSortName }) {
   }, [sortName]);
 
   return (
-    <div class="container-bar">
-      <div class="wrapper-searchInput">
+    <div className="container-bar">
+      <div className="wrapper-searchInput">
         <form action="">
           <label htmlFor="search">검색:</label>
           <input
@@ -46,7 +45,7 @@ function Bar({ sortName, setSortName }) {
         </form>
       </div>
 
-      <div class="wraaper-sortButton">
+      <div className="wraaper-sortButton">
         <form action="">
           <label htmlFor="sort">정렬:</label>
           <select

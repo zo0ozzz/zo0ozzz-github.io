@@ -37,6 +37,8 @@ export default function ({ categories }) {
     setActiveCategory(currentCategory);
   }, [currentCategory]);
 
+  useEffect(() => {}, []);
+
   return (
     <div className="categoryList">
       <ul>

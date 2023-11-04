@@ -13,7 +13,6 @@ import PageFooter from "./component/common/PageFooter";
 function App() {
   const [sortName, setSortName] = useState("최신순");
   const categories = ["블로그", "기타", "뿅뿅뿅"];
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <>
@@ -26,14 +25,8 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <Category
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                />
+                <Category categories={categories} />
                 <HomeContentList
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
                   sortName={sortName}
                   setSortName={setSortName}
                 />
@@ -47,14 +40,8 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <Category
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                />
+                <Category categories={categories} />
                 <HomeContentList
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
                   sortName={sortName}
                   setSortName={setSortName}
                 />
@@ -68,10 +55,7 @@ function App() {
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
                 <Category categories={categories} />
-                {/* <SearchList sortName={sortName} /> */}
                 <HomeContentList
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
                   sortName={sortName}
                   setSortName={setSortName}
                 />

@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
 import "./Category.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export default function ({
-  categories,
-  selectedCategory,
-  setSelectedCategory,
-}) {
+export default function ({ categories }) {
+  const firstCategory = "전체";
+  const lastCategory = "미분류";
+
   const navigate = useNavigate();
-  const [isActive1, setisActive1] = useState(false);
-
-  // const categoryClass = isActive ? "active" : null;
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const currentCategory =
+    currentPath === "/"
+      ? firstCategory
+      : decodeURIComponent(currentPath.replace("/categories/", ""));
+  // 모든 카테고리 항목을 클릭하면 카테고리 페이지가 아니라 홈으로 이동하게 해놨음.
+  const [activeCategory, setActiveCategory] = useState(firstCategory);
 
   const categoryList = categories.map((category, index) => {
-    const [isActive2, setisActive2] = useState(false);
+    const isActive = category === activeCategory;
 
     return (
       <li
-        className={isActive2 ? "active" : null}
+        className={isActive ? "active" : ""}
         key={index}
         onClick={() => {
-          setisActive2(true);
+          setActiveCategory(category);
           navigate("/categories/" + category);
         }}
       >
@@ -29,20 +33,32 @@ export default function ({
     );
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setActiveCategory(currentCategory);
+  }, [currentCategory]);
 
   return (
     <div className="categoryList">
       <ul>
         <li
-          className="category"
+          className={firstCategory === activeCategory ? "active" : ""}
           onClick={() => {
-            navigate("/");
+            setActiveCategory(firstCategory);
+            navigate("/categories/전체");
           }}
         >
-          전체(0)
+          {firstCategory}(0)
         </li>
         {categoryList}
+        <li
+          className={lastCategory === activeCategory ? "active" : ""}
+          onClick={() => {
+            setActiveCategory(lastCategory);
+            navigate("/categories/미분류");
+          }}
+        >
+          {lastCategory}(0)
+        </li>
       </ul>
     </div>
   );

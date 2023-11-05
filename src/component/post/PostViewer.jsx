@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 
-export default function PostViewer({ _id }) {
+export default function PostViewer({ _id, setCategoriesAndPostsCount }) {
   const [post, setPost] = useState({ title: "", content: "" });
   const navigate = useNavigate();
   const viewerRef = useRef(null);

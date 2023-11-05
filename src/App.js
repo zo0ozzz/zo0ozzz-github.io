@@ -13,7 +13,20 @@ import PageFooter from "./component/common/PageFooter";
 
 function App() {
   const [sortName, setSortName] = useState("최신순");
-  const categories = ["블로그", "기타", "뿅뿅뿅"];
+  // const [categories, setCategories] = useState([
+  //   "블로그",
+  //   "기타",
+  //   "뿅뿅뿅",
+  //   "미분류",
+  // ]);
+  const categories = ["블로그", "기타", "뿅뿅뿅", "미분류"];
+  const initialCategoriesObject = categories.reduce((acc, eachCategory) => {
+    acc[eachCategory] = "-";
+    return acc;
+  }, {});
+  const [categoriesAndPostsCount, setCategoriesAndPostsCount] = useState(
+    initialCategoriesObject
+  );
   // const categories = setting.categories;
   // const categories = useMemo(() => ["블로그", "기타", "뿅뿅뿅"], []);
 
@@ -28,7 +41,10 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <Category categories={categories} />
+                <Category
+                  categories={categories}
+                  categoriesAndPostsCount={categoriesAndPostsCount}
+                />
                 <HomeContentList
                   sortName={sortName}
                   setSortName={setSortName}
@@ -43,7 +59,10 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <Category categories={categories} />
+                <Category
+                  categories={categories}
+                  categoriesAndPostsCount={categoriesAndPostsCount}
+                />
                 <HomeContentList
                   sortName={sortName}
                   setSortName={setSortName}
@@ -57,7 +76,10 @@ function App() {
               <>
                 <HomeHellow />
                 <Bar sortName={sortName} setSortName={setSortName} />
-                <Category categories={categories} />
+                <Category
+                  categories={categories}
+                  categoriesAndPostsCount={categoriesAndPostsCount}
+                />
                 <HomeContentList
                   sortName={sortName}
                   setSortName={setSortName}
@@ -69,7 +91,7 @@ function App() {
             path="/posts/:_id"
             element={
               <>
-                <Post />
+                <Post setCategoriesAndPostsCount={setCategoriesAndPostsCount} />
               </>
             }
           />
@@ -77,7 +99,11 @@ function App() {
             path="/edit/:_id"
             element={
               <>
-                <Post mode={"edit"} categories={categories} />
+                <Post
+                  mode={"edit"}
+                  categories={categories}
+                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+                />
               </>
             }
           />
@@ -85,7 +111,11 @@ function App() {
             path="/create"
             element={
               <>
-                <Post mode={"create"} categories={categories} />
+                <Post
+                  mode={"create"}
+                  categories={categories}
+                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+                />
               </>
             }
           />

@@ -6,9 +6,16 @@ import QuillEditor from "../../lib/Quill/Quill.jsx";
 import { Quill } from "react-quill";
 import ImageResizePrompt from "./ImageResizePrompt";
 
-export default function PostEditor({ _id, mode, categories }) {
+export default function PostEditor({
+  _id,
+  mode,
+  categories,
+  setCategoriesAndPostsCount,
+}) {
   const [post, setPost] = useState({ title: "", category: "", content: "" });
+  console.log(post.category);
   const [categoryName, setCategoryName] = useState("");
+  console.log(categoryName);
   const editorRef = useRef(null);
   const navigate = useNavigate();
   const [imageResize, setImageResize] = useState({
@@ -86,7 +93,6 @@ export default function PostEditor({ _id, mode, categories }) {
 
   const handleChangeCategoryName = (e) => {
     const categoryName = e.target.value;
-
     setCategoryName(categoryName);
     setPostCategory(categoryName);
   };
@@ -117,7 +123,7 @@ export default function PostEditor({ _id, mode, categories }) {
         ...prevPost,
         title: "",
         content: "",
-        category: "",
+        category: "미분류",
       }));
 
       return;
@@ -196,7 +202,7 @@ export default function PostEditor({ _id, mode, categories }) {
             value={categoryName}
             onChange={handleChangeCategoryName}
           >
-            <option selected="true" value=""></option>
+            <option selected="true" value="미분류"></option>
             {categories.map((item, index) => {
               return (
                 <option id={index} value={item}>

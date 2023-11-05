@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Category.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../../lib/axios/axios";
 
-export default function ({ categories }) {
+export default function ({ categories, categoriesAndPostsCount }) {
+  const [prevCategories, setPrevCategories] = useState("");
+
   const firstCategory = "전체";
   const lastCategory = "미분류";
 
@@ -16,6 +19,19 @@ export default function ({ categories }) {
   // 모든 카테고리 항목을 클릭하면 카테고리 페이지가 아니라 홈으로 이동하게 해놨음.
   const [activeCategory, setActiveCategory] = useState(firstCategory);
 
+  async function updateCategories() {
+    try {
+      const response = await api.patch("/post/updateCategories", categories);
+      const status = response.status;
+
+      console.log(status);
+
+      console.log("카테고리 업데이트: ", status === 200 ? "성공" : "실패");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const categoryList = categories.map((category, index) => {
     const isActive = category === activeCategory;
 
@@ -28,7 +44,7 @@ export default function ({ categories }) {
           navigate("/categories/" + category);
         }}
       >
-        {category}(0)
+        {category}({categoriesAndPostsCount[category]})
       </li>
     );
   });
@@ -37,7 +53,17 @@ export default function ({ categories }) {
     setActiveCategory(currentCategory);
   }, [currentCategory]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    function isSameArray(arr1, arr2) {
+      return JSON.stringify(arr1) === JSON.stringify(arr2);
+    }
+
+    if (isSameArray(categories, prevCategories)) {
+      return;
+    }
+
+    updateCategories();
+  }, [categories, prevCategories]);
 
   return (
     <div className="categoryList">

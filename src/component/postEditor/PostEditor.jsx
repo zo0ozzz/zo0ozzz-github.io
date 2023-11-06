@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import { Quill } from "react-quill";
-import ImageResizePrompt from "./ImageResizePrompt";
+import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 
 export default function PostEditor({
   _id,
@@ -46,8 +46,10 @@ export default function PostEditor({
 
       const response = await api.patch("/post/" + _id, editedPost);
       const status = response.status;
+      const data = response.data;
 
       if (status === 200) {
+        setCategoriesAndPostsCount(data);
         navigate("/posts/" + _id);
       } else {
         console.log("status: ", status);
@@ -63,9 +65,12 @@ export default function PostEditor({
 
       const response = await api.post("/post", newPost);
       const status = response.status;
-      const newPost_id = response.data._id;
+      const data = response.data;
+      const newPost_id = data._id;
+      const newCategoriesAndPostsCount = data.categoryPostsCountValue;
 
       if (status === 200) {
+        setCategoriesAndPostsCount(newCategoriesAndPostsCount);
         navigate("/posts/" + newPost_id);
       } else {
         console.log("status: ", status);

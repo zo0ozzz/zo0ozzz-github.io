@@ -1,0 +1,17 @@
+.header {
+  width: 900px;
+
+  padding: 10px 0;
+
+  margin: 10px auto 0 auto;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+
+  border-bottom: 1px solid;
+
+  .header-name {
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

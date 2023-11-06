@@ -1,4 +1,4 @@
-import "./HomeHellow.scss";
+import "./Hellow.scss";
 
 export default function HomeHellow() {
   return (

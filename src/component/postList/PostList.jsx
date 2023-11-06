@@ -1,14 +1,13 @@
-import "./HomeContentList.scss";
+import "./PostList.scss";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function HomeContentList({ sortName }) {
+export default function PostList({ sortName }) {
   const { selectedCategory } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchString = searchParams.get("searchString");
-
   const [posts, setPosts] = useState([]);
 
   const postsList = posts.map((post, index) => {
@@ -152,7 +151,6 @@ export default function HomeContentList({ sortName }) {
     }
 
     if (searchString) {
-      console.log("반응");
       getSearchPosts();
 
       return;

@@ -1,7 +1,7 @@
 import "./SearchList.scss";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import api from "../../lib/axios/axios.js";
+import api from "../lib/axios/axios.js";
 
 export default function SearchList({ sortName }) {
   const [posts, setPosts] = useState([]);

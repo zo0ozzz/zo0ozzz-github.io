@@ -1,4 +1,4 @@
-import "./PageFooter.scss";
+import "./Footer.scss";
 
 export default function PageFooter() {
   return (

@@ -10,9 +10,6 @@ import SearchList from "./창고/SearchList";
 import Post from "./pages/post/Post";
 import PageFooter from "./component/footer/Footer";
 import Home from "./pages/home/Home";
-import Category from "./pages/category/Category";
-import Search from "./pages/search/Search";
-import God from "./pages/god/God";
 // import setting from "./setting.js";
 
 function App() {
@@ -42,13 +39,19 @@ function App() {
             path="/"
             element={
               <>
-                <Home
+                <Home />
+                {/*  */}
+                <HomeHellow />
+                <SearchAndSortingBar
                   sortName={sortName}
                   setSortName={setSortName}
+                />
+                <CategoryBar
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                 />
+                <PostList sortName={sortName} setSortName={setSortName} />
               </>
             }
           />
@@ -57,13 +60,17 @@ function App() {
             // 이걸 쿼리 스트링으로 보내면 뒤에 추가를 안 해줘도 됨!
             element={
               <>
-                <Category
+                <HomeHellow />
+                <SearchAndSortingBar
                   sortName={sortName}
                   setSortName={setSortName}
+                />
+                <CategoryBar
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                 />
+                <PostList sortName={sortName} setSortName={setSortName} />
               </>
             }
           />
@@ -71,13 +78,17 @@ function App() {
             path="/search"
             element={
               <>
-                <Search
+                <HomeHellow />
+                <SearchAndSortingBar
                   sortName={sortName}
                   setSortName={setSortName}
+                />
+                <CategoryBar
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                 />
+                <PostList sortName={sortName} setSortName={setSortName} />
               </>
             }
           />
@@ -110,14 +121,6 @@ function App() {
                   categories={categories}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                 />
-              </>
-            }
-          />
-          <Route
-            path="/god"
-            element={
-              <>
-                <God />
               </>
             }
           />

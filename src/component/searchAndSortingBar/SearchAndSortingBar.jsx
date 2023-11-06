@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Bar.scss";
+import "./SearchAndSortingBar.scss";
 
-function Bar({ sortName, setSortName }) {
+function SearchAndSortingBar({ sortName, setSortName }) {
   const [selectValue, setSelectValue] = useState("");
   const navigate = useNavigate();
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -63,4 +63,4 @@ function Bar({ sortName, setSortName }) {
   );
 }
 
-export default Bar;
+export default SearchAndSortingBar;

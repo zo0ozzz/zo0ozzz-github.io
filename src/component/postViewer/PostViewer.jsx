@@ -6,6 +6,7 @@ import QuillEditor from "../../lib/Quill/Quill.jsx";
 
 export default function PostViewer({ _id, setCategoriesAndPostsCount }) {
   const [post, setPost] = useState({ title: "", content: "" });
+  // const [category, setCategory] = useState('');
   const navigate = useNavigate();
   const viewerRef = useRef(null);
 
@@ -90,6 +91,10 @@ export default function PostViewer({ _id, setCategoriesAndPostsCount }) {
         <div className="title">
           <div className="titleContent">{post.title}</div>
         </div>
+        {post.category === "미분류" ? null : (
+          <div className="category">분류: {post.category}</div>
+        )}
+
         <div className="content">
           <QuillEditor
             postContent={post.content}

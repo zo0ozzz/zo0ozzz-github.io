@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import "./Category.scss";
+import "./CategoryBar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios";
 
-export default function ({ categories, categoriesAndPostsCount }) {
+export default function ({
+  categories,
+  categoriesAndPostsCount,
+  setCategoriesAndPostsCount,
+}) {
+  console.log(categories);
   const [prevCategories, setPrevCategories] = useState("");
 
   const firstCategory = "전체";
-  const lastCategory = "미분류";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,17 +27,22 @@ export default function ({ categories, categoriesAndPostsCount }) {
     try {
       const response = await api.patch("/post/updateCategories", categories);
       const status = response.status;
+      const data = response.data;
 
-      console.log(status);
-
-      console.log("카테고리 업데이트: ", status === 200 ? "성공" : "실패");
+      if (status === 200) {
+        setCategoriesAndPostsCount(data);
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
+  let allPostCount = 0;
+
   const categoryList = categories.map((category, index) => {
     const isActive = category === activeCategory;
+    const categoryPostsCount = categoriesAndPostsCount[category];
+    allPostCount += categoryPostsCount;
 
     return (
       <li
@@ -44,7 +53,7 @@ export default function ({ categories, categoriesAndPostsCount }) {
           navigate("/categories/" + category);
         }}
       >
-        {category}({categoriesAndPostsCount[category]})
+        {category}({categoryPostsCount})
       </li>
     );
   });
@@ -75,10 +84,10 @@ export default function ({ categories, categoriesAndPostsCount }) {
             navigate("/categories/전체");
           }}
         >
-          {firstCategory}(0)
+          {firstCategory}({allPostCount})
         </li>
         {categoryList}
-        <li
+        {/* <li
           className={lastCategory === activeCategory ? "active" : ""}
           onClick={() => {
             setActiveCategory(lastCategory);
@@ -86,7 +95,7 @@ export default function ({ categories, categoriesAndPostsCount }) {
           }}
         >
           {lastCategory}(0)
-        </li>
+        </li> */}
       </ul>
     </div>
   );

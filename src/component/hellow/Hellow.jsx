@@ -1,9 +1,9 @@
 import "./Hellow.scss";
 
-export default function HomeHellow() {
+export default function Hellow() {
   return (
     <>
-      <section className="home-hellow">
+      <section className="hellow">
         <p>
           안녕하세요.
           <br />

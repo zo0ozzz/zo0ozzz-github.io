@@ -1,18 +1,11 @@
 import "./Nav.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import Button1 from "../button1/Button1.jsx";
 import Button1List from "../button1List/Button1List";
-import LinkList2 from "../linkList2/LinkList2";
+import LinkList from "../linkList/LinkList";
 
 export function Nav() {
   const navigate = useNavigate();
-
-  const linkData = [
-    { name: "nav1", URL: "#" },
-    { name: "nav2", URL: "#" },
-    { name: "nav3", URL: "#" },
-  ];
 
   const buttonData = [
     { name: "godMode", onClick: beGod },
@@ -20,9 +13,11 @@ export function Nav() {
     { name: "+", onClick: goCreate },
   ];
 
-  const buttonsElement = buttonData.map(({ name, onClick }, index) => (
-    <Button1 name={name} onClick={onClick} key={index} />
-  ));
+  const linkData = [
+    { name: "nav1", URL: "#" },
+    { name: "nav2", URL: "#" },
+    { name: "nav3", URL: "#" },
+  ];
 
   function beGod() {
     navigate("/god");
@@ -38,10 +33,12 @@ export function Nav() {
 
       if (answer !== null) {
         const response = await api.delete("/deleteAllData");
-        const result = response.data;
+        const status = response.status;
 
-        if (response.ok) {
+        if (status === 200) {
           alert("데이터 삭제 완료.");
+        } else {
+          console.log(status);
         }
       }
     } catch (error) {
@@ -53,11 +50,7 @@ export function Nav() {
     <>
       <nav className="nav">
         <Button1List data={buttonData} />
-        <LinkList2 data={linkData} />
-
-        {/* <div className="nav-buttons-wrapper">{buttonsElement}</div> */}
-        {/* <div className="nav-links-wrapper"> */}
-        {/* </div> */}
+        <LinkList data={linkData} />
       </nav>
     </>
   );

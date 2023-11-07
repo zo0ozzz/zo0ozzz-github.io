@@ -1,8 +1,9 @@
+import "./ToolBar.scss";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SearchAndSortingBar.scss";
+import Searcher from "../searcher/Searcher";
 
-function SearchAndSortingBar({ sortName, setSortName }) {
+export default function ToolBar({ sortName, setSortName }) {
   const [selectValue, setSelectValue] = useState("");
   const navigate = useNavigate();
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -31,20 +32,7 @@ function SearchAndSortingBar({ sortName, setSortName }) {
 
   return (
     <div className="container-bar">
-      <div className="wrapper-searchInput">
-        <form action="">
-          <label htmlFor="search">검색:</label>
-          <input
-            type="text"
-            id="search"
-            autoComplete="off"
-            value={searchInputValue}
-            onChange={handleChangeSearchInput}
-          />
-          <input type="submit" value="확인" onClick={handleClickSearchButton} />
-        </form>
-      </div>
-
+      <Searcher />
       <div className="wraaper-sortButton">
         <form action="">
           <label htmlFor="sort">정렬:</label>
@@ -62,5 +50,3 @@ function SearchAndSortingBar({ sortName, setSortName }) {
     </div>
   );
 }
-
-export default SearchAndSortingBar;

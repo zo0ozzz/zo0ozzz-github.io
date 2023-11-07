@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import PageHeader from "./component/header/Header";
 import HomeHellow from "./component/hellow/Hellow";
-import SearchAndSortingBar from "./component/searchAndSortingBar/SearchAndSortingBar";
+// import SearchAndSortingBar from "./component/toolBar/ToolBar";
 import CategoryBar from "./component/categoryBar/CategoryBar";
 import PostList from "./component/postList/PostList";
 import SearchList from "./창고/SearchList";

@@ -1,6 +1,6 @@
 import "./Home.scss";
 import Hellow from "../../component/hellow/Hellow";
-import SearchAndSortingBar from "../../component/searchAndSortingBar/SearchAndSortingBar";
+import SearchAndSortingBar from "../../component/toolBar/ToolBar";
 import CategoryBar from "../../component/categoryBar/CategoryBar";
 import PostList from "../../component/postList/PostList";
 

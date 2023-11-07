@@ -2,55 +2,49 @@ import "./Searcher.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputButton1 from "../inputButton1/InputButton1";
+import InputText1 from "../inputText1/InputText1";
+import Label1 from "../label/Label1";
 
 export default function () {
   const navigate = useNavigate();
 
-  const [searchInputValue, setSearchInputValue] = useState("");
+  const [textInputValue, settextInputValue] = useState("");
 
   const searcherData = {
-    label: { name: "검색: ", htmlFor: this.textInput.id },
-    inputText: {
+    label: { name: "검색:", htmlFor: "searchTextInput" },
+    textInput: {
       type: "text",
       id: "searchTextInput",
       autoComplete: "off",
-      value: searchInputValue,
-      onChange: handleChangeSearchInput,
+      value: textInputValue,
+      onChange: handleChangeTextInput,
     },
-    inputSubmit: {
+    submitInput: {
       type: "submit",
       value: "확인",
-      onClick: handleClickSearchButton,
+      onClick: handleClickSubmitInput,
     },
   };
 
-  const handleChangeSearchInput = (e) => {
+  function handleChangeTextInput(e) {
     const value = e.target.value;
 
-    setSearchInputValue(value);
-  };
+    settextInputValue(value);
+  }
 
-  const handleClickSearchButton = (e) => {
+  function handleClickSubmitInput(e) {
     e.preventDefault();
 
-    navigate("/search?searchString=" + searchInputValue);
-  };
+    navigate("/search?searchString=" + textInputValue);
+  }
 
   return (
     <>
       <div className="searcher">
         <form action="">
-          <label htmlFor={searcherData.label.name.htmlFor}>
-            {searcherData.label.name}
-          </label>
-          <input
-            type={searcherData.inputText.type}
-            id={searcherData.inputText.id}
-            autoComplete={searcherData.inputText.autoComplete}
-            value={searcherData.inputText.value}
-            onChange={searcherData.inputText.onChange}
-          />
-          <InputButton1 data={searcherData.inputSubmit} />
+          <Label1 data={searcherData.label} />
+          <InputText1 data={searcherData.textInput} />
+          <InputButton1 data={searcherData.submitInput} />
         </form>
       </div>
     </>

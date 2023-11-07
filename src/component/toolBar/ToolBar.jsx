@@ -2,9 +2,10 @@ import "./ToolBar.scss";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Searcher from "../searcher/Searcher";
+import SortingSelector from "../sortingSelector/SortingSelector";
 
 export default function ToolBar({ sortName, setSortName }) {
-  const [selectValue, setSelectValue] = useState("");
+  // const [selectValue, setSelectValue] = useState("");
   const navigate = useNavigate();
   const [searchInputValue, setSearchInputValue] = useState("");
 
@@ -20,20 +21,21 @@ export default function ToolBar({ sortName, setSortName }) {
     setSearchInputValue(value);
   };
 
-  const handleChangeSelect = (e) => {
-    const sortName = e.target.value;
+  // const handleChangeSelect = (e) => {
+  //   const sortName = e.target.value;
 
-    setSortName(sortName);
-  };
+  //   setSortName(sortName);
+  // };
 
-  useEffect(() => {
-    setSelectValue(sortName);
-  }, [sortName]);
+  // useEffect(() => {
+  //   setSelectValue(sortName);
+  // }, [sortName]);
 
   return (
-    <div className="container-bar">
+    <div className="toolBar">
       <Searcher />
-      <div className="wraaper-sortButton">
+      <SortingSelector sortName={sortName} setSortName={setSortName} />
+      {/* <div className="wraaper-sortButton">
         <form action="">
           <label htmlFor="sort">정렬:</label>
           <select
@@ -46,7 +48,7 @@ export default function ToolBar({ sortName, setSortName }) {
             <option value="오래된 순">오래된 순</option>
           </select>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 }

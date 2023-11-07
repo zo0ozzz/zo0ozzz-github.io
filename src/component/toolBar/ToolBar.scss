@@ -1,40 +1,9 @@
-.container-bar {
+.toolBar {
   display: flex;
   justify-content: end;
   align-items: center;
 
-  // border: 1px solid;
   margin-top: 10px;
-
-  .wrapper-searchInput {
-    display: flex;
-
-    label {
-      vertical-align: middle;
-
-      font: inherit;
-
-      margin-right: 5px;
-    }
-
-    input[type="text"] {
-      vertical-align: middle;
-
-      width: 150px;
-
-      font: inherit;
-
-      margin-right: 5px;
-    }
-
-    input[type="submit"] {
-      vertical-align: middle;
-
-      font: inherit;
-
-      margin-right: 10px;
-    }
-  }
 
   .wraaper-sortButton {
     display: flex;
@@ -52,5 +21,4 @@
       font: inherit;
     }
   }
-  // margin: 0 auto;
 }

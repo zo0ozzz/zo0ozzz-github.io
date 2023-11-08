@@ -1,18 +1,20 @@
 import "./Select1.scss";
 
 export default function Select1({ data }) {
-  const { value = "견본", onChange = () => {}, id = "" } = data;
+  const { value = [], onChange = () => {}, id = "", option = [] } = data;
+
+  const options = option.map(({ value, name }, index) => {
+    return (
+      <option value={value} key={index}>
+        {name}
+      </option>
+    );
+  });
 
   return (
-    <span className="Select1">
-      <select
-        name=""
-        id="sort"
-        value={selectValue}
-        onChange={handleChangeSelect}
-      >
-        <option value="최신순">최신순</option>
-        <option value="오래된 순">오래된 순</option>
+    <span className="select1">
+      <select name="" id="sort" value={value} onChange={onChange}>
+        {options}
       </select>
     </span>
   );

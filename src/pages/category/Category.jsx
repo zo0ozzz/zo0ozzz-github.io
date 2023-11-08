@@ -6,6 +6,7 @@ import PostList from "../../component/postList/PostList";
 export default function Category({
   sortName,
   setSortName,
+  sortingMedthodData,
   categories,
   categoriesAndPostsCount,
   setCategoriesAndPostsCount,
@@ -13,13 +14,21 @@ export default function Category({
   return (
     <>
       <Hellow />
-      <SearchAndSortingBar sortName={sortName} setSortName={setSortName} />
+      <SearchAndSortingBar
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
       <CategoryBar
         categories={categories}
         categoriesAndPostsCount={categoriesAndPostsCount}
         setCategoriesAndPostsCount={setCategoriesAndPostsCount}
       />
-      <PostList sortName={sortName} setSortName={setSortName} />
+      <PostList
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
     </>
   );
 }

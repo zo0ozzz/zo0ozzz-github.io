@@ -7,6 +7,7 @@ import PostList from "../../component/postList/PostList";
 export default function Home({
   sortName,
   setSortName,
+  sortingMedthodData,
   categories,
   categoriesAndPostsCount,
   setCategoriesAndPostsCount,
@@ -14,13 +15,22 @@ export default function Home({
   return (
     <>
       <Hellow />
-      <SearchAndSortingBar sortName={sortName} setSortName={setSortName} />
+      <SearchAndSortingBar
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
       <CategoryBar
         categories={categories}
         categoriesAndPostsCount={categoriesAndPostsCount}
         setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+        sortingMedthodData={sortingMedthodData}
       />
-      <PostList sortName={sortName} setSortName={setSortName} />
+      <PostList
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
     </>
   );
 }

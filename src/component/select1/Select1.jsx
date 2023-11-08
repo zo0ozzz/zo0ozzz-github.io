@@ -13,7 +13,7 @@ export default function Select1({ data }) {
 
   return (
     <span className="select1">
-      <select name="" id="sort" value={value} onChange={onChange}>
+      <select name="" id={id} value={value} onChange={onChange}>
         {options}
       </select>
     </span>

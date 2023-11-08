@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function PostList({ sortName }) {
+export default function PostList({ sortName, sortingMedthodData }) {
   const { selectedCategory } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -12,8 +12,7 @@ export default function PostList({ sortName }) {
 
   const postsList = posts.map((post, index) => {
     function convertDate(dateString) {
-      // date는 12자리(년월일시분초) 숫자로 된 문자열
-
+      // ex) dateString = 20230318목121212
       const year = dateString.slice(2, 4);
       const month = dateString.slice(4, 6);
       const date = dateString.slice(6, 8);
@@ -40,22 +39,13 @@ export default function PostList({ sortName }) {
     try {
       const response = await api.get("/post");
       const status = response.status;
-      let posts = response.data;
+      const posts = response.data;
 
       if (status === 200) {
-        if (sortName === "오래된 순") {
-          const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
-
-          setPosts(sortedPosts);
-
-          return;
-        }
-
-        const sortedPosts = posts.sort((a, b) => b.number - a.number);
-
+        const sortedPosts = getSortedPosts(posts);
         setPosts(sortedPosts);
       } else {
-        console.log("get, /post 요청 실패", "status: ", status);
+        console.log(status);
       }
     } catch (error) {
       console.log(error);
@@ -66,24 +56,13 @@ export default function PostList({ sortName }) {
     try {
       const response = await api.get("/post/categories/" + selectedCategory);
       const status = response.status;
-      let categoryPosts = response.data;
+      const posts = response.data;
 
       if (status === 200) {
-        if (sortName === "오래된 순") {
-          const sortedPosts = [...categoryPosts].sort(
-            (a, b) => a.number - b.number
-          );
-
-          setPosts(sortedPosts);
-
-          return;
-        }
-
-        const sortedPosts = [...categoryPosts].sort(
-          (a, b) => b.number - a.number
-        );
-
+        const sortedPosts = getSortedPosts(posts);
         setPosts(sortedPosts);
+      } else {
+        console.log(status);
       }
     } catch (error) {
       console.log(error);
@@ -96,45 +75,27 @@ export default function PostList({ sortName }) {
         "/post/search?searchString=" + searchString
       );
       const status = response.status;
-      console.log(status);
-      let posts = response.data;
+      const posts = response.data;
 
       if (status === 200) {
-        if (sortName === "오래된 순") {
-          const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
-
-          setPosts(sortedPosts);
-
-          return;
-        }
-
-        const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
-
+        const sortedPosts = getSortedPosts(posts);
         setPosts(sortedPosts);
       } else {
-        console.log("get, /post 요청 실패", "status: ", status);
+        console.log(status);
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  function sortPosts() {
-    if (sortName === "최신순") {
-      const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
+  function getSortedPosts(posts) {
+    const sortingFunc = sortingMedthodData.find(
+      (item) => item.value === sortName
+    ).sortingFunc;
 
-      setPosts(sortedPosts);
+    const sortedPosts = sortingFunc(posts);
 
-      return;
-    }
-
-    if (sortName === "오래된 순") {
-      const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
-
-      setPosts(sortedPosts);
-
-      return;
-    }
+    return sortedPosts;
   }
 
   useEffect(() => {
@@ -158,7 +119,8 @@ export default function PostList({ sortName }) {
   }, [selectedCategory, searchString]);
 
   useEffect(() => {
-    sortPosts();
+    const sortedPosts = getSortedPosts(posts);
+    setPosts(sortedPosts);
   }, [sortName]);
 
   return (

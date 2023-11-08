@@ -1,13 +1,9 @@
 .select1 {
-  label {
-    margin-right: 5px;
-
-    font: inherit;
-  }
-
   select {
+    font: inherit;
+
     border: none;
 
-    font: inherit;
+    vertical-align: middle;
   }
 }

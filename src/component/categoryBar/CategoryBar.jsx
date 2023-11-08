@@ -8,7 +8,6 @@ export default function ({
   categoriesAndPostsCount,
   setCategoriesAndPostsCount,
 }) {
-  console.log(categories);
   const [prevCategories, setPrevCategories] = useState("");
 
   const firstCategory = "전체";

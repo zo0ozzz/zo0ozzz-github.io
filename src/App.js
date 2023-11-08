@@ -1,50 +1,77 @@
 import "./App.scss";
 import { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
-import PageHeader from "./component/header/Header";
-import HomeHellow from "./component/hellow/Hellow";
-// import SearchAndSortingBar from "./component/toolBar/ToolBar";
-import CategoryBar from "./component/categoryBar/CategoryBar";
-import PostList from "./component/postList/PostList";
-import SearchList from "./창고/SearchList";
-import Post from "./pages/post/Post";
-import PageFooter from "./component/footer/Footer";
+import Header from "./component/header/Header";
+import Footer from "./component/footer/Footer";
 import Home from "./pages/home/Home";
 import Category from "./pages/category/Category";
 import Search from "./pages/search/Search";
+import Post from "./pages/post/Post";
 import God from "./pages/god/God";
-// import setting from "./setting.js";
 
 function App() {
-  const [sortName, setSortName] = useState("최신순");
+  const sortingMedthodData = [
+    {
+      value: "최신순",
+      name: "최신순",
+      sortingFunc: sortingFunc1,
+    },
+    {
+      value: "오래된 순",
+      name: "오래된 순",
+      sortingFunc: sortingFunc2,
+    },
+  ];
+  const [selectedSortingMedthod, setSelectedSortingMedthod] = useState(
+    sortingMedthodData[0].value
+  );
+
+  const categoryData = [
+    { name: "블로그", postCount: "-" },
+    { name: "기타", postCount: "-" },
+    { name: "뿅뿅뿅", postCount: "-" },
+    { name: "미분류", postCount: "-" },
+  ];
+
   const [categories, setCategories] = useState([
     "블로그",
     "기타",
     "뿅뿅뿅",
     "미분류",
   ]);
-  const initialCategoriesObject = categories.reduce((acc, eachCategory) => {
-    acc[eachCategory] = "-";
-    return acc;
-  }, {});
-  const [categoriesAndPostsCount, setCategoriesAndPostsCount] = useState(
-    initialCategoriesObject
-  );
-  // const categories = setting.categories;
-  // const categories = useMemo(() => ["블로그", "기타", "뿅뿅뿅"], []);
 
+  // const initialCategoriesObject = categories.reduce((acc, eachCategory) => {
+  //   acc[eachCategory] = "-";
+  //   return acc;
+  // }, {});
+
+  const [categoriesAndPostsCount, setCategoriesAndPostsCount] =
+    useState(categoryData);
+
+  function sortingFunc1(posts) {
+    const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
+
+    return sortedPosts;
+  }
+
+  function sortingFunc2(posts) {
+    const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
+
+    return sortedPosts;
+  }
   return (
     <>
       <div className="wrapper">
-        <PageHeader />
+        <Header />
         <Routes>
           <Route
             path="/"
             element={
               <>
                 <Home
-                  sortName={sortName}
-                  setSortName={setSortName}
+                  sortName={selectedSortingMedthod}
+                  setSortName={setSelectedSortingMedthod}
+                  sortingMedthodData={sortingMedthodData}
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
@@ -58,8 +85,9 @@ function App() {
             element={
               <>
                 <Category
-                  sortName={sortName}
-                  setSortName={setSortName}
+                  sortName={selectedSortingMedthod}
+                  setSortName={setSelectedSortingMedthod}
+                  sortingMedthodData={sortingMedthodData}
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
@@ -72,8 +100,9 @@ function App() {
             element={
               <>
                 <Search
-                  sortName={sortName}
-                  setSortName={setSortName}
+                  sortName={selectedSortingMedthod}
+                  setSortName={setSelectedSortingMedthod}
+                  sortingMedthodData={sortingMedthodData}
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
@@ -123,7 +152,7 @@ function App() {
           />
         </Routes>
         <div className="empty"></div>
-        <PageFooter />
+        <Footer />
       </div>
     </>
   );

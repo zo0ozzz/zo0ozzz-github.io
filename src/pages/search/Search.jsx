@@ -7,6 +7,7 @@ import PostList from "../../component/postList/PostList";
 export default function Search({
   sortName,
   setSortName,
+  sortingMedthodData,
   categories,
   categoriesAndPostsCount,
   setCategoriesAndPostsCount,
@@ -14,13 +15,21 @@ export default function Search({
   return (
     <>
       <Hellow />
-      <SearchAndSortingBar sortName={sortName} setSortName={setSortName} />
+      <SearchAndSortingBar
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
       <CategoryBar
         categories={categories}
         categoriesAndPostsCount={categoriesAndPostsCount}
         setCategoriesAndPostsCount={setCategoriesAndPostsCount}
       />
-      <PostList sortName={sortName} setSortName={setSortName} />
+      <PostList
+        sortName={sortName}
+        setSortName={setSortName}
+        sortingMedthodData={sortingMedthodData}
+      />
     </>
   );
 }

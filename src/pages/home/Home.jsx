@@ -10,8 +10,9 @@ export default function Home({
   sortingMedthodData,
   categories,
   categoriesAndPostsCount,
-  setCategoriesAndPostsCount,
   categoryData,
+  setCategoryData,
+  setCategoriesAndPostsCount,
 }) {
   return (
     <>
@@ -27,6 +28,7 @@ export default function Home({
         setCategoriesAndPostsCount={setCategoriesAndPostsCount}
         sortingMedthodData={sortingMedthodData}
         categoryData={categoryData}
+        setCategoryData={setCategoryData}
       />
       <PostList
         sortName={sortName}

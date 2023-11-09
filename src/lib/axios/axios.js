@@ -1,7 +1,7 @@
 import axios from "axios";
-import { baseURL } from "../../urls.js";
+import URL from "../../URL.js";
 
-axios.defaults.baseURL = baseURL;
+axios.defaults.baseURL = URL.base;
 const axiosInstance = axios.create();
 
 export default axiosInstance;

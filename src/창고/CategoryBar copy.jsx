@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./CategoryBar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import api from "../../lib/axios/axios";
+import api from "../lib/axios/axios";
 
 export default function ({
   categories,

@@ -1,6 +1,7 @@
 import "./App.scss";
 import { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
+import URL from "./URL";
 import Header from "./component/header/Header";
 import Footer from "./component/footer/Footer";
 import Home from "./pages/home/Home";
@@ -26,13 +27,13 @@ function App() {
     sortingMedthodData[0].value
   );
 
-  const categoryData = [
+  const [categoryData, setCategoryData] = useState([
     { name: "전체", postCount: "-" },
     { name: "블로그", postCount: "-" },
     { name: "기타", postCount: "-" },
     { name: "뿅뿅뿅", postCount: "-" },
     { name: "미분류", postCount: "-" },
-  ];
+  ]);
 
   const [selectedCategory, setSelectedCategory] = useState(
     categoryData[0].name
@@ -81,6 +82,7 @@ function App() {
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                   categoryData={categoryData}
+                  setCategoryData={setCategoryData}
                 />
               </>
             }

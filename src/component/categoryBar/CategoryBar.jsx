@@ -1,100 +1,80 @@
-import { useEffect, useState } from "react";
 import "./CategoryBar.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import api from "../../lib/axios/axios";
+import LinkList from "../linkList/LinkList";
 
-export default function ({
-  categories,
-  categoriesAndPostsCount,
-  setCategoriesAndPostsCount,
-  categoryData,
-}) {
-  // const categoryData = [
-  //   { name: "전체", postCount: "-" },
-  //   { name: "블로그", postCount: "-" },
-  //   { name: "기타", postCount: "-" },
-  //   { name: "뿅뿅뿅", postCount: "-" },
-  //   { name: "미분류", postCount: "-" },
-  // ];
-
-  const [prevCategories, setPrevCategories] = useState("");
-
-  const firstCategory = "전체";
-
-  const navigate = useNavigate();
+export default function ({ categoryData, setCategoryData }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const currentCategory =
     currentPath === "/"
-      ? firstCategory
+      ? categoryData[0].name
       : decodeURIComponent(currentPath.replace("/categories/", ""));
-  // 모든 카테고리 항목을 클릭하면 카테고리 페이지가 아니라 홈으로 이동하게 해놨음.
-  const [activeCategory, setActiveCategory] = useState(firstCategory);
+
+  const [prevCategoryData, setPrevCategoryData] = useState({});
+
+  const categoryListData = categoryData.map(({ name, postCount }, index) => {
+    return {
+      name: `${name}(${postCount})`,
+      URL: `/categories/${name}`,
+      className_li: name === currentCategory ? "active" : "",
+    };
+  });
 
   async function updateCategories() {
     try {
-      const response = await api.patch("/post/updateCategories", categories);
+      const response = await api.patch("/post/updateCategories", categoryData);
       const status = response.status;
       const data = response.data;
 
       if (status === 200) {
-        setCategoriesAndPostsCount(data);
+        setPrevCategoryData(categoryData);
+        setCategoryData(data);
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  let allPostCount = 0;
-
-  const categoryList = categories.map((category, index) => {
-    const isActive = category === activeCategory;
-    const categoryPostsCount = categoriesAndPostsCount[category];
-    allPostCount += categoryPostsCount;
-
-    return (
-      <li
-        className={isActive ? "active" : ""}
-        key={index}
-        onClick={() => {
-          setActiveCategory(category);
-          navigate("/categories/" + category);
-        }}
-      >
-        {category}({categoryPostsCount})
-      </li>
-    );
-  });
-
   useEffect(() => {
-    setActiveCategory(currentCategory);
-  }, [currentCategory]);
-
-  useEffect(() => {
-    function isSameArray(arr1, arr2) {
-      return JSON.stringify(arr1) === JSON.stringify(arr2);
-    }
-
-    if (isSameArray(categories, prevCategories)) {
+    if (isSameArray(categoryData, prevCategoryData)) {
       return;
     }
 
     updateCategories();
-  }, [categories, prevCategories]);
+  }, [categoryData]);
+
+  function isSameArray(arr1, arr2) {
+    if (isLengthSame(arr1, arr2) && isElementSame(arr1, arr2)) {
+      return true;
+    }
+
+    return false;
+
+    function isLengthSame(arr1, arr2) {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function isElementSame(arr1, arr2) {
+      for (let i = 0; i < arr1.length; i++) {
+        if (JSON.stringify(arr1[i]) !== JSON.stringify(arr2[i])) {
+          return false;
+        }
+
+        return true;
+      }
+    }
+  }
 
   return (
     <div className="categoryList">
       <ul>
-        <li
-          className={firstCategory === activeCategory ? "active" : ""}
-          onClick={() => {
-            setActiveCategory(firstCategory);
-            navigate("/categories/전체");
-          }}
-        >
-          {firstCategory}({allPostCount})
-        </li>
-        {categoryList}
+        <LinkList data={categoryListData} />
       </ul>
     </div>
   );

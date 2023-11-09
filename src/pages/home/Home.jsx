@@ -11,6 +11,7 @@ export default function Home({
   categories,
   categoriesAndPostsCount,
   setCategoriesAndPostsCount,
+  categoryData,
 }) {
   return (
     <>
@@ -25,6 +26,7 @@ export default function Home({
         categoriesAndPostsCount={categoriesAndPostsCount}
         setCategoriesAndPostsCount={setCategoriesAndPostsCount}
         sortingMedthodData={sortingMedthodData}
+        categoryData={categoryData}
       />
       <PostList
         sortName={sortName}

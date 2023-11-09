@@ -33,7 +33,7 @@ export default function ({
 
   async function updateCategories() {
     try {
-      const response = await api.patch("/post/updateCategories", categories);
+      const response = await api.patch("/post/updateCategories", categoryData);
       const status = response.status;
       const data = response.data;
 

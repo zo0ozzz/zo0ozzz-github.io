@@ -27,11 +27,16 @@ function App() {
   );
 
   const categoryData = [
+    { name: "전체", postCount: "-" },
     { name: "블로그", postCount: "-" },
     { name: "기타", postCount: "-" },
     { name: "뿅뿅뿅", postCount: "-" },
     { name: "미분류", postCount: "-" },
   ];
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryData[0].name
+  );
 
   const [categories, setCategories] = useState([
     "블로그",
@@ -75,6 +80,7 @@ function App() {
                   categories={categories}
                   categoriesAndPostsCount={categoriesAndPostsCount}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+                  categoryData={categoryData}
                 />
               </>
             }

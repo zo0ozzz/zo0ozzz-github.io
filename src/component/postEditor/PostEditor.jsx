@@ -1,6 +1,6 @@
 import "./PostEditor.scss";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import { Quill } from "react-quill";
@@ -11,11 +11,11 @@ export default function PostEditor({
   mode,
   categories,
   setCategoriesAndPostsCount,
+  categoryData,
+  setCategoryData,
 }) {
   const [post, setPost] = useState({ title: "", category: "", content: "" });
-  console.log(post.category);
   const [categoryName, setCategoryName] = useState("");
-  console.log(categoryName);
   const editorRef = useRef(null);
   const navigate = useNavigate();
   const [imageResize, setImageResize] = useState({
@@ -49,7 +49,7 @@ export default function PostEditor({
       const data = response.data;
 
       if (status === 200) {
-        setCategoriesAndPostsCount(data);
+        setCategoryData(data);
         navigate("/posts/" + _id);
       } else {
         console.log("status: ", status);
@@ -67,10 +67,10 @@ export default function PostEditor({
       const status = response.status;
       const data = response.data;
       const newPost_id = data._id;
-      const newCategoriesAndPostsCount = data.categoryPostsCountValue;
+      const newCategoryData = data.categoryData;
 
       if (status === 200) {
-        setCategoriesAndPostsCount(newCategoriesAndPostsCount);
+        setCategoryData(newCategoryData);
         navigate("/posts/" + newPost_id);
       } else {
         console.log("status: ", status);
@@ -173,8 +173,8 @@ export default function PostEditor({
 
   return (
     <>
-      <div className="wrapper-postEditor">
-        <div className="bar">
+      <div className="postEditor">
+        <div className="postEditor-bar">
           {mode === "edit" ? (
             <button
               className={"completeEditButton"}
@@ -191,7 +191,7 @@ export default function PostEditor({
             </button>
           ) : null}
         </div>
-        <div className="title">
+        <div className="postEditor-title">
           <input
             type="text"
             value={post.title}
@@ -199,7 +199,7 @@ export default function PostEditor({
             onKeyDown={(e) => handleKeyDownPostTitleInput(e)}
           />
         </div>
-        <div className="categorySelector">
+        <div className="postEditor-categorySelector">
           <label htmlFor="categorySelector">카테고리: </label>
           <select
             name=""

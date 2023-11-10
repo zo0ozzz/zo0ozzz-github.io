@@ -78,8 +78,45 @@ function App() {
                   sortName={selectedSortingMedthod}
                   setSortName={setSelectedSortingMedthod}
                   sortingMedthodData={sortingMedthodData}
-                  categories={categories}
-                  categoriesAndPostsCount={categoriesAndPostsCount}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
+                />
+              </>
+            }
+          />
+          <Route
+            path={URL.category(":selectedCategory")}
+            element={
+              <>
+                <Category
+                  sortName={selectedSortingMedthod}
+                  setSortName={setSelectedSortingMedthod}
+                  sortingMedthodData={sortingMedthodData}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
+                />
+              </>
+            }
+          />
+          <Route
+            path={URL.search}
+            element={
+              <>
+                <Search
+                  sortName={selectedSortingMedthod}
+                  setSortName={setSelectedSortingMedthod}
+                  sortingMedthodData={sortingMedthodData}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
+                />
+              </>
+            }
+          />
+          <Route
+            path={URL.post(":_id")}
+            element={
+              <>
+                <Post
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
@@ -88,70 +125,35 @@ function App() {
             }
           />
           <Route
-            path="/categories/:selectedCategory"
-            // 이걸 쿼리 스트링으로 보내면 뒤에 추가를 안 해줘도 됨!
-            element={
-              <>
-                <Category
-                  sortName={selectedSortingMedthod}
-                  setSortName={setSelectedSortingMedthod}
-                  sortingMedthodData={sortingMedthodData}
-                  categories={categories}
-                  categoriesAndPostsCount={categoriesAndPostsCount}
-                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/search"
-            element={
-              <>
-                <Search
-                  sortName={selectedSortingMedthod}
-                  setSortName={setSelectedSortingMedthod}
-                  sortingMedthodData={sortingMedthodData}
-                  categories={categories}
-                  categoriesAndPostsCount={categoriesAndPostsCount}
-                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/posts/:_id"
-            element={
-              <>
-                <Post setCategoriesAndPostsCount={setCategoriesAndPostsCount} />
-              </>
-            }
-          />
-          <Route
-            path="/edit/:_id"
+            path={URL.edit(":_id")}
             element={
               <>
                 <Post
                   mode={"edit"}
                   categories={categories}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
                 />
               </>
             }
           />
           <Route
-            path="/create"
+            path={URL.create}
             element={
               <>
                 <Post
                   mode={"create"}
                   categories={categories}
                   setCategoriesAndPostsCount={setCategoriesAndPostsCount}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
                 />
               </>
             }
           />
           <Route
-            path="/god"
+            path={URL.god}
             element={
               <>
                 <God />

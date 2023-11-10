@@ -1,5 +1,14 @@
-.wrapper-postEditor {
-  .title {
+.postEditor {
+  .postEditor-bar {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    padding-right: 1px;
+    margin: 5px 0;
+  }
+
+  .postEditor-title {
     display: flex;
     justify-content: center;
 
@@ -16,7 +25,7 @@
     }
   }
 
-  .categorySelector {
+  .postEditor-categorySelector {
     text-align: right;
 
     margin-top: 5px;

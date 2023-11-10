@@ -5,8 +5,8 @@ import CategoryBar from "../../component/categoryBar/CategoryBar";
 import PostList from "../../component/postList/PostList";
 
 export default function Home({
-  sortName,
-  setSortName,
+  selectedSortingMedthod,
+  setSelectedSortingMedthod,
   sortingMedthodData,
   categoryData,
   setCategoryData,
@@ -15,15 +15,18 @@ export default function Home({
     <>
       <Hellow />
       <ToolBar
-        sortName={sortName}
-        setSortName={setSortName}
         sortingMedthodData={sortingMedthodData}
+        selectedSortingMedthod={selectedSortingMedthod}
+        setSelectedSortingMedthod={setSelectedSortingMedthod}
       />
       <CategoryBar
         categoryData={categoryData}
         setCategoryData={setCategoryData}
       />
-      <PostList sortName={sortName} sortingMedthodData={sortingMedthodData} />
+      <PostList
+        selectedSortingMedthod={selectedSortingMedthod}
+        sortingMedthodData={sortingMedthodData}
+      />
     </>
   );
 }

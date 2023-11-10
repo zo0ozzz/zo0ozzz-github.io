@@ -4,8 +4,9 @@ export default function InputText1({ data }) {
   const {
     value = "견본",
     onChange = () => {},
+    onKeyDown = () => {},
     id = "",
-    autoComplete = false,
+    autoComplete = "",
   } = data;
 
   return (
@@ -16,6 +17,7 @@ export default function InputText1({ data }) {
           type="text"
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           id={id}
           autoComplete={autoComplete}
         />

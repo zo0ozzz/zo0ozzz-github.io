@@ -2,7 +2,7 @@ import "./PostViewer.scss";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import URL from "../../URL";
+import { POST_API, POST_EDIT_PAGE } from "../../URL";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import Button1List from "../button1List/Button1List";
 
@@ -34,7 +34,7 @@ export default function PostViewer({ _id, setCategoryData }) {
 
   // handler function
   function handleClickEditPostButton() {
-    navigate(URL.edit(_id));
+    navigate(POST_EDIT_PAGE(_id));
   }
 
   async function handleClickDeletePostButton() {
@@ -45,7 +45,7 @@ export default function PostViewer({ _id, setCategoryData }) {
     }
 
     try {
-      const response = await api.delete("/post/" + _id);
+      const response = await api.delete(POST_API(_id));
       const status = response.status;
       const newCategoryData = response.data;
 
@@ -66,7 +66,7 @@ export default function PostViewer({ _id, setCategoryData }) {
   // useEffect function
   async function getPost() {
     try {
-      const response = await api.get("/post/" + _id);
+      const response = await api.get(POST_API(_id));
       const status = response.status;
       const post = response.data;
 

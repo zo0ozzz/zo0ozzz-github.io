@@ -1,7 +1,12 @@
 import "./Select1.scss";
 
 export default function Select1({ data }) {
-  const { value = [], onChange = () => {}, id = "", option = [] } = data;
+  const {
+    value = [],
+    onChange = () => {},
+    id = "",
+    option = [{ value: "", name: "견본", className_option: "" }],
+  } = data;
 
   const options = option.map(({ value, name }, index) => {
     return (

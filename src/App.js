@@ -1,7 +1,15 @@
 import "./App.scss";
 import { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
-import URL from "./URL";
+import {
+  HOME_PAGE,
+  CATEGORY_PAGE,
+  SEARCH_PAGE,
+  POST_VIEW_PAGE,
+  POST_EDIT_PAGE,
+  POST_CREATE_PAGE,
+  GOD_PAGE,
+} from "./URL";
 import Header from "./component/header/Header";
 import Footer from "./component/footer/Footer";
 import Home from "./pages/home/Home";
@@ -15,69 +23,42 @@ function App() {
     {
       value: "최신순",
       name: "최신순",
-      sortingFunc: sortingFunc1,
+      sortingFunc: (posts) => [...posts].sort((a, b) => b.number - a.number),
     },
     {
       value: "오래된 순",
       name: "오래된 순",
-      sortingFunc: sortingFunc2,
+      sortingFunc: (posts) => [...posts].sort((a, b) => a.number - b.number),
     },
   ];
+
   const [selectedSortingMedthod, setSelectedSortingMedthod] = useState(
     sortingMedthodData[0].value
   );
 
+  const allAndNoCategoryData = { all: "전체", no: "미분류" };
+
   const [categoryData, setCategoryData] = useState([
-    { name: "전체", postCount: "-" },
+    { name: allAndNoCategoryData.all, postCount: "-" },
     { name: "블로그", postCount: "-" },
     { name: "기타", postCount: "-" },
     { name: "뿅뿅뿅", postCount: "-" },
-    { name: "미분류", postCount: "-" },
+    { name: allAndNoCategoryData.no, postCount: "-" },
   ]);
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    categoryData[0].name
-  );
-
-  const [categories, setCategories] = useState([
-    "블로그",
-    "기타",
-    "뿅뿅뿅",
-    "미분류",
-  ]);
-
-  // const initialCategoriesObject = categories.reduce((acc, eachCategory) => {
-  //   acc[eachCategory] = "-";
-  //   return acc;
-  // }, {});
-
-  const [categoriesAndPostsCount, setCategoriesAndPostsCount] =
-    useState(categoryData);
-
-  function sortingFunc1(posts) {
-    const sortedPosts = [...posts].sort((a, b) => b.number - a.number);
-
-    return sortedPosts;
-  }
-
-  function sortingFunc2(posts) {
-    const sortedPosts = [...posts].sort((a, b) => a.number - b.number);
-
-    return sortedPosts;
-  }
   return (
     <>
       <div className="wrapper">
         <Header />
         <Routes>
           <Route
-            path="/"
+            path={HOME_PAGE}
             element={
               <>
                 <Home
-                  sortName={selectedSortingMedthod}
-                  setSortName={setSelectedSortingMedthod}
                   sortingMedthodData={sortingMedthodData}
+                  selectedSortingMedthod={selectedSortingMedthod}
+                  setSelectedSortingMedthod={setSelectedSortingMedthod}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
                 />
@@ -85,12 +66,12 @@ function App() {
             }
           />
           <Route
-            path={URL.category(":selectedCategory")}
+            path={CATEGORY_PAGE(":selectedCategory")}
             element={
               <>
                 <Category
-                  sortName={selectedSortingMedthod}
-                  setSortName={setSelectedSortingMedthod}
+                  selectedSortingMedthod={selectedSortingMedthod}
+                  setSelectedSortingMedthod={setSelectedSortingMedthod}
                   sortingMedthodData={sortingMedthodData}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
@@ -99,12 +80,12 @@ function App() {
             }
           />
           <Route
-            path={URL.search}
+            path={SEARCH_PAGE}
             element={
               <>
                 <Search
-                  sortName={selectedSortingMedthod}
-                  setSortName={setSelectedSortingMedthod}
+                  selectedSortingMedthod={selectedSortingMedthod}
+                  setSelectedSortingMedthod={setSelectedSortingMedthod}
                   sortingMedthodData={sortingMedthodData}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
@@ -113,11 +94,10 @@ function App() {
             }
           />
           <Route
-            path={URL.post(":_id")}
+            path={POST_VIEW_PAGE(":_id")}
             element={
               <>
                 <Post
-                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
                 />
@@ -125,35 +105,33 @@ function App() {
             }
           />
           <Route
-            path={URL.edit(":_id")}
+            path={POST_EDIT_PAGE(":_id")}
             element={
               <>
                 <Post
                   mode={"edit"}
-                  categories={categories}
-                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
+                  allAndNoCategoryData={allAndNoCategoryData}
                 />
               </>
             }
           />
           <Route
-            path={URL.create}
+            path={POST_CREATE_PAGE}
             element={
               <>
                 <Post
                   mode={"create"}
-                  categories={categories}
-                  setCategoriesAndPostsCount={setCategoriesAndPostsCount}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
+                  allAndNoCategoryData={allAndNoCategoryData}
                 />
               </>
             }
           />
           <Route
-            path={URL.god}
+            path={GOD_PAGE}
             element={
               <>
                 <God />

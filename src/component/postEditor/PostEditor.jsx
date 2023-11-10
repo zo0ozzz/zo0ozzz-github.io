@@ -5,17 +5,20 @@ import api from "../../lib/axios/axios.js";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import { Quill } from "react-quill";
 import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
+import Select1 from "../select1/Select1";
+import Label1 from "../label/Label1";
+import Button1 from "../button1/Button1";
+import InputText1 from "../inputText1/InputText1";
+import { POST_API } from "../../URL";
 
 export default function PostEditor({
   _id,
   mode,
-  categories,
-  setCategoriesAndPostsCount,
   categoryData,
   setCategoryData,
+  allAndNoCategoryData,
 }) {
   const [post, setPost] = useState({ title: "", category: "", content: "" });
-  const [categoryName, setCategoryName] = useState("");
   const editorRef = useRef(null);
   const navigate = useNavigate();
   const [imageResize, setImageResize] = useState({
@@ -26,25 +29,40 @@ export default function PostEditor({
     position: { top: 0 },
   });
 
-  const setPostTitle = useCallback(
-    (newPostTitle) =>
-      setPost((prevPost) => ({ ...prevPost, title: newPostTitle })),
-    []
-  );
+  function setPostTitle(newPostTitle) {
+    setPost((prevPost) => ({ ...prevPost, title: newPostTitle }));
+  }
 
-  const setPostCategory = useCallback((newPostCategory) =>
-    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }))
-  );
+  function setPostCategory(newPostCategory) {
+    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }));
+  }
 
-  const setPostContent = useCallback((newPostContent) =>
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }), [])
-  );
+  function setPostContent(newPostContent) {
+    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
+  }
+
+  // mount func
+  async function getPost() {
+    try {
+      const response = await api.get(POST_API(_id));
+      const status = response.status;
+      const post = response.data;
+
+      if (status === 200) {
+        setPost((prevPost) => ({ ...prevPost, ...post }));
+      } else {
+        console.log("get, /post:id 요청 실패", "status: ", status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleClickCompleteEditButton() {
     try {
       const editedPost = post;
 
-      const response = await api.patch("/post/" + _id, editedPost);
+      const response = await api.patch(POST_API(_id), editedPost);
       const status = response.status;
       const data = response.data;
 
@@ -63,7 +81,7 @@ export default function PostEditor({
     try {
       const newPost = post;
 
-      const response = await api.post("/post", newPost);
+      const response = await api.post(POST_API(""), newPost);
       const status = response.status;
       const data = response.data;
       const newPost_id = data._id;
@@ -96,31 +114,10 @@ export default function PostEditor({
     }
   }
 
-  const handleChangeCategoryName = (e) => {
-    const categoryName = e.target.value;
-    setCategoryName(categoryName);
-    setPostCategory(categoryName);
+  const handleChangeCategory = (e) => {
+    const newCategory = e.target.value;
+    setPostCategory(newCategory);
   };
-
-  // mount func
-  async function getPost() {
-    try {
-      const response = await api.get("/post/" + _id);
-      const status = response.status;
-      const post = response.data;
-
-      if (status === 200) {
-        setPostTitle(post.title);
-        setPostContent(post.content);
-        setPostCategory(post.category);
-        setCategoryName(post.category);
-      } else {
-        console.log("get, /post:id 요청 실패", "status: ", status);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   useEffect(() => {
     if (mode === "create") {
@@ -128,7 +125,7 @@ export default function PostEditor({
         ...prevPost,
         title: "",
         content: "",
-        category: "미분류",
+        category: allAndNoCategoryData.no,
       }));
 
       return;
@@ -171,51 +168,63 @@ export default function PostEditor({
     });
   }, []);
 
+  const completeEditButtonData = {
+    name: "수정 완료",
+    onClick: handleClickCompleteEditButton,
+    className: "completeEditButton",
+  };
+
+  const completeCreateButtonData = {
+    name: "등록",
+    onClick: handleClickCompleteCreateButton,
+    className: "completeCreateButton",
+  };
+
+  const categorySelectId = "categorySelect";
+  const categorySelectLabelData = {
+    name: "카테고리:",
+    htmlFor: categorySelectId,
+  };
+
+  const categorySelectOptionData = categoryData.reduce((acc, { name }) => {
+    if (name === allAndNoCategoryData.all) {
+      return acc;
+    } else {
+      acc.push({ value: name, name: name });
+
+      return acc;
+    }
+  }, []);
+
+  const categorySelectData = {
+    value: post.category,
+    onChange: handleChangeCategory,
+    id: categorySelectId,
+    option: categorySelectOptionData,
+  };
+
+  const postTitleInputData = {
+    value: post.title,
+    onChange: handleChangePostTitleInput,
+    onKeyDown: handleKeyDownPostTitleInput,
+  };
+
   return (
     <>
       <div className="postEditor">
         <div className="postEditor-bar">
           {mode === "edit" ? (
-            <button
-              className={"completeEditButton"}
-              onClick={handleClickCompleteEditButton}
-            >
-              수정 완료
-            </button>
+            <Button1 data={completeEditButtonData} />
           ) : mode === "create" ? (
-            <button
-              className={"completeCreateButton"}
-              onClick={handleClickCompleteCreateButton}
-            >
-              등록
-            </button>
+            <Button1 data={completeCreateButtonData} />
           ) : null}
         </div>
         <div className="postEditor-title">
-          <input
-            type="text"
-            value={post.title}
-            onChange={(e) => handleChangePostTitleInput(e)}
-            onKeyDown={(e) => handleKeyDownPostTitleInput(e)}
-          />
+          <InputText1 data={postTitleInputData} />
         </div>
         <div className="postEditor-categorySelector">
-          <label htmlFor="categorySelector">카테고리: </label>
-          <select
-            name=""
-            id="categorySelector"
-            value={categoryName}
-            onChange={handleChangeCategoryName}
-          >
-            <option selected="true" value="미분류"></option>
-            {categories.map((item, index) => {
-              return (
-                <option id={index} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
+          <Label1 data={categorySelectLabelData} />
+          <Select1 data={categorySelectData} />
         </div>
         <div className="content">
           <QuillEditor

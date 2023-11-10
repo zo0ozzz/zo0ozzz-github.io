@@ -4,9 +4,9 @@ import Label1 from "../label/Label1";
 import Select1 from "../select1/Select1";
 
 export default function SortingSelector({
-  sortName,
-  setSortName,
   sortingMedthodData,
+  selectedSortingMedthod,
+  setSelectedSortingMedthod,
 }) {
   const [selectValue, setSelectValue] = useState("");
   const selectId = "select";
@@ -22,14 +22,14 @@ export default function SortingSelector({
   };
 
   function handleChangeSelect(e) {
-    const sortName = e.target.value;
+    const sortingMedthod = e.target.value;
 
-    setSortName(sortName);
+    setSelectedSortingMedthod(sortingMedthod);
   }
 
   useEffect(() => {
-    setSelectValue(sortName);
-  }, [sortName]);
+    setSelectValue(selectedSortingMedthod);
+  }, [selectedSortingMedthod]);
 
   return (
     <span className="sortingSelector">

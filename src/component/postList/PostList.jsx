@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 
-export default function PostList({ sortName, sortingMedthodData }) {
+export default function PostList({
+  selectedSortingMedthod,
+  sortingMedthodData,
+}) {
   const { selectedCategory } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -90,7 +93,7 @@ export default function PostList({ sortName, sortingMedthodData }) {
 
   function getSortedPosts(posts) {
     const sortingFunc = sortingMedthodData.find(
-      (item) => item.value === sortName
+      (item) => item.value === selectedSortingMedthod
     ).sortingFunc;
 
     const sortedPosts = sortingFunc(posts);
@@ -121,7 +124,7 @@ export default function PostList({ sortName, sortingMedthodData }) {
   useEffect(() => {
     const sortedPosts = getSortedPosts(posts);
     setPosts(sortedPosts);
-  }, [sortName]);
+  }, [selectedSortingMedthod]);
 
   return (
     <>

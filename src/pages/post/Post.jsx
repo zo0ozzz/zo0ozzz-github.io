@@ -1,16 +1,13 @@
 import "./Post.scss";
-import { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import api from "../../lib/axios/axios.js";
-import PostViewer from "../../component/postViewer/PostViewer";
+import { useParams } from "react-router-dom";
 import PostEditor from "../../component/postEditor/PostEditor";
+import PostViewer from "../../component/postViewer/PostViewer";
 
 export default function Post({
   mode,
-  categories,
-  setCategoriesAndPostsCount,
   categoryData,
   setCategoryData,
+  allAndNoCategoryData,
 }) {
   const { _id } = useParams();
 
@@ -21,10 +18,9 @@ export default function Post({
           <PostEditor
             _id={_id}
             mode={mode}
-            categories={categories}
-            setCategoriesAndPostsCount={setCategoriesAndPostsCount}
             categoryData={categoryData}
             setCategoryData={setCategoryData}
+            allAndNoCategoryData={allAndNoCategoryData}
           />
         ) : (
           <PostViewer _id={_id} setCategoryData={setCategoryData} />

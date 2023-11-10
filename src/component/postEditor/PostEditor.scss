@@ -12,69 +12,80 @@
     display: flex;
     justify-content: center;
 
-    padding: 5px;
-
     border: 1px solid;
 
-    input {
+    padding: 5px;
+
+    .inputText1 {
       width: 100%;
 
-      font: inherit;
-      // form 관련된 요소는 폰트 상속이 안 된다고 한다!
-      font-weight: bold;
+      .inputText1-input {
+        width: 100%;
+
+        font-weight: bold;
+      }
     }
   }
 
   .postEditor-categorySelector {
-    text-align: right;
-
-    margin-top: 5px;
-  }
-
-  .ql-toolbar {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 
-    padding: 0;
-    border: 1px solid black;
-    margin: 0;
+    padding-right: 1px;
     margin-top: 5px;
 
-    .ql-formats {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      margin: 0;
-
-      * {
-        padding: 2px;
-        margin: 0;
-      }
+    .label1 {
+      margin-right: 5px;
     }
   }
 
-  .ql-container {
-    padding: 5px 10px;
-    border: 1px solid;
+  .content {
+    .ql-toolbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    .ql-editor {
-      .ql-syntax {
-        width: 90%;
+      padding: 0;
+      border: 1px solid black;
+      margin: 0;
+      margin-top: 5px;
 
-        margin: 0 auto;
+      .ql-formats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0;
 
-        span {
-          font: inherit;
+        * {
+          padding: 2px;
+          margin: 0;
         }
       }
+    }
 
-      img {
-        display: block;
-        margin: 0 auto;
+    .ql-container {
+      padding: 5px 10px;
+      border: 1px solid;
 
-        cursor: pointer;
+      .ql-editor {
+        .ql-syntax {
+          width: 90%;
+
+          margin: 0 auto;
+
+          span {
+            font: inherit;
+          }
+        }
+
+        img {
+          display: block;
+          margin: 0 auto;
+
+          cursor: pointer;
+        }
       }
     }
   }

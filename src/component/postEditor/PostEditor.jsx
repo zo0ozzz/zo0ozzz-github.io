@@ -2,21 +2,20 @@ import "./PostEditor.scss";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import QuillEditor from "../../lib/Quill/Quill.jsx";
+import { POST_API } from "../../URL";
 import { Quill } from "react-quill";
-import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 import Select1 from "../select1/Select1";
 import Label1 from "../label/Label1";
 import Button1 from "../button1/Button1";
 import InputText1 from "../inputText1/InputText1";
-import { POST_API } from "../../URL";
+import QuillEditor from "../../lib/Quill/Quill.jsx";
+import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 
 export default function PostEditor({
   _id,
   mode,
   categoryData,
   setCategoryData,
-  allAndNoCategoryData,
 }) {
   const [post, setPost] = useState({ title: "", category: "", content: "" });
   const editorRef = useRef(null);
@@ -29,19 +28,7 @@ export default function PostEditor({
     position: { top: 0 },
   });
 
-  function setPostTitle(newPostTitle) {
-    setPost((prevPost) => ({ ...prevPost, title: newPostTitle }));
-  }
-
-  function setPostCategory(newPostCategory) {
-    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }));
-  }
-
-  function setPostContent(newPostContent) {
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
-  }
-
-  // mount func
+  // mount function
   async function getPost() {
     try {
       const response = await api.get(POST_API(_id));
@@ -58,26 +45,40 @@ export default function PostEditor({
     }
   }
 
-  async function handleClickCompleteEditButton() {
+  // handler function
+  const handleClickCancleEditButton = () => navigate(-1);
+
+  const handleClickCompleteEditButton = async () => {
     try {
       const editedPost = post;
-
       const response = await api.patch(POST_API(_id), editedPost);
       const status = response.status;
       const data = response.data;
 
       if (status === 200) {
-        setCategoryData(data);
-        navigate("/posts/" + _id);
+        if (!data) {
+          navigate("/posts/" + _id);
+
+          return;
+        }
+
+        if (data) {
+          setCategoryData(data);
+          navigate("/posts/" + _id);
+
+          return;
+        }
       } else {
         console.log("status: ", status);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function handleClickCompleteCreateButton() {
+  const handleClickCancleCreateButton = () => navigate(-1);
+
+  const handleClickCompleteCreateButton = async () => {
     try {
       const newPost = post;
 
@@ -96,7 +97,7 @@ export default function PostEditor({
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   function handleChangePostTitleInput(e) {
     const newPostTitle = e.target.value;
@@ -119,13 +120,26 @@ export default function PostEditor({
     setPostCategory(newCategory);
   };
 
+  function setPostTitle(newPostTitle) {
+    setPost((prevPost) => ({ ...prevPost, title: newPostTitle }));
+  }
+
+  function setPostCategory(newPostCategory) {
+    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }));
+  }
+
+  function setPostContent(newPostContent) {
+    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
+  }
+
+  // useEffect
   useEffect(() => {
     if (mode === "create") {
       setPost((prevPost) => ({
         ...prevPost,
         title: "",
         content: "",
-        category: allAndNoCategoryData.no,
+        category: categoryData.find((item) => item.id === 1).name,
       }));
 
       return;
@@ -168,10 +182,17 @@ export default function PostEditor({
     });
   }, []);
 
+  // componentRenderingData
   const completeEditButtonData = {
     name: "수정 완료",
     onClick: handleClickCompleteEditButton,
     className: "completeEditButton",
+  };
+
+  const cancleEditButtonData = {
+    name: "취소",
+    onClick: handleClickCancleEditButton,
+    className: "cancleEditButton",
   };
 
   const completeCreateButtonData = {
@@ -180,17 +201,23 @@ export default function PostEditor({
     className: "completeCreateButton",
   };
 
+  const cancleCreateButtonData = {
+    name: "취소",
+    onClick: handleClickCancleCreateButton,
+    className: "cancleCreateButton",
+  };
+
   const categorySelectId = "categorySelect";
   const categorySelectLabelData = {
     name: "카테고리:",
     htmlFor: categorySelectId,
   };
 
-  const categorySelectOptionData = categoryData.reduce((acc, { name }) => {
-    if (name === allAndNoCategoryData.all) {
+  const categorySelectOptionData = categoryData.reduce((acc, { id, name }) => {
+    if (id === 0) {
       return acc;
     } else {
-      acc.push({ value: name, name: name });
+      acc.push({ id: id, value: name, name: name });
 
       return acc;
     }
@@ -199,7 +226,7 @@ export default function PostEditor({
   const categorySelectData = {
     value: post.category,
     onChange: handleChangeCategory,
-    id: categorySelectId,
+    elementId: categorySelectId,
     option: categorySelectOptionData,
   };
 
@@ -209,14 +236,27 @@ export default function PostEditor({
     onKeyDown: handleKeyDownPostTitleInput,
   };
 
+  const postEditorData = {
+    value: post.content,
+    onChange: setPostContent,
+    readOnly: false,
+  };
+
   return (
     <>
       <div className="postEditor">
         <div className="postEditor-bar">
           {mode === "edit" ? (
-            <Button1 data={completeEditButtonData} />
+            <>
+              <Button1 data={cancleEditButtonData} />
+              <Button1 data={completeEditButtonData} />
+            </>
           ) : mode === "create" ? (
-            <Button1 data={completeCreateButtonData} />
+            <>
+              <Button1 data={cancleCreateButtonData} />
+
+              <Button1 data={completeCreateButtonData} />
+            </>
           ) : null}
         </div>
         <div className="postEditor-title">
@@ -227,11 +267,7 @@ export default function PostEditor({
           <Select1 data={categorySelectData} />
         </div>
         <div className="content">
-          <QuillEditor
-            postContent={post.content}
-            setPostContent={setPostContent}
-            ref={editorRef}
-          />
+          <QuillEditor data={postEditorData} ref={editorRef} />
           {imageResize.isPrompt ? (
             <ImageResizePrompt
               editorRef={editorRef}

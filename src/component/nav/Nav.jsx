@@ -7,27 +7,12 @@ import LinkList from "../linkList/LinkList";
 export function Nav() {
   const navigate = useNavigate();
 
-  const buttonData = [
-    { name: "godMode", onClick: beGod },
-    { name: "-", onClick: deleteAllPosts },
-    { name: "+", onClick: goCreate },
-  ];
+  // handler function
+  const beGod = () => navigate("/god");
 
-  const linkData = [
-    { name: "nav1", URL: "#" },
-    { name: "nav2", URL: "#" },
-    { name: "nav3", URL: "#" },
-  ];
+  const goCreate = () => navigate("/create");
 
-  function beGod() {
-    navigate("/god");
-  }
-
-  function goCreate() {
-    navigate("/create");
-  }
-
-  async function deleteAllPosts() {
+  const deleteAllPosts = async () => {
     try {
       const answer = prompt("삭제할까요?");
 
@@ -44,7 +29,21 @@ export function Nav() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  // component rendering data
+  const buttonData = [
+    { name: "goTestPage", onClick: () => navigate("/test") },
+    { name: "godMode", onClick: beGod },
+    { name: "-", onClick: deleteAllPosts },
+    { name: "+", onClick: goCreate },
+  ];
+
+  const linkData = [
+    { name: "nav1", URL: "#" },
+    { name: "nav2", URL: "#" },
+    { name: "nav3", URL: "#" },
+  ];
 
   return (
     <>

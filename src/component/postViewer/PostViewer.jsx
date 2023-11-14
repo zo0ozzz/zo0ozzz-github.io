@@ -1,42 +1,17 @@
 import "./PostViewer.scss";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import { POST_API, POST_EDIT_PAGE } from "../../URL";
-import QuillEditor from "../../lib/Quill/Quill.jsx";
 import Button1List from "../button1List/Button1List";
+import QuillEditor from "../../lib/Quill/Quill.jsx";
 
 export default function PostViewer({ _id, setCategoryData }) {
   const navigate = useNavigate();
-
   const [post, setPost] = useState({ title: "", content: "" });
-  const barButtonListData = [
-    {
-      name: "수정",
-      onClick: handleClickEditPostButton,
-      className: "postViewer-editButton",
-    },
-    {
-      name: "삭제",
-      onClick: handleClickDeletePostButton,
-      className: "postViewer-deleteButton",
-    },
-  ];
   const viewerRef = useRef(null);
 
-  useEffect(() => {
-    getPost();
-  }, []);
-
-  function setPostContent(newPostContent) {
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
-  }
-
-  // handler function
-  function handleClickEditPostButton() {
-    navigate(POST_EDIT_PAGE(_id));
-  }
-
+  // mount function
   async function handleClickDeletePostButton() {
     const answer = prompt("게시물을 삭제하시겠습니까?");
 
@@ -63,7 +38,6 @@ export default function PostViewer({ _id, setCategoryData }) {
     }
   }
 
-  // useEffect function
   async function getPost() {
     try {
       const response = await api.get(POST_API(_id));
@@ -80,6 +54,39 @@ export default function PostViewer({ _id, setCategoryData }) {
     }
   }
 
+  // handler function
+  const setPostContent = (newPostContent) =>
+    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
+
+  function handleClickEditPostButton() {
+    navigate(POST_EDIT_PAGE(_id));
+  }
+
+  // useEffect
+  useEffect(() => {
+    getPost();
+  }, []);
+
+  // component rendering data
+  const barButtonListData = [
+    {
+      name: "수정",
+      onClick: handleClickEditPostButton,
+      className: "postViewer-editButton",
+    },
+    {
+      name: "삭제",
+      onClick: handleClickDeletePostButton,
+      className: "postViewer-deleteButton",
+    },
+  ];
+
+  const postViewerData = {
+    value: post.content,
+    onChange: setPostContent,
+    readOnly: true,
+  };
+
   return (
     <>
       <div className="postViewer">
@@ -90,12 +97,7 @@ export default function PostViewer({ _id, setCategoryData }) {
           <p className="postViewer-titleContent">{post.title}</p>
         </div>
         <div className="postViewer-category">분류: {post.category}</div>
-        <QuillEditor
-          postContent={post.content}
-          setPostContent={setPostContent}
-          isViewer={true}
-          ref={viewerRef}
-        />
+        <QuillEditor data={postViewerData} ref={viewerRef} />
       </div>
     </>
   );

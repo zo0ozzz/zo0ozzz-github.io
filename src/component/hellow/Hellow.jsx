@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./Hellow.scss";
 
 export default function Hellow() {
@@ -12,6 +13,10 @@ export default function Hellow() {
       </p>
     );
   });
+
+  useEffect(() => {
+    console.log("hellow");
+  }, []);
 
   return (
     <>

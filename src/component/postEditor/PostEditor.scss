@@ -6,6 +6,12 @@
 
     padding-right: 1px;
     margin: 5px 0;
+
+    .button1 {
+      & .button1-button {
+        margin-left: 5px;
+      }
+    }
   }
 
   .postEditor-title {

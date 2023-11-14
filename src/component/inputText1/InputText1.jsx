@@ -6,7 +6,7 @@ export default function InputText1({ data }) {
     onChange = () => {},
     onKeyDown = () => {},
     id = "",
-    autoComplete = "",
+    autoComplete = "off",
   } = data;
 
   return (

@@ -1,4 +1,5 @@
 import "./Home.scss";
+import { useMemo } from "react";
 import Hellow from "../../component/hellow/Hellow";
 import ToolBar from "../../component/toolBar/ToolBar";
 import CategoryBar from "../../component/categoryBar/CategoryBar";
@@ -11,9 +12,17 @@ export default function Home({
   categoryData,
   setCategoryData,
 }) {
+  const hellowComponent = useMemo(() => {
+    return (
+      <>
+        <Hellow />
+      </>
+    );
+  }, []);
   return (
     <>
-      <Hellow />
+      {hellowComponent}
+      {/* <Hellow /> */}
       <ToolBar
         sortingMedthodData={sortingMedthodData}
         selectedSortingMedthod={selectedSortingMedthod}

@@ -17,15 +17,19 @@ import Category from "./pages/category/Category";
 import Search from "./pages/search/Search";
 import Post from "./pages/post/Post";
 import God from "./pages/god/God";
+import Test from "./pages/test/Test";
 
 function App() {
+  const [blogName, setBlogName] = useState("");
   const sortingMedthodData = [
     {
+      id: 0,
       value: "최신순",
       name: "최신순",
       sortingFunc: (posts) => [...posts].sort((a, b) => b.number - a.number),
     },
     {
+      id: 1,
       value: "오래된 순",
       name: "오래된 순",
       sortingFunc: (posts) => [...posts].sort((a, b) => a.number - b.number),
@@ -36,20 +40,29 @@ function App() {
     sortingMedthodData[0].value
   );
 
-  const allAndNoCategoryData = { all: "전체", no: "미분류" };
+  // const allAndNoCategoryData = { all: "전체", no: "미분류" };
 
-  const [categoryData, setCategoryData] = useState([
-    { name: allAndNoCategoryData.all, postCount: "-" },
-    { name: "블로그", postCount: "-" },
-    { name: "기타", postCount: "-" },
-    { name: "뿅뿅뿅", postCount: "-" },
-    { name: allAndNoCategoryData.no, postCount: "-" },
-  ]);
+  // const [categoryData, setCategoryData] = useState([
+  //   { id: 0, name: "전체", postCount: "-" },
+  //   { id: 2, name: "블로그", postCount: "-" },
+  //   { id: 3, name: "기타", postCount: "-" },
+  //   { id: 4, name: "뿅뿅뿅", postCount: "-" },
+  //   { id: 1, name: "미분류", postCount: "-" },
+  // ]);
 
+  const [categoryData, setCategoryData] = useState([]);
+
+  // id 0: 모든 게시물(카테고리 상관없음)
+  // id 1: 카테고리가 지정되지 않는 게시물(미분류)
+  // - 이 두 필드의 id는 변경되면 안 됨. 추가적인 카테고리는 id 2부터 시작.
+
+  useEffect(() => {
+    // console.log("hellow");
+  }, []);
   return (
     <>
       <div className="wrapper">
-        <Header />
+        <Header blogName={blogName} setBlogName={setBlogName} />
         <Routes>
           <Route
             path={HOME_PAGE}
@@ -112,7 +125,6 @@ function App() {
                   mode={"edit"}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
-                  allAndNoCategoryData={allAndNoCategoryData}
                 />
               </>
             }
@@ -125,7 +137,6 @@ function App() {
                   mode={"create"}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
-                  allAndNoCategoryData={allAndNoCategoryData}
                 />
               </>
             }
@@ -134,7 +145,20 @@ function App() {
             path={GOD_PAGE}
             element={
               <>
-                <God />
+                <God
+                  blogName={blogName}
+                  setBlogName={setBlogName}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
+                />
+              </>
+            }
+          />
+          <Route
+            path={"/test"}
+            element={
+              <>
+                <Test />
               </>
             }
           />

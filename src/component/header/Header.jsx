@@ -1,9 +1,29 @@
 import "./Header.scss";
+import { useEffect } from "react";
+import api from "../../lib/axios/axios";
 import { Link } from "react-router-dom";
 import { Nav } from "../nav/Nav";
 
-export default function PageHeader() {
-  const blogNameData = { name: "zo0ozzz", URL: "/" };
+export default function PageHeader({ blogName, setBlogName }) {
+  const blogNameData = { name: blogName, URL: "/" };
+
+  const getBlogName = async () => {
+    const response = await api.get("/god/blogName");
+    const status = response.status;
+    const data = response.data;
+
+    const blogName = data.blogName;
+
+    if (status === 200) {
+      setBlogName(blogName);
+    } else {
+      console.log(status);
+    }
+  };
+
+  useEffect(() => {
+    getBlogName();
+  }, []);
 
   return (
     <>

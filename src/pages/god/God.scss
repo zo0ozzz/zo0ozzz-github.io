@@ -1,3 +1,48 @@
 .god {
-  margin-top: 5px;
+  .message {
+    font-weight: bold;
+
+    margin: 10px 0 10px 0;
+  }
+
+  .god-blogName {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .label1 {
+      margin-right: 5px;
+    }
+
+    .inputText1 {
+      margin-right: 5px;
+    }
+  }
+
+  .god-category {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin-top: 10px;
+
+    .god-category-categoryList {
+      display: flex;
+
+      .god-category-categoryList-item {
+        background-color: whitesmoke;
+
+        border: 1px solid;
+
+        padding: 3px;
+      }
+
+      & .god-category-categoryList-item {
+        margin-right: 5px;
+      }
+    }
+
+    .button1 {
+    }
+  }
 }

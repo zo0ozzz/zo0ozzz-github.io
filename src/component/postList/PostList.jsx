@@ -31,7 +31,7 @@ export default function PostList({
       <Link to={"/posts/" + post._id} className="link" key={index}>
         <section className="contentList">
           <h2 className="subject">{post.title}</h2>
-          <div className="number">no.{post.number}</div>
+          <div className="number">#{post.number}</div>
           <time className="date">{convertDate(post.createDate)}</time>
         </section>
       </Link>

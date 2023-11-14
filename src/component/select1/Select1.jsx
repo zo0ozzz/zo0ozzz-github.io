@@ -4,13 +4,14 @@ export default function Select1({ data }) {
   const {
     value = [],
     onChange = () => {},
-    id = "",
-    option = [{ value: "", name: "견본", className_option: "" }],
+
+    elementId = "",
+    option = [{ id: "", value: "", name: "견본", className_option: "" }],
   } = data;
 
-  const options = option.map(({ value, name }, index) => {
+  const options = option.map(({ value, name, id }, index) => {
     return (
-      <option value={value} key={index}>
+      <option value={value} key={id}>
         {name}
       </option>
     );
@@ -18,7 +19,7 @@ export default function Select1({ data }) {
 
   return (
     <span className="select1">
-      <select name="" id={id} value={value} onChange={onChange}>
+      <select name="" id={elementId} value={value} onChange={onChange}>
         {options}
       </select>
     </span>

@@ -17,6 +17,44 @@ export default function God({
   // 랜더링되는 블로그 이름은 확인 버튼을 누르기 전엔 변경되지 않게 하는 게 좋겠음.
   // 그러기 위해선 god 페이지의 blogName을 조정하는 textInput을
   // blogName과는 독립된 스테이트로 관리해줘야 함.
+  const [categoryData2, setCategoryData2] = useState([]);
+  // const [isSelected, setIsSelected] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  console.log("categoryData2: ", categoryData2);
+
+  // mount function
+  const getBlogName = async () => {
+    const response = await api.get("/god/blogName");
+    const status = response.status;
+    const data = response.data;
+
+    const blogName = data.blogName;
+
+    if (status === 200) {
+      setBlogNameTextInputValue(blogName);
+    } else {
+      console.log(status);
+    }
+  };
+
+  const getCategoryData = async () => {
+    try {
+      const response = await api.get("/god/categoryData");
+      const status = response.status;
+      const data = response.data;
+
+      if (status === 200) {
+        const categoryData = data.categoryData;
+
+        setCategoryData2(categoryData);
+      } else {
+        console.log(status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // handler function
   const handleChangeBlogName = (e) => {
@@ -47,16 +85,12 @@ export default function God({
 
   // useEffect
   useEffect(() => {
-    setBlogNameTextInputValue(blogName);
-  }, [blogName]);
+    getBlogName();
+  }, []);
 
-  //  useEffect(() => {
-  //    if (isSameArray(categoryData, prevCategoryData)) {
-  //      return;
-  //    }
-
-  //    updateCategoryData();
-  //  }, [categoryData]);
+  useEffect(() => {
+    getCategoryData();
+  }, []);
 
   const blogNameTextInputId = "blogNameTextInput";
 
@@ -81,14 +115,35 @@ export default function God({
     name: "카테고리 수정: ",
   };
 
+  const categoryCreateButtonData = {
+    name: "+",
+  };
+
+  const categoryUpButtonData = {
+    name: "up",
+  };
+
+  const categoryDownButtonData = {
+    name: "down",
+  };
+
   const categorySubmitButtonData = {
     name: "확인",
   };
 
-  const categoryList = categoryData.map(({ name, postCount }, index) => {
+  const categoryList = categoryData2.map(({ name, postCount }, index) => {
+    const isSelected = index === selectedIndex;
+
     return (
       <>
-        <span className="god-category-categoryList-item">{`${name}(${postCount})`}</span>
+        <span
+          className={`god-category-categoryList-item ${
+            isSelected ? "selected" : ""
+          }`}
+          onClick={() => {
+            setSelectedIndex(index);
+          }}
+        >{`${name}(${postCount})`}</span>
       </>
     );
   });
@@ -104,6 +159,11 @@ export default function God({
         </div>
         <div className="god-category">
           <Label1 data={categoryLabelData} />
+          <div className="god-categorySettingButtons">
+            <Button1 data={categoryCreateButtonData} />
+            <Button1 data={categoryUpButtonData} />
+            <Button1 data={categoryDownButtonData} />
+          </div>
           <div className="god-category-categoryList">{categoryList}</div>
           <Button1 data={categorySubmitButtonData} />
         </div>

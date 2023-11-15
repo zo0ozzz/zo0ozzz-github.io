@@ -12,6 +12,8 @@ export default function ({ categoryData, setCategoryData }) {
       ? categoryData[0].name
       : decodeURIComponent(currentPath.replace("/categories/", ""));
 
+  console.log("categoryData: ", categoryData);
+
   // const [prevCategoryData, setPrevCategoryData] = useState({});
 
   // async function updateCategoryData() {

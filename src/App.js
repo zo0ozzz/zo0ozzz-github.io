@@ -43,14 +43,14 @@ function App() {
   // const allAndNoCategoryData = { all: "전체", no: "미분류" };
 
   // const [categoryData, setCategoryData] = useState([
-  //   { id: 0, name: "전체", postCount: "-" },
-  //   { id: 2, name: "블로그", postCount: "-" },
-  //   { id: 3, name: "기타", postCount: "-" },
-  //   { id: 4, name: "뿅뿅뿅", postCount: "-" },
-  //   { id: 1, name: "미분류", postCount: "-" },
+  //   { id: 0, order: 0, name: "전체", postCount: "-" },
+  //   { id: 2, order: 1, name: "블로그", postCount: "-" },
+  //   { id: 3, order: 2, name: "기타", postCount: "-" },
+  //   { id: 4, order: 3, name: "뿅뿅뿅", postCount: "-" },
+  //   { id: 1, order: 4, name: "미분류", postCount: "-" },
   // ]);
 
-  const [categoryData, setCategoryData] = useState([]);
+  const [categoryData, setCategoryData] = useState([{}]);
 
   // id 0: 모든 게시물(카테고리 상관없음)
   // id 1: 카테고리가 지정되지 않는 게시물(미분류)

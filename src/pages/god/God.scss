@@ -26,15 +26,33 @@
 
     margin-top: 10px;
 
-    .god-category-categoryList {
+    .god-categorySettingButtons {
       display: flex;
+      gap: 3px;
+    }
+
+    .god-category-categoryList {
+      width: 200px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
 
       .god-category-categoryList-item {
-        background-color: whitesmoke;
+        // background-color: whitesmoke;
 
         border: 1px solid;
 
         padding: 3px;
+      }
+
+      .selected {
+        background-color: whitesmoke;
+
+        font-weight: bold;
+        text-decoration: underline;
+
+        border: 2px solid;
       }
 
       & .god-category-categoryList-item {

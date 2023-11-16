@@ -20,6 +20,8 @@
   }
 
   .god-category {
+    width: 300px;
+
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -32,7 +34,7 @@
     }
 
     .god-category-categoryList {
-      width: 200px;
+      width: 300px;
 
       display: flex;
       flex-direction: column;
@@ -60,7 +62,17 @@
       }
     }
 
-    .button1 {
+    .god-category-namingNewCategory {
+      display: flex;
+      gap: 3px;
+
+      .inputText1 {
+        flex-grow: 1;
+
+        .inputText1-input {
+          width: 100%;
+        }
+      }
     }
   }
 }

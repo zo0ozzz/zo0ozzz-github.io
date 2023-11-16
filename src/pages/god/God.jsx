@@ -22,6 +22,10 @@ export default function God({
   console.log(godCategoryData);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
   console.log(selectedCategoryIndex);
+  const [isStepForNamingNewCategory, setIsStepForNamingNewCategory] =
+    useState(false);
+  const [newCategoryTextInputValue, setNewCategoryTextInputValue] =
+    useState("");
 
   // mount function
   const getBlogName = async () => {
@@ -138,22 +142,23 @@ export default function God({
   };
 
   const handleClickCreateNewCategoryButton = () => {
-    const newCategoryName = prompt("추가할 카테고리명을 입력해주세요.");
+    // const newCategoryName = godCategoryData
+    // const newGodCategoryData = [...godCategoryData].push({isRepresentative: false, name: '새로운 카테고리'})
+    // const newCategoryName = prompt("추가할 카테고리명을 입력해주세요.");
+    // if (newCategoryName !== null && newCategoryName !== "") {
+    //   const newGodCategoryData = [...godCategoryData];
+    //   newGodCategoryData.push({
+    //     isRepresentative: false,
+    //     name: newCategoryName,
+    //     postCount: 0,
+    //   });
+    //   setGodCategoryData(newGodCategoryData);
+    //   return;
+    // } else {
+    //   alert("카테고리 이름을 입력해주세요.");
+    // }
 
-    if (newCategoryName !== null && newCategoryName !== "") {
-      const newGodCategoryData = [...godCategoryData];
-      newGodCategoryData.push({
-        isRepresentative: false,
-        name: newCategoryName,
-        postCount: 0,
-      });
-
-      setGodCategoryData(newGodCategoryData);
-
-      return;
-    } else {
-      alert("카테고리 이름을 입력해주세요.");
-    }
+    setIsStepForNamingNewCategory((prev) => !prev);
   };
 
   const handleClickDeleteSelectedCategoryButton = () => {
@@ -195,6 +200,12 @@ export default function God({
     });
 
     setGodCategoryData((prev) => newGodCategoryData);
+  };
+
+  const handleChangeNewCategoryTextInput = (e) => {
+    const value = e.target.value;
+
+    setNewCategoryTextInputValue(value);
   };
 
   // useEffect
@@ -300,6 +311,68 @@ export default function God({
     name: "확인",
   };
 
+  const newCategoryTextInputData = {
+    value: newCategoryTextInputValue,
+    onChange: handleChangeNewCategoryTextInput,
+    // placehorder: "",
+  };
+
+  const completeCreatingNewCategoryButtonData = {
+    name: "확인",
+    onClick: () => {
+      const checkDuplicateCategoryName = () => {
+        const result = godCategoryData.findIndex(
+          ({ name }) => name === newCategoryTextInputValue
+        );
+
+        if (result !== -1) {
+          return true;
+        }
+
+        if (result === -1) {
+          return false;
+        }
+      };
+
+      if (
+        newCategoryTextInputValue !== "" &&
+        checkDuplicateCategoryName() === false
+      ) {
+        const newGodCategoryData = [...godCategoryData];
+        newGodCategoryData.push({
+          name: newCategoryTextInputValue,
+          postCount: 0,
+          id: Date.now(),
+        });
+
+        setGodCategoryData((prev) => newGodCategoryData);
+        setIsStepForNamingNewCategory((prev) => false);
+        setNewCategoryTextInputValue((prev) => "");
+
+        return;
+      }
+
+      if (newCategoryTextInputValue === "") {
+        alert("아차차~ 카테고리 이름을 안 지었네~~~");
+
+        return;
+      }
+
+      if (checkDuplicateCategoryName() === true) {
+        alert("똑같은 이름이 이미 있잖아~~~");
+
+        return;
+      }
+    },
+  };
+
+  const cancelCreatingNewCategoryButtonData = {
+    name: "취소",
+    onClick: () => {
+      setIsStepForNamingNewCategory((prev) => false);
+    },
+  };
+
   const categoryList = godCategoryData.map(
     ({ id, name, postCount, isRepresentative = false }, index) => {
       const isSelected = index === selectedCategoryIndex;
@@ -354,7 +427,17 @@ export default function God({
             <Button1 data={deleteSelectedCategoryButtonData} />
             <Button1 data={setSelectedCategoryAsRepresentativeButtonData} />
           </div>
-          <div className="god-category-categoryList">{categoryList}</div>
+          <div className="god-category-categoryList">
+            {categoryList}
+            {isStepForNamingNewCategory ? (
+              <div className="god-category-namingNewCategory">
+                <InputText1 data={newCategoryTextInputData} />
+                <Button1 data={completeCreatingNewCategoryButtonData} />
+                <Button1 data={cancelCreatingNewCategoryButtonData} />
+              </div>
+            ) : null}
+            {<span>중복된 이름입니다.</span>}
+          </div>
           <Button1 data={categorySubmitButtonData} />
         </div>
       </div>

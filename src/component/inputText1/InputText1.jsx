@@ -7,6 +7,7 @@ export default function InputText1({ data }) {
     onKeyDown = () => {},
     id = "",
     autoComplete = "off",
+    placehorder = "",
   } = data;
 
   return (
@@ -20,6 +21,7 @@ export default function InputText1({ data }) {
           onKeyDown={onKeyDown}
           id={id}
           autoComplete={autoComplete}
+          placeholder={placehorder}
         />
       </span>
     </>

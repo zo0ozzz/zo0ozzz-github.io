@@ -1,0 +1,59 @@
+.categoryEditor {
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  margin-top: 10px;
+
+  &__title {
+  }
+
+  &__settingButtons {
+    .settingButtons {
+      display: flex;
+      gap: 3px;
+    }
+  }
+
+  &__categoryList {
+    .categoryList {
+      width: 300px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+
+      &__item {
+        border: 1px solid;
+
+        padding: 3px;
+
+        &--selected {
+          background-color: whitesmoke;
+
+          font-weight: bold;
+          text-decoration: underline;
+
+          border: 2px solid;
+        }
+      }
+    }
+  }
+
+  &__newCategoryCreator {
+    .newCategoryCreator {
+      display: flex;
+      gap: 3px;
+
+      .inputText1 {
+        flex-grow: 1;
+
+        .inputText1-input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

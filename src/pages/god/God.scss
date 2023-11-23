@@ -19,58 +19,6 @@
     }
   }
 
-  .categoryEditor {
-    width: 300px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    margin-top: 10px;
-
-    .categoryEditor__settingButtons {
-      display: flex;
-      gap: 3px;
-    }
-
-    .categoryEditor__categoryList {
-      width: 300px;
-
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-
-      .categoryEditor__categoryList--item {
-        border: 1px solid;
-
-        padding: 3px;
-      }
-
-      & .god-category-categoryList--item {
-        margin-right: 5px;
-      }
-
-      .categoryEditor__categoryList--selectedItem {
-        background-color: whitesmoke;
-
-        font-weight: bold;
-        text-decoration: underline;
-
-        border: 2px solid;
-      }
-
-      .categoryEditor__categoryList--newItem {
-        display: flex;
-        gap: 3px;
-
-        .inputText1 {
-          flex-grow: 1;
-
-          .inputText1-input {
-            width: 100%;
-          }
-        }
-      }
-    }
+  .god__categoryEditor {
   }
 }

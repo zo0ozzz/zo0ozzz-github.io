@@ -274,32 +274,38 @@ export default function CategoryEditor({ setCategoryData }) {
   const moveUpSelectedCategoryButtonData = {
     name: "up",
     onClick: handleClickMoveUpSelectedCategoryButton,
+    className: "settingButtons__button",
   };
 
   const moveDownSelectedCategoryButtonData = {
     name: "down",
     onClick: handleClickMoveDownSelectedCategoryButton,
+    className: "settingButtons__button",
   };
 
   const createNewCategoryButtonData = {
     name: "+",
     onClick: handleClickCreateNewCategoryButton,
     disabled: isDisabled.createNewCategoryButton,
+    className: "settingButtons__button",
   };
 
   const deleteSelectedCategoryButtonData = {
     name: "-",
     onClick: handleClickDeleteSelectedCategoryButton,
+    className: "settingButtons__button",
   };
 
   const setSelectedCategoryAsRepresentativeButtonData = {
     name: "대표로 설정",
     onClick: handleClickSelectedCategoryAsRepresentativeButton,
+    className: "settingButtons__button",
   };
 
   const categorySubmitButtonData = {
     name: "확인",
     onClick: handleClickCategorySubmitButton,
+    className: "settingButtons__button",
   };
 
   const newCategoryTextInputData = {
@@ -355,26 +361,23 @@ export default function CategoryEditor({ setCategoryData }) {
     ({ id, name, postCount, isRepresentative = false }, index) => {
       const isSelected = index === selectedCategoryIndex;
       const isEditing = index === selectedCategoryIndex && editMode;
-      console.log("isEditing: ", isEditing);
 
       if (isRepresentative === true) {
         return (
           <>
             {isEditing ? (
-              <>
-                <div style={{ display: "flex", gap: "3px" }}>
-                  <InputText1 data={editingSelectedCategoryNameTextInputData} />
-                  <Button1
-                    data={compeleteEditingSelectedCategoryNameButtonData}
-                  />
-                  <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
-                </div>
-              </>
+              <div style={{ display: "flex", gap: "3px" }}>
+                <InputText1 data={editingSelectedCategoryNameTextInputData} />
+                <Button1
+                  data={compeleteEditingSelectedCategoryNameButtonData}
+                />
+                <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
+              </div>
             ) : (
               <span
                 key={index}
-                className={`categoryEditor__categoryList--item ${
-                  isSelected ? "categoryEditor__categoryList--selectedItem" : ""
+                className={`categoryList__item ${
+                  isSelected ? "categoryList__item--selected" : ""
                 }`}
                 onClick={() => {
                   setSelectedCategoryIndex(index);
@@ -385,23 +388,20 @@ export default function CategoryEditor({ setCategoryData }) {
           </>
         );
       }
+
       return (
         <>
           {isEditing ? (
-            <>
-              <div style={{ display: "flex", gap: "3px" }}>
-                <InputText1 data={editingSelectedCategoryNameTextInputData} />
-                <Button1
-                  data={compeleteEditingSelectedCategoryNameButtonData}
-                />
-                <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
-              </div>
-            </>
+            <div style={{ display: "flex", gap: "3px" }}>
+              <InputText1 data={editingSelectedCategoryNameTextInputData} />
+              <Button1 data={compeleteEditingSelectedCategoryNameButtonData} />
+              <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
+            </div>
           ) : (
             <span
               key={index}
-              className={`categoryEditor__categoryList--item ${
-                isSelected ? "categoryEditor__categoryList--selectedItem" : ""
+              className={`categoryList__item ${
+                isSelected ? "categoryList__item--selected" : ""
               }`}
               onClick={() => {
                 setSelectedCategoryIndex(index);
@@ -414,25 +414,28 @@ export default function CategoryEditor({ setCategoryData }) {
     }
   );
 
-  // https://nykim.work/15
-
   return (
     <>
-      {" "}
       <div className="categoryEditor">
-        <Label1 data={categoryLabelData} />
+        <div className="categoryEditor__title">
+          <Label1 data={categoryLabelData} />
+        </div>
         <div className="categoryEditor__settingButtons">
-          <Button1 data={moveUpSelectedCategoryButtonData} />
-          <Button1 data={moveDownSelectedCategoryButtonData} />
-          <Button1 data={createNewCategoryButtonData} />
-          <Button1 data={deleteSelectedCategoryButtonData} />
-          <Button1 data={setSelectedCategoryAsRepresentativeButtonData} />
-          <Button1 data={changeSelectedCategoryNameButtonData} />
+          <div className="settingButtons">
+            <Button1 data={moveUpSelectedCategoryButtonData} />
+            <Button1 data={moveDownSelectedCategoryButtonData} />
+            <Button1 data={createNewCategoryButtonData} />
+            <Button1 data={deleteSelectedCategoryButtonData} />
+            <Button1 data={setSelectedCategoryAsRepresentativeButtonData} />
+            <Button1 data={changeSelectedCategoryNameButtonData} />
+          </div>
         </div>
         <div className="categoryEditor__categoryList">
-          {categoryList}
-          {isStepForNamingNewCategory ? (
-            <div className="categoryEditor__categoryList--newItem">
+          <div className="categoryList">{categoryList}</div>
+        </div>
+        {isStepForNamingNewCategory ? (
+          <div className="categoryEditor__newCategoryCreator">
+            <div className="newCategoryCreator">
               <InputText1
                 data={newCategoryTextInputData}
                 ref={newCategoryTextInputRef}
@@ -440,10 +443,13 @@ export default function CategoryEditor({ setCategoryData }) {
               <Button1 data={completeCreatingNewCategoryButtonData} />
               <Button1 data={cancelCreatingNewCategoryButtonData} />
             </div>
-          ) : null}
+          </div>
+        ) : null}
+
+        <div className="categoryEditor__submitButton">
+          <Button1 data={categorySubmitButtonData} />
         </div>
       </div>
-      <Button1 data={categorySubmitButtonData} />
     </>
   );
 }

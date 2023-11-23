@@ -3,40 +3,103 @@ import { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Test() {
-  const [testArray, setTestArray] = useState([
-    { name: "바보" },
-    { name: "멍청이" },
-    { name: "해삼" },
-    { name: "멍게" },
-    { name: "말미잘" },
-  ]);
-  console.log([...testArray]);
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  const [selectedItem, setSelectedItem] = useState({});
+  const prevCategoryData = [
+    {
+      isAllCategory: true,
+      isRepresentative: true,
+      id: 0,
+      name: "전체",
+      postCount: 2,
+    },
+    {
+      isRepresentative: false,
+      id: 1,
+      name: "블로그",
+      postCount: 0,
+    },
+    {
+      isRepresentative: false,
+      id: 2,
+      name: "기타",
+      postCount: 0,
+    },
+    {
+      isRepresentative: false,
+      id: 3,
+      name: "뿅뿅뿅",
+      postCount: 1,
+    },
+    {
+      isRepresentative: false,
+      isNoCategory: true,
+      id: 4,
+      name: "미분류",
+      postCount: 1,
+    },
+  ];
 
-  const handleTestArr = (array) => {
-    const newArray = [...array];
-    newArray[selectedIndex - 1] = selectedItem;
-    newArray[selectedIndex] = array[selectedIndex - 1];
+  const newCategoryData = [
+    {
+      isAllCategory: true,
+      isRepresentative: true,
+      id: 0,
+      name: "전체",
+      postCount: 2,
+    },
+    {
+      isRepresentative: false,
+      id: 1,
+      name: "블로고",
+      postCount: 0,
+    },
+    {
+      isRepresentative: false,
+      id: 2,
+      name: "드럼",
+      postCount: 0,
+    },
+    {
+      isRepresentative: false,
+      isNoCategory: true,
+      id: 4,
+      name: "미분류",
+      postCount: 1,
+    },
+  ];
 
-    setTestArray(newArray);
-    setSelectedIndex((prev) => prev - 1);
-  };
+  const prevIds = prevCategoryData.map((item) => item.id);
+  console.log("prevIds: ", prevIds);
 
-  const testList = testArray.map((item, index) => {
-    const isSelected = index === selectedIndex;
-
-    return (
-      <span
-        key={index}
-        className={`item ${isSelected ? "selected" : ""}`}
-        onClick={() => {
-          setSelectedIndex(index);
-          setSelectedItem((prev) => ({ ...prev, ...item }));
-        }}
-      >{`${item.name}(0)`}</span>
+  let arr = [];
+  for (const prevItem of prevCategoryData) {
+    const result = newCategoryData.filter(
+      (newItem) => newItem.id === prevItem.id && newItem.name !== prevItem.name
     );
+
+    console.log("ddd", result);
+  }
+  // 이런 식으로 카테고리 이름이 바뀐 경우를 찾아낼 수 있음.
+  // 여기서는 새로운 데이터 중 변경된 데이터의 id와 기존 이름, 새로운 이름을 얻으면 됨.
+
+  let arr2 = [];
+  prevIds.forEach((id, index) => {
+    const result = newCategoryData.find((newItem) => newItem.id === id);
+
+    if (result === undefined && prevCategoryData[index].postCount > 0) {
+      arr2.push(index);
+    }
   });
+  // 여기서는 기존 데이터 중 포스트가 들어 있는 채 삭제된 카테고리의 이름을 얻으면 됨.
+
+  console.log("삭제된 카테고리의 인덱스", arr2);
+
+  // for(const id of prevIds) {
+  //   const result = newCategoryData.find((newItem) => newItem.id === id  );
+
+  //   if(result === undefined) {
+  //     arr2.push(newCategoryData[index])
+  //   }
+  // }
 
   return (
     <>
@@ -46,10 +109,6 @@ export default function Test() {
             {`<테스트 페이지>`}
           </p>
         </div>
-        <div className="buttons">
-          <button onClick={() => handleTestArr(testArray)}>up</button>
-        </div>
-        <div className="list">{testList}</div>
       </div>
     </>
   );

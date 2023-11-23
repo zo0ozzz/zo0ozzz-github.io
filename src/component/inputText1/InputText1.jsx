@@ -1,8 +1,10 @@
 import "./InputText1.scss";
+import { forwardRef } from "react";
 
-export default function InputText1({ data }) {
+const InputText1 = forwardRef(({ data }, ref = null) => {
   const {
-    value = "견본",
+    value = "",
+    defaultValue = "",
     onChange = () => {},
     onKeyDown = () => {},
     id = "",
@@ -17,13 +19,17 @@ export default function InputText1({ data }) {
           className="inputText1-input"
           type="text"
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           onKeyDown={onKeyDown}
           id={id}
           autoComplete={autoComplete}
           placeholder={placehorder}
+          ref={ref}
         />
       </span>
     </>
   );
-}
+});
+
+export default InputText1;

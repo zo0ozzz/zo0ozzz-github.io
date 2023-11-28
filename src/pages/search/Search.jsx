@@ -27,6 +27,7 @@ export default function Search({
         sortingMedthodData={sortingMedthodData}
         selectedSortingMedthod={selectedSortingMedthod}
         setSelectedSortingMedthod={setSelectedSortingMedthod}
+        categoryData={categoryData}
       />
     </>
   );

@@ -20,26 +20,6 @@ export default function ({
   //   currentPath.replace("/categories/", "")
   // );
 
-  const getCategoryData = async () => {
-    try {
-      const response = await api.get("/god/categoryData");
-      const status = response.status;
-      const data = response.data;
-
-      if (status === 200) {
-        const categoryData = data.categoryData;
-
-        setCategoryData(categoryData);
-      } else {
-        console.log(status);
-      }
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    getCategoryData();
-  }, []);
-
   // useEffect(() => {
   //   if (categoryData.length === 1) {
   //     return;

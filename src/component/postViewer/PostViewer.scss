@@ -5,23 +5,12 @@
 
   margin-top: 5px;
 
-  &__toolbar {
+  &__postToolbar {
     display: flex;
     justify-content: end;
     align-items: center;
 
     padding-right: 1px;
-  }
-
-  .toolbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &__buttonsWrapper {
-      display: flex;
-      gap: 5px;
-    }
   }
 
   &__postTitle {

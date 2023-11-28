@@ -11,7 +11,6 @@ import InputText1 from "../inputText1/InputText1";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
-import InputText2 from "../inputText2/InputText2.jsx";
 
 export default function PostEditor({
   _id,
@@ -270,13 +269,7 @@ export default function PostEditor({
           />
         </div>
         <div className="postEditor-title">
-          {/* <InputText1 data={postTitleInputData} /> */}
-          <InputText2
-            value={post.title}
-            onChange={handleChangePostTitleInput}
-            onKeyDown={handleKeyDownPostTitleInput}
-            editorRef={editorRef}
-          />
+          <InputText1 data={postTitleInputData} />
         </div>
         <div className="postEditor-categorySelector">
           <Label1 data={categorySelectLabelData} />

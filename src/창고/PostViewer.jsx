@@ -7,7 +7,6 @@ import Button1List from "../button1List/Button1List";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
 import Button2 from "../button2/Button2.jsx";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
-import PostTitle from "../postTitle/PostTitle.jsx";
 
 export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
   const navigate = useNavigate();
@@ -70,6 +69,20 @@ export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
     getPost();
   }, []);
 
+  // component rendering data
+  // const barButtonListData = [
+  //   {
+  //     name: "수정",
+  //     onClick: handleClickEditPostButton,
+  //     className: "postViewer-editButton",
+  //   },
+  //   {
+  //     name: "삭제",
+  //     onClick: handleClickDeletePostButton,
+  //     className: "postViewer-deleteButton",
+  //   },
+  // ];
+
   const postViewerData = {
     value: post.content,
     onChange: setPostContent,
@@ -79,16 +92,31 @@ export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
   return (
     <>
       <div className="postViewer">
-        <div className="postViewer__postToolbar">
+        <div className="postViewer__toolbar">
           <PostToolBar
             mode={mode}
             _id={_id}
             setCategoryData={setCategoryData}
             isGod={isGod}
           />
+          {/* <div className="toolbar">
+            {true ? (
+              <div className="toolbar__buttonsWrapper">
+                <Button2
+                  name="수정"
+                  className="toolbar__editPostButton"
+                  onClick={handleClickEditPostButton}
+                />
+                <Button2
+                  name="삭제"
+                  className="toolbar__deletePostButton"
+                  onClick={handleClickDeletePostButton}
+                />
+              </div>
+            ) : null}
+          </div> */}
         </div>
         <div className="postViewer__postTitle">
-          <PostTitle mode={mode} title={post.title} />
           <div className="postTitle">
             <p className="postTitle__title">{post.title}</p>
           </div>

@@ -9,7 +9,7 @@ export default function Post({ mode, categoryData, setCategoryData, isGod }) {
   return (
     <>
       <div className="post">
-        {mode ? (
+        {mode === "edit" || mode === "create" ? (
           <PostEditor
             _id={_id}
             mode={mode}
@@ -17,13 +17,14 @@ export default function Post({ mode, categoryData, setCategoryData, isGod }) {
             setCategoryData={setCategoryData}
             isGod={isGod}
           />
-        ) : (
+        ) : mode === "view" ? (
           <PostViewer
             _id={_id}
+            mode={mode}
             setCategoryData={setCategoryData}
             isGod={isGod}
           />
-        )}
+        ) : null}
       </div>
     </>
   );

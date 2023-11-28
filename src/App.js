@@ -47,6 +47,7 @@ function App() {
     useState("");
   const [isGod, setIsGod] = useState(true);
   console.log(isGod);
+  console.log(categoryData);
 
   const getCategoryData = async () => {
     try {

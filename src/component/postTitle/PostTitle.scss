@@ -1,2 +1,19 @@
 .postTitle {
+  width: 100%;
+
+  border: 1px solid;
+
+  padding: 5px;
+
+  &__title {
+    text-align: center;
+
+    font-weight: bold;
+  }
+
+  &__titleInput {
+    width: 100%;
+
+    font-weight: bold;
+  }
 }

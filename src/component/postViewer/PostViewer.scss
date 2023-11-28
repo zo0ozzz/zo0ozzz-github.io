@@ -17,19 +17,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    border: 1px solid;
-
-    padding: 5px 15px;
   }
 
-  .postTitle {
-    &__title {
-      font-weight: bold;
-    }
-  }
-
-  &__categoryInfo {
+  &__postCategoryBar {
     display: flex;
     justify-content: end;
     align-items: center;
@@ -37,7 +27,7 @@
     padding-right: 1px;
   }
 
-  .categoryInfo {
+  .postCategoryBar {
     &__labelAndCategoryNameWrapper {
       display: flex;
       gap: 5px;

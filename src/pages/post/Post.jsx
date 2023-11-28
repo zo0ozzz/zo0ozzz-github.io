@@ -21,6 +21,7 @@ export default function Post({ mode, categoryData, setCategoryData, isGod }) {
           <PostViewer
             _id={_id}
             mode={mode}
+            categoryData={categoryData}
             setCategoryData={setCategoryData}
             isGod={isGod}
           />

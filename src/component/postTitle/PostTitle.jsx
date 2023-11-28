@@ -1,7 +1,8 @@
 import "./PostTitle.scss";
 import InputText2 from "../inputText2/InputText2";
 
-const PostTitle = ({ mode, title, setPostTitle, editorRef }) => {
+const PostTitle = ({ mode, postTitle, setPostTitle, editorRef }) => {
+  // handler function
   function handleChangePostTitleInput(e) {
     const newPostTitle = e.target.value;
 
@@ -21,12 +22,13 @@ const PostTitle = ({ mode, title, setPostTitle, editorRef }) => {
   return (
     <div className="postTitle">
       {mode === "view" ? (
-        <p className="postTitle__title">{title}</p>
+        <p className="postTitle__title">{postTitle}</p>
       ) : (
         <InputText2
-          value={title}
+          value={postTitle}
           onChange={handleChangePostTitleInput}
           onKeyDown={handleKeyDownPostTitleInput}
+          className="postTitle__titleInput"
         />
       )}
     </div>

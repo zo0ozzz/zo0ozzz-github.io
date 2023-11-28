@@ -14,26 +14,17 @@
     }
   }
 
-  .postEditor-title {
+  .postEditor__title {
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    border: 1px solid;
+    // border: 1px solid;
 
-    padding: 5px;
-
-    .inputText1 {
-      width: 100%;
-
-      .inputText1-input {
-        width: 100%;
-
-        font-weight: bold;
-      }
-    }
+    // padding: 5px;
   }
 
-  .postEditor-categorySelector {
+  .postEditor__postCategoryBar {
     display: flex;
     justify-content: end;
     align-items: center;

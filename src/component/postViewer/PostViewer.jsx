@@ -2,16 +2,15 @@ import "./PostViewer.scss";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import { POST_API, POST_EDIT_PAGE } from "../../URL";
-import Button1List from "../button1List/Button1List";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
-import Button2 from "../button2/Button2.jsx";
+import { POST_API, POST_EDIT_PAGE } from "../../URL";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
 import PostTitle from "../postTitle/PostTitle.jsx";
+import PostCategoryBar from "../postCategoryBar/PostCategoryBar.jsx";
 
-export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
+export default function PostViewer({ _id, setCategoryData, mode, isGod }) {
   const navigate = useNavigate();
-  const [post, setPost] = useState({ title: "", content: "" });
+  const [post, setPost] = useState({ title: "", content: "", category: "" });
   const viewerRef = useRef(null);
 
   // mount function
@@ -25,14 +24,16 @@ export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
     try {
       const response = await api.delete(POST_API(_id));
       const status = response.status;
-      const newCategoryData = response.data;
 
       if (status === 200) {
         alert("삭제 완료");
-        setCategoryData(newCategoryData);
         navigate("/");
+
+        return;
       } else {
         console.log(status);
+
+        return;
       }
     } catch (error) {
       alert("삭제 실패(통신 오류)");
@@ -48,7 +49,7 @@ export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
       const post = response.data;
 
       if (status === 200) {
-        setPost(post);
+        setPost((prev) => ({ ...prev, post }));
       } else {
         console.log("get, /post:id 요청 실패", "status: ", status);
       }
@@ -88,18 +89,10 @@ export default function PostViewer({ _id, setCategoryData, isGod, mode }) {
           />
         </div>
         <div className="postViewer__postTitle">
-          <PostTitle mode={mode} title={post.title} />
-          <div className="postTitle">
-            <p className="postTitle__title">{post.title}</p>
-          </div>
+          <PostTitle mode={mode} postTitle={post.title} />
         </div>
-        <div className="postViewer__categoryInfo">
-          <div className="categoryInfo">
-            <div className="categoryInfo__labelAndCategoryNameWrapper">
-              <p className="categoryInfo__label">분류: </p>
-              <p className="categoryInfo__categoryName">{post.category}</p>
-            </div>
-          </div>
+        <div className="postViewer__postCategoryBar">
+          <PostCategoryBar postCategory={post.category} mode={mode} />
         </div>
         <div className="postViewer__viewer">
           <QuillEditor data={postViewerData} ref={viewerRef} />

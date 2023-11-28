@@ -129,6 +129,31 @@ table {
   box-sizing: border-box;
 }
 
+.label {
+  display: flex;
+  align-items: center;
+
+  font: inherit;
+}
+
+.textInput {
+  font: inherit;
+
+  vertical-align: middle;
+}
+
+.select {
+  font: inherit;
+
+  border: none;
+}
+
+.button {
+  font: inherit;
+
+  vertical-align: middle;
+}
+
 .link {
   text-decoration: none;
   color: inherit;

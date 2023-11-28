@@ -1,16 +1,20 @@
 .header {
   width: 900px;
 
-  padding: 10px 0;
-
-  margin: 10px auto 0 auto;
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border-bottom: 1px solid;
 
-  .header-name {
+  padding: 10px 0;
+  margin: 10px auto 0 auto;
+
+  .flexEmpty {
+    flex-grow: 1;
+  }
+
+  .blogName__name {
     font-size: 12px;
     font-weight: bold;
   }

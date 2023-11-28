@@ -26,6 +26,7 @@ export default function Category({
         sortingMedthodData={sortingMedthodData}
         selectedSortingMedthod={selectedSortingMedthod}
         setSelectedSortingMedthod={setSelectedSortingMedthod}
+        categoryData={categoryData}
       />
     </>
   );

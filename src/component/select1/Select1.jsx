@@ -2,10 +2,10 @@ import "./Select1.scss";
 
 export default function Select1({ data }) {
   const {
+    className = "",
     value = [],
     onChange = () => {},
-
-    elementId = "",
+    id = "",
     option = [{ id: "", value: "", name: "견본", className_option: "" }],
   } = data;
 
@@ -18,10 +18,14 @@ export default function Select1({ data }) {
   });
 
   return (
-    <span className="select1">
-      <select name="" id={elementId} value={value} onChange={onChange}>
-        {options}
-      </select>
-    </span>
+    <select
+      className={`select1 select ${className}`}
+      name=""
+      id={id}
+      value={value}
+      onChange={onChange}
+    >
+      {options}
+    </select>
   );
 }

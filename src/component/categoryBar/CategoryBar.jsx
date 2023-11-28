@@ -1,72 +1,24 @@
 import "./CategoryBar.scss";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import api from "../../lib/axios/axios";
 import LinkList from "../linkList/LinkList";
 
-export default function ({ categoryData, setCategoryData }) {
+export default function ({
+  categoryData,
+  setCategoryData,
+  representativeCategoryName,
+}) {
+  // const [defaultCategory, setDefaultCategory] = useState("");
   const location = useLocation();
   const currentPath = location.pathname;
   const currentCategory =
     currentPath === "/"
-      ? categoryData[0].name
+      ? representativeCategoryName
       : decodeURIComponent(currentPath.replace("/categories/", ""));
-
-  console.log("categoryData: ", categoryData);
-
-  // const [prevCategoryData, setPrevCategoryData] = useState({});
-
-  // async function updateCategoryData() {
-  //   try {
-  //     const response = await api.patch(
-  //       "/post/updateCategoryData",
-  //       categoryData
-  //     );
-  //     const status = response.status;
-  //     const data = response.data;
-
-  //     if (status === 200) {
-  //       setPrevCategoryData(categoryData);
-  //       setCategoryData(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // function isSameArray(arr1, arr2) {
-  //   if (isLengthSame(arr1, arr2) && isElementSame(arr1, arr2)) {
-  //     return true;
-  //   }
-
-  //   return false;
-
-  //   function isLengthSame(arr1, arr2) {
-  //     if (arr1.length !== arr2.length) {
-  //       return false;
-  //     }
-
-  //     return true;
-  //   }
-
-  //   function isElementSame(arr1, arr2) {
-  //     for (let i = 0; i < arr1.length; i++) {
-  //       if (JSON.stringify(arr1[i]) !== JSON.stringify(arr2[i])) {
-  //         return false;
-  //       }
-
-  //       return true;
-  //     }
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (isSameArray(categoryData, prevCategoryData)) {
-  //     return;
-  //   }
-
-  //   updateCategoryData();
-  // }, [categoryData]);
+  // const currentCategory = decodeURIComponent(
+  //   currentPath.replace("/categories/", "")
+  // );
 
   const getCategoryData = async () => {
     try {
@@ -88,19 +40,37 @@ export default function ({ categoryData, setCategoryData }) {
     getCategoryData();
   }, []);
 
-  const categoryListData = categoryData.map(({ name, postCount }, index) => {
-    return {
-      name: `${name}(${postCount})`,
-      URL: `/categories/${name}`,
-      className_li: name === currentCategory ? "active" : "",
-    };
-  });
+  // useEffect(() => {
+  //   if (categoryData.length === 1) {
+  //     return;
+  //   } else {
+  //     setDefaultCategory(representativeCategoryName);
+  //   }
+  // }, [representativeCategoryName]);
+
+  const categoryList = categoryData.map(
+    ({ name, postCount, isRepresentative = false }, index) => {
+      return (
+        <>
+          <Link to={"/categories/" + name} className="link">
+            <li
+              className={`categoryList__item ${
+                name === currentCategory ? "categoryList__item--active" : ""
+              }`}
+            >
+              {`${name}(${postCount})`}
+            </li>
+          </Link>
+        </>
+      );
+    }
+  );
 
   return (
-    <div className="categoryList">
-      <ul>
-        <LinkList data={categoryListData} />
-      </ul>
+    <div className="categoryBar">
+      <div className="categoryBar__categoryList">
+        <ul className="categoryList">{categoryList}</ul>
+      </div>
     </div>
   );
 }

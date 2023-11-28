@@ -1,0 +1,55 @@
+.login {
+  &__loginBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loginBox {
+    display: flex;
+    gap: 5px;
+
+    border: 1px solid;
+
+    padding: 50px;
+    margin: 50px;
+
+    &__idWrapper {
+      display: flex;
+
+      margin-bottom: 5px;
+    }
+
+    &__idLabel {
+      width: 60px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__passwordWrapper {
+      display: flex;
+    }
+
+    &__passwordLabel {
+      width: 60px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__submitButtonWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__submitButton {
+      height: 100%;
+
+      display: inline-block;
+    }
+  }
+}

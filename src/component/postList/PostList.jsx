@@ -6,6 +6,8 @@ import api from "../../lib/axios/axios.js";
 export default function PostList({
   selectedSortingMedthod,
   sortingMedthodData,
+  categoryData,
+  representativeCategoryName,
 }) {
   const { selectedCategory } = useParams();
   const location = useLocation();
@@ -55,7 +57,7 @@ export default function PostList({
     }
   }
 
-  async function getCategoryPosts() {
+  async function getCategoryPosts(selectedCategory) {
     try {
       const response = await api.get("/post/categories/" + selectedCategory);
       const status = response.status;
@@ -102,24 +104,34 @@ export default function PostList({
   }
 
   useEffect(() => {
+    if (categoryData.length === 1) {
+      // 아직 카테고리 데이터가 업데이트되지 않은 경우
+      return;
+    }
+
     if (!selectedCategory && !searchString) {
-      getAllPosts();
+      // - url이 '/'(홈)이면 이쪽으로
+      // - 대표 카테고리의 자료들이 뿌려짐
+
+      getCategoryPosts(representativeCategoryName);
 
       return;
     }
 
     if (selectedCategory) {
-      getCategoryPosts();
+      // 카테고리를 클릭해서 들어온 경우
+      getCategoryPosts(selectedCategory);
 
       return;
     }
 
     if (searchString) {
+      // 내용 검색으로 들어온 경우
       getSearchPosts();
 
       return;
     }
-  }, [selectedCategory, searchString]);
+  }, [selectedCategory, searchString, representativeCategoryName]);
 
   useEffect(() => {
     const sortedPosts = getSortedPosts(posts);

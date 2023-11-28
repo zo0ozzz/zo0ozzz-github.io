@@ -1,5 +1,5 @@
 import "./CategoryEditor.scss";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import api from "../../lib/axios/axios";
 import InputText1 from "../../component/inputText1/InputText1";
 import Label1 from "../../component/label/Label1";
@@ -18,6 +18,7 @@ export default function CategoryEditor({ setCategoryData }) {
   const [editMode, setEditMode] = useState(false);
   const [editedCategoryName, setEditedCategoryName] = useState("");
   const newCategoryTextInputRef = useRef(null);
+  const editingSelectedCategoryNameTextInputRef = useRef(null);
 
   const getCategoryData = async () => {
     try {
@@ -267,6 +268,12 @@ export default function CategoryEditor({ setCategoryData }) {
     } else return;
   }, [isStepForNamingNewCategory]);
 
+  useEffect(() => {
+    if (editMode === true) {
+      editingSelectedCategoryNameTextInputRef.current.focus();
+    } else return;
+  }, [editMode]);
+
   const categoryLabelData = {
     name: "카테고리 수정: ",
   };
@@ -311,6 +318,7 @@ export default function CategoryEditor({ setCategoryData }) {
   const newCategoryTextInputData = {
     value: newCategoryTextInputValue,
     onChange: handleChangeNewCategoryTextInput,
+    className: "newCategoryCreator__newCategoryNameTextInput",
   };
 
   const completeCreatingNewCategoryButtonData = {
@@ -345,16 +353,19 @@ export default function CategoryEditor({ setCategoryData }) {
   const editingSelectedCategoryNameTextInputData = {
     value: editedCategoryName,
     onChange: handleChangeEditingSelectedCategoryNameTextInput,
+    className: "categoryList__renamingTextInput",
   };
 
   const compeleteEditingSelectedCategoryNameButtonData = {
     name: "확인",
     onClick: handleClickCompeleteEditingSelectedCategoryNameButton,
+    className: "categoryList__completeRenamingButton",
   };
 
   const cancelEditingSelectedCategoryNameButtonData = {
     name: "취소",
     onClick: handleClickCancelEditingSelectedCategoryNameButton,
+    className: "categoryList__cancelRenamingButton",
   };
 
   const categoryList = godCategoryData.map(
@@ -362,44 +373,19 @@ export default function CategoryEditor({ setCategoryData }) {
       const isSelected = index === selectedCategoryIndex;
       const isEditing = index === selectedCategoryIndex && editMode;
 
-      if (isRepresentative === true) {
-        return (
-          <>
-            {isEditing ? (
-              <div style={{ display: "flex", gap: "3px" }}>
-                <InputText1 data={editingSelectedCategoryNameTextInputData} />
-                <Button1
-                  data={compeleteEditingSelectedCategoryNameButtonData}
-                />
-                <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
-              </div>
-            ) : (
-              <span
-                key={index}
-                className={`categoryList__item ${
-                  isSelected ? "categoryList__item--selected" : ""
-                }`}
-                onClick={() => {
-                  setSelectedCategoryIndex(index);
-                  setEditMode((prev) => false);
-                }}
-              >{`${name}(${postCount})(대표)`}</span>
-            )}
-          </>
-        );
-      }
-
       return (
-        <>
+        <React.Fragment key={index}>
           {isEditing ? (
-            <div style={{ display: "flex", gap: "3px" }}>
-              <InputText1 data={editingSelectedCategoryNameTextInputData} />
+            <div className="categoryList__renamingBox">
+              <InputText1
+                data={editingSelectedCategoryNameTextInputData}
+                ref={editingSelectedCategoryNameTextInputRef}
+              />
               <Button1 data={compeleteEditingSelectedCategoryNameButtonData} />
               <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
             </div>
           ) : (
             <span
-              key={index}
               className={`categoryList__item ${
                 isSelected ? "categoryList__item--selected" : ""
               }`}
@@ -407,9 +393,9 @@ export default function CategoryEditor({ setCategoryData }) {
                 setSelectedCategoryIndex(index);
                 setEditMode((prev) => false);
               }}
-            >{`${name}(${postCount})`}</span>
+            >{`${name}(${postCount})${isRepresentative ? "(대표)" : ""}`}</span>
           )}
-        </>
+        </React.Fragment>
       );
     }
   );
@@ -445,7 +431,6 @@ export default function CategoryEditor({ setCategoryData }) {
             </div>
           </div>
         ) : null}
-
         <div className="categoryEditor__submitButton">
           <Button1 data={categorySubmitButtonData} />
         </div>

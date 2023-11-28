@@ -1,28 +1,12 @@
 .test {
-  .buttons {
-    margin-bottom: 5px;
+  &__messageBox {
   }
 
-  .list {
-    width: 200px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-
-    .item {
-      border: 1px solid;
-
-      padding: 3px;
-    }
-
-    .selected {
+  .messageBox {
+    &__message {
       font-weight: bold;
-      text-decoration: underline;
 
-      background-color: whitesmoke;
-
-      border: 2px solid;
+      margin: 10px 5px;
     }
   }
 }

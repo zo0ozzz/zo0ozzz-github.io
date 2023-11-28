@@ -11,6 +11,7 @@ export default function Home({
   sortingMedthodData,
   categoryData,
   setCategoryData,
+  representativeCategoryName,
 }) {
   const hellowComponent = useMemo(() => {
     return (
@@ -31,10 +32,13 @@ export default function Home({
       <CategoryBar
         categoryData={categoryData}
         setCategoryData={setCategoryData}
+        representativeCategoryName={representativeCategoryName}
       />
       <PostList
         selectedSortingMedthod={selectedSortingMedthod}
         sortingMedthodData={sortingMedthodData}
+        categoryData={categoryData}
+        representativeCategoryName={representativeCategoryName}
       />
     </>
   );

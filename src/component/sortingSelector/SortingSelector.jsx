@@ -9,17 +9,10 @@ export default function SortingSelector({
   setSelectedSortingMedthod,
 }) {
   const [selectValue, setSelectValue] = useState("");
-  const selectId = "select";
 
-  const sortingSelectorData = {
-    label: { name: "정렬:", htmlFor: selectId },
-    select: {
-      value: selectValue,
-      onChange: handleChangeSelect,
-      id: selectId,
-      option: sortingMedthodData,
-    },
-  };
+  useEffect(() => {
+    setSelectValue(selectedSortingMedthod);
+  }, [selectedSortingMedthod]);
 
   function handleChangeSelect(e) {
     const sortingMedthod = e.target.value;
@@ -27,9 +20,22 @@ export default function SortingSelector({
     setSelectedSortingMedthod(sortingMedthod);
   }
 
-  useEffect(() => {
-    setSelectValue(selectedSortingMedthod);
-  }, [selectedSortingMedthod]);
+  const selectId = "select";
+
+  const sortingSelectorData = {
+    label: {
+      name: "정렬:",
+      htmlFor: selectId,
+      className: "sortingSelector__label",
+    },
+    select: {
+      value: selectValue,
+      onChange: handleChangeSelect,
+      id: selectId,
+      option: sortingMedthodData,
+      className: "sortingSelector__select",
+    },
+  };
 
   return (
     <span className="sortingSelector">

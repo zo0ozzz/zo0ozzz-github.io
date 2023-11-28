@@ -77,6 +77,7 @@ export default function ({ setBlogName }) {
   const blogNameLabelData = {
     name: "블로그 이름:",
     htmlFor: blogNameTextInputId,
+    className: "blogNameEditor__title",
   };
 
   const blogNameTextInputData = {
@@ -84,19 +85,24 @@ export default function ({ setBlogName }) {
     onChange: handleChangeGodBlogName,
     id: blogNameTextInputId,
     name: blogNameTextInputId,
+    className: "blogNameEditor__renamingTextInput",
   };
 
   const blogNameSubmitButtonData = {
     name: "확인",
     onClick: handleClickGodBlogNameSubmitButton,
+    className: "blogNameEditor__renamingCompleteButton",
   };
   return (
     <>
-      {" "}
       <div className="blogNameEditor">
-        <Label1 data={blogNameLabelData} />
-        <InputText1 data={blogNameTextInputData} />
-        <Button1 data={blogNameSubmitButtonData} />
+        <div className="blogNameEditor__inner">
+          <Label1 data={blogNameLabelData} />
+          <div className="blogNameEditor__renamingBox">
+            <InputText1 data={blogNameTextInputData} />
+            <Button1 data={blogNameSubmitButtonData} />
+          </div>
+        </div>
       </div>
     </>
   );

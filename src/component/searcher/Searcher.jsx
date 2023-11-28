@@ -11,18 +11,24 @@ export default function () {
   const [textInputValue, settextInputValue] = useState("");
 
   const searcherData = {
-    label: { name: "검색:", htmlFor: "searchTextInput" },
+    label: {
+      name: "검색:",
+      htmlFor: "searchTextInput",
+      className: "searcher__label",
+    },
     textInput: {
       type: "text",
       id: "searchTextInput",
       autoComplete: "off",
       value: textInputValue,
       onChange: handleChangeTextInput,
+      className: "searcher__textInput",
     },
     submitInput: {
       type: "submit",
       value: "확인",
       onClick: handleClickSubmitInput,
+      className: "searcher__submitButton",
     },
   };
 
@@ -47,11 +53,9 @@ export default function () {
   return (
     <>
       <div className="searcher">
-        <form action="">
-          <Label1 data={searcherData.label} />
-          <InputText1 data={searcherData.textInput} />
-          <InputButton1 data={searcherData.submitInput} />
-        </form>
+        <Label1 data={searcherData.label} />
+        <InputText1 data={searcherData.textInput} ref={null} />
+        <InputButton1 data={searcherData.submitInput} />
       </div>
     </>
   );

@@ -1,7 +1,4 @@
 .sortingSelector {
-  .label1 {
-    .label1-label {
-      margin-right: 5px;
-    }
-  }
+  display: flex;
+  gap: 5px;
 }

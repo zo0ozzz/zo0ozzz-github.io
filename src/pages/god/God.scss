@@ -1,24 +1,7 @@
 .god {
-  .message {
+  &__message {
     font-weight: bold;
 
     margin: 10px 0 10px 0;
-  }
-
-  .blogNameEditor {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    .label1 {
-      margin-right: 5px;
-    }
-
-    .inputText1 {
-      margin-right: 5px;
-    }
-  }
-
-  .god__categoryEditor {
   }
 }

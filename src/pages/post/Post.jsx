@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import PostEditor from "../../component/postEditor/PostEditor";
 import PostViewer from "../../component/postViewer/PostViewer";
 
-export default function Post({ mode, categoryData, setCategoryData }) {
+export default function Post({ mode, categoryData, setCategoryData, isGod }) {
   const { _id } = useParams();
 
   return (
@@ -15,9 +15,14 @@ export default function Post({ mode, categoryData, setCategoryData }) {
             mode={mode}
             categoryData={categoryData}
             setCategoryData={setCategoryData}
+            isGod={isGod}
           />
         ) : (
-          <PostViewer _id={_id} setCategoryData={setCategoryData} />
+          <PostViewer
+            _id={_id}
+            setCategoryData={setCategoryData}
+            isGod={isGod}
+          />
         )}
       </div>
     </>

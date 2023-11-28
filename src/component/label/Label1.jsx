@@ -1,15 +1,11 @@
 import "./Label1.scss";
 
-export default function Label1({ data = {} }) {
-  const { name = "", htmlFor = "" } = data;
+export default function Label1({ data }) {
+  const { name = "", htmlFor = "", className = "" } = data;
 
   return (
-    <>
-      <span className="label1">
-        <label className="label1-label" htmlFor={htmlFor}>
-          {name}
-        </label>
-      </span>
-    </>
+    <label className={`label1 label ${className}`} htmlFor={htmlFor}>
+      {name}
+    </label>
   );
 }

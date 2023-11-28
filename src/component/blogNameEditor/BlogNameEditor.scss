@@ -1,0 +1,21 @@
+.blogNameEditor {
+  &__inner {
+    width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__renamingBox {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__renamingTextInput {
+    flex-grow: 1;
+  }
+
+  &__renamingCompleteButton {
+  }
+}

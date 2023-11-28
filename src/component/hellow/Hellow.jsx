@@ -14,10 +14,6 @@ export default function Hellow() {
     );
   });
 
-  useEffect(() => {
-    console.log("hellow");
-  }, []);
-
   return (
     <>
       <section className="hellow">{content}</section>

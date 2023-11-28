@@ -1,17 +1,22 @@
-.categoryList {
+.categoryBar {
   margin-top: 10px;
 
-  li {
-    display: inline-block;
+  &__categoryList {
+    .categoryList {
+      display: flex;
+      gap: 5px;
 
-    margin-right: 5px;
+      &--item {
+        display: inline-block;
 
-    cursor: pointer;
-  }
+        margin-right: 5px;
 
-  .linkList {
-    .active {
-      font-weight: bold;
+        cursor: pointer;
+      }
+
+      &__item--active {
+        font-weight: bold;
+      }
     }
   }
 }

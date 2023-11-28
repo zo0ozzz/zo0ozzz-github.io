@@ -18,6 +18,7 @@ import Search from "./pages/search/Search";
 import Post from "./pages/post/Post";
 import God from "./pages/god/God";
 import Test from "./pages/test/Test";
+import Login from "./pages/login/Login";
 
 function App() {
   const [blogName, setBlogName] = useState("");
@@ -40,29 +41,33 @@ function App() {
     sortingMedthodData[0].value
   );
 
-  // const allAndNoCategoryData = { all: "전체", no: "미분류" };
-
-  // const [categoryData, setCategoryData] = useState([
-  //   { id: 0, order: 0, name: "전체", postCount: "-" },
-  //   { id: 2, order: 1, name: "블로그", postCount: "-" },
-  //   { id: 3, order: 2, name: "기타", postCount: "-" },
-  //   { id: 4, order: 3, name: "뿅뿅뿅", postCount: "-" },
-  //   { id: 1, order: 4, name: "미분류", postCount: "-" },
-  // ]);
-
   const [categoryData, setCategoryData] = useState([{}]);
-
-  // id 0: 모든 게시물(카테고리 상관없음)
-  // id 1: 카테고리가 지정되지 않는 게시물(미분류)
-  // - 이 두 필드의 id는 변경되면 안 됨. 추가적인 카테고리는 id 2부터 시작.
+  const [representativeCategoryName, setRepresentativeCategoryName] =
+    useState("");
+  const [isGod, setIsGod] = useState(false);
+  console.log(isGod);
 
   useEffect(() => {
-    // console.log("hellow");
-  }, []);
+    if (categoryData.length === 1) return;
+    // - 카테고리데이터가 업데이트 되지 않으면 아무 동작도 하지 않음.
+
+    const representativeCategoryName = categoryData.find(
+      // - 카테고리 데이터가 업데이트 되면
+      // - 대표 카테고리를 찾아(isRe... === true) 저장.
+      (item) => item.isRepresentative === true
+    ).name;
+    setRepresentativeCategoryName((prev) => representativeCategoryName);
+  }, [categoryData]);
+
   return (
     <>
       <div className="wrapper">
-        <Header blogName={blogName} setBlogName={setBlogName} />
+        <Header
+          blogName={blogName}
+          setBlogName={setBlogName}
+          isGod={isGod}
+          setIsGod={setIsGod}
+        />
         <Routes>
           <Route
             path={HOME_PAGE}
@@ -74,7 +79,16 @@ function App() {
                   setSelectedSortingMedthod={setSelectedSortingMedthod}
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
+                  representativeCategoryName={representativeCategoryName}
                 />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <Login isGod={isGod} setIsGod={setIsGod} />
               </>
             }
           />
@@ -113,6 +127,7 @@ function App() {
                 <Post
                   categoryData={categoryData}
                   setCategoryData={setCategoryData}
+                  isGod={isGod}
                 />
               </>
             }

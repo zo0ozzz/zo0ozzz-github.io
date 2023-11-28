@@ -6,7 +6,7 @@ export default function God({ setBlogName, setCategoryData }) {
   return (
     <>
       <div className="god">
-        <p className="message">{`나는 신이야!`}</p>
+        <p className="god__message">{`나는 신이야!`}</p>
         <div className="god__blogName">
           <BlogNameEditor setBlogName={setBlogName} />
         </div>

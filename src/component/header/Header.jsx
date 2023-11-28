@@ -4,7 +4,7 @@ import api from "../../lib/axios/axios";
 import { Link } from "react-router-dom";
 import { Nav } from "../nav/Nav";
 
-export default function PageHeader({ blogName, setBlogName }) {
+export default function PageHeader({ blogName, setBlogName, isGod, setIsGod }) {
   const blogNameData = { name: blogName, URL: "/" };
 
   const getBlogName = async () => {
@@ -30,14 +30,16 @@ export default function PageHeader({ blogName, setBlogName }) {
   }, []);
 
   return (
-    <>
-      <header className="header">
+    <header className="header">
+      <div className="header__blogName">
         <Link to={blogNameData.URL} className="link">
-          <p className="header-name">{blogNameData.name}</p>
+          <p className="blogName__name">{blogNameData.name}</p>
         </Link>
-        <div className="grid-div" />
-        <Nav />
-      </header>
-    </>
+      </div>
+      <div className="flexEmpty" />
+      <div className="header__nav">
+        <Nav isGod={isGod} setIsGod={setIsGod} />
+      </div>
+    </header>
   );
 }

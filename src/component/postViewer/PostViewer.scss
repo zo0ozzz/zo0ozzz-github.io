@@ -1,54 +1,84 @@
 .postViewer {
-  .postViewer-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin-top: 5px;
+
+  &__toolbar {
     display: flex;
     justify-content: end;
     align-items: center;
 
     padding-right: 1px;
-    margin: 5px 0;
+  }
 
-    .button1List {
-      & .button1List-button {
-        margin-left: 5px;
-      }
+  .toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__buttonsWrapper {
+      display: flex;
+      gap: 5px;
     }
   }
 
-  .postViewer-title {
+  &__postTitle {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     border: 1px solid;
 
     padding: 5px 15px;
+  }
 
-    .postViewer-titleContent {
+  .postTitle {
+    &__title {
       font-weight: bold;
     }
   }
 
-  .postViewer-category {
-    text-align: right;
+  &__categoryInfo {
+    display: flex;
+    justify-content: end;
+    align-items: center;
 
-    padding-right: 3px;
-    margin-top: 5px;
+    padding-right: 1px;
   }
 
-  .ql-container {
-    padding: 5px 10px;
-    border: 1px solid black !important;
-    margin-top: 5px;
+  .categoryInfo {
+    &__labelAndCategoryNameWrapper {
+      display: flex;
+      gap: 5px;
+    }
 
-    .ql-editor {
-      img {
-        display: block;
-        margin: 0 auto;
-      }
+    &__label {
+      display: flex;
+    }
 
-      .ql-syntax {
-        width: 90%;
+    &__categoryName {
+      display: flex;
+    }
+  }
 
-        margin: 0 auto;
+  &__viewer {
+    .ql-container {
+      padding: 5px 10px;
+      border: 1px solid black !important;
+
+      .ql-editor {
+        img {
+          display: block;
+          margin: 0 auto;
+        }
+
+        .ql-syntax {
+          width: 90%;
+
+          margin: 0 auto;
+        }
       }
     }
   }

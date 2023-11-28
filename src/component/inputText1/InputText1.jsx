@@ -3,32 +3,29 @@ import { forwardRef } from "react";
 
 const InputText1 = forwardRef(({ data }, ref = null) => {
   const {
+    className = "",
     value = "",
     defaultValue = "",
     onChange = () => {},
     onKeyDown = () => {},
     id = "",
     autoComplete = "off",
-    placehorder = "",
+    placeholder = "",
   } = data;
 
   return (
-    <>
-      <span className="inputText1">
-        <input
-          className="inputText1-input"
-          type="text"
-          value={value}
-          defaultValue={defaultValue}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          id={id}
-          autoComplete={autoComplete}
-          placeholder={placehorder}
-          ref={ref}
-        />
-      </span>
-    </>
+    <input
+      type="text"
+      className={`inputText1 textInput ${className}`}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      id={id}
+      autoComplete={autoComplete}
+      placeholder={placeholder}
+      ref={ref}
+    />
   );
 });
 

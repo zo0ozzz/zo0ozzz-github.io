@@ -5,8 +5,9 @@ import api from "../../lib/axios/axios.js";
 import { POST_API, POST_EDIT_PAGE } from "../../URL";
 import Button1List from "../button1List/Button1List";
 import QuillEditor from "../../lib/Quill/Quill.jsx";
+import Button2 from "../button2/Button2.jsx";
 
-export default function PostViewer({ _id, setCategoryData }) {
+export default function PostViewer({ _id, setCategoryData, isGod }) {
   const navigate = useNavigate();
   const [post, setPost] = useState({ title: "", content: "" });
   const viewerRef = useRef(null);
@@ -90,14 +91,40 @@ export default function PostViewer({ _id, setCategoryData }) {
   return (
     <>
       <div className="postViewer">
-        <div className="postViewer-bar">
-          <Button1List data={barButtonListData} />
+        <div className="postViewer__toolbar">
+          <div className="toolbar">
+            {true ? (
+              <div className="toolbar__buttonsWrapper">
+                <Button2
+                  name="수정"
+                  className="toolbar__editPostButton"
+                  onClick={handleClickEditPostButton}
+                />
+                <Button2
+                  name="삭제"
+                  className="toolbar__deletePostButton"
+                  onClick={handleClickDeletePostButton}
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
-        <div className="postViewer-title">
-          <p className="postViewer-titleContent">{post.title}</p>
+        <div className="postViewer__postTitle">
+          <div className="postTitle">
+            <p className="postTitle__title">{post.title}</p>
+          </div>
         </div>
-        <div className="postViewer-category">분류: {post.category}</div>
-        <QuillEditor data={postViewerData} ref={viewerRef} />
+        <div className="postViewer__categoryInfo">
+          <div className="categoryInfo">
+            <div className="categoryInfo__labelAndCategoryNameWrapper">
+              <p className="categoryInfo__label">분류: </p>
+              <p className="categoryInfo__categoryName">{post.category}</p>
+            </div>
+          </div>
+        </div>
+        <div className="postViewer__viewer">
+          <QuillEditor data={postViewerData} ref={viewerRef} />
+        </div>
       </div>
     </>
   );

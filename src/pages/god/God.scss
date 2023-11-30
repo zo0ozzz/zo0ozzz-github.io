@@ -1,4 +1,10 @@
 .god {
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
   &__message {
     font-weight: bold;
 

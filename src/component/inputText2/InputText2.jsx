@@ -10,10 +10,10 @@ const InputText2 = forwardRef(
       onChange,
       onKeyDown,
       id,
-      autoComplete,
+      autoComplete = "off",
       placeholder,
     },
-    ref = null
+    ref
   ) => {
     return (
       <input

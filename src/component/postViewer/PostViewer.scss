@@ -3,8 +3,6 @@
   flex-direction: column;
   gap: 5px;
 
-  margin-top: 5px;
-
   &__postToolbar {
     display: flex;
     justify-content: end;
@@ -39,26 +37,6 @@
 
     &__categoryName {
       display: flex;
-    }
-  }
-
-  &__viewer {
-    .ql-container {
-      padding: 5px 10px;
-      border: 1px solid black !important;
-
-      .ql-editor {
-        img {
-          display: block;
-          margin: 0 auto;
-        }
-
-        .ql-syntax {
-          width: 90%;
-
-          margin: 0 auto;
-        }
-      }
     }
   }
 }

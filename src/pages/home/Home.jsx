@@ -13,17 +13,9 @@ export default function Home({
   setCategoryData,
   representativeCategoryName,
 }) {
-  const hellowComponent = useMemo(() => {
-    return (
-      <>
-        <Hellow />
-      </>
-    );
-  }, []);
   return (
     <>
-      {hellowComponent}
-      {/* <Hellow /> */}
+      <Hellow />
       <ToolBar
         sortingMedthodData={sortingMedthodData}
         selectedSortingMedthod={selectedSortingMedthod}

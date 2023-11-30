@@ -22,7 +22,8 @@ import Test from "./pages/test/Test";
 import Login from "./pages/login/Login";
 
 function App() {
-  const [blogName, setBlogName] = useState("");
+  const [isGod, setIsGod] = useState(true);
+  const [isGodPage, setIsGodPage] = useState(false);
   const sortingMedthodData = [
     {
       id: 0,
@@ -37,18 +38,14 @@ function App() {
       sortingFunc: (posts) => [...posts].sort((a, b) => a.number - b.number),
     },
   ];
-
   const [selectedSortingMedthod, setSelectedSortingMedthod] = useState(
     sortingMedthodData[0].value
   );
-
   const [categoryData, setCategoryData] = useState([{}]);
   const [representativeCategoryName, setRepresentativeCategoryName] =
     useState("");
-  const [isGod, setIsGod] = useState(true);
-  console.log(isGod);
-  console.log(categoryData);
 
+  // mount function
   const getCategoryData = async () => {
     try {
       const response = await api.get("/god/categoryData");
@@ -62,16 +59,22 @@ function App() {
       } else {
         console.log(status);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  // useEffect
   useEffect(() => {
     getCategoryData();
-  }, []);
+
+    return;
+  }, [isGodPage]);
 
   useEffect(() => {
     if (categoryData.length === 1) return;
-    // - 카테고리데이터가 업데이트 되지 않으면 아무 동작도 하지 않음.
+    // - 카테고리 데이터가 업데이트 되지 않으면 아무 동작도 하지 않음.
+    //  - 전체, 미분류가 기본이라 업데이트된 상태라면 length가 1이 되지 않으니까.
 
     const representativeCategoryName = categoryData.find(
       // - 카테고리 데이터가 업데이트 되면
@@ -79,80 +82,65 @@ function App() {
       (item) => item.isRepresentative === true
     ).name;
     setRepresentativeCategoryName((prev) => representativeCategoryName);
+
+    return;
   }, [categoryData]);
 
   return (
     <>
-      <div className="wrapper">
-        <Header
-          blogName={blogName}
-          setBlogName={setBlogName}
-          isGod={isGod}
-          setIsGod={setIsGod}
-        />
+      <div className="app">
+        <Header isGod={isGod} setIsGod={setIsGod} isGodPage={isGodPage} />
         <Routes>
           <Route
             path={HOME_PAGE}
             element={
-              <>
-                <Home
-                  sortingMedthodData={sortingMedthodData}
-                  selectedSortingMedthod={selectedSortingMedthod}
-                  setSelectedSortingMedthod={setSelectedSortingMedthod}
-                  categoryData={categoryData}
-                  setCategoryData={setCategoryData}
-                  representativeCategoryName={representativeCategoryName}
-                />
-              </>
+              <Home
+                sortingMedthodData={sortingMedthodData}
+                selectedSortingMedthod={selectedSortingMedthod}
+                setSelectedSortingMedthod={setSelectedSortingMedthod}
+                categoryData={categoryData}
+                setCategoryData={setCategoryData}
+                representativeCategoryName={representativeCategoryName}
+              />
             }
           />
           <Route
             path="/login"
-            element={
-              <>
-                <Login isGod={isGod} setIsGod={setIsGod} />
-              </>
-            }
+            element={<Login isGod={isGod} setIsGod={setIsGod} />}
           />
           <Route
             path={CATEGORY_PAGE(":selectedCategory")}
             element={
-              <>
-                <Category
-                  selectedSortingMedthod={selectedSortingMedthod}
-                  setSelectedSortingMedthod={setSelectedSortingMedthod}
-                  sortingMedthodData={sortingMedthodData}
-                  categoryData={categoryData}
-                  setCategoryData={setCategoryData}
-                />
-              </>
+              <Category
+                selectedSortingMedthod={selectedSortingMedthod}
+                setSelectedSortingMedthod={setSelectedSortingMedthod}
+                sortingMedthodData={sortingMedthodData}
+                categoryData={categoryData}
+                setCategoryData={setCategoryData}
+              />
             }
           />
           <Route
             path={SEARCH_PAGE}
             element={
-              <>
-                <Search
-                  selectedSortingMedthod={selectedSortingMedthod}
-                  setSelectedSortingMedthod={setSelectedSortingMedthod}
-                  sortingMedthodData={sortingMedthodData}
-                  categoryData={categoryData}
-                  setCategoryData={setCategoryData}
-                />
-              </>
+              <Search
+                selectedSortingMedthod={selectedSortingMedthod}
+                setSelectedSortingMedthod={setSelectedSortingMedthod}
+                sortingMedthodData={sortingMedthodData}
+                categoryData={categoryData}
+                setCategoryData={setCategoryData}
+              />
             }
           />
           <Route
             path={POST_VIEW_PAGE(":_id")}
             element={
-              <>
-                <Post
-                  mode={"view"}
-                  categoryData={categoryData}
-                  setCategoryData={setCategoryData}
-                  isGod={isGod}
-                />
-              </>
+              <Post
+                mode={"view"}
+                categoryData={categoryData}
+                setCategoryData={setCategoryData}
+                isGod={isGod}
+              />
             }
           />
           <Route
@@ -184,24 +172,14 @@ function App() {
           <Route
             path={GOD_PAGE}
             element={
-              <>
-                <God
-                  blogName={blogName}
-                  setBlogName={setBlogName}
-                  categoryData={categoryData}
-                  setCategoryData={setCategoryData}
-                />
-              </>
+              <God
+                setIsGodPage={setIsGodPage}
+                categoryData={categoryData}
+                setCategoryData={setCategoryData}
+              />
             }
           />
-          <Route
-            path={"/test"}
-            element={
-              <>
-                <Test />
-              </>
-            }
-          />
+          <Route path={"/test"} element={<Test />} />
         </Routes>
         <div className="empty"></div>
         <Footer />

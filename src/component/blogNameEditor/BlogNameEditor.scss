@@ -1,7 +1,5 @@
 .blogNameEditor {
   &__inner {
-    width: 300px;
-
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -9,13 +7,14 @@
 
   &__renamingBox {
     display: flex;
-    gap: 3px;
-  }
+    flex-direction: column;
+    gap: 5px;
 
-  &__renamingTextInput {
-    flex-grow: 1;
-  }
-
-  &__renamingCompleteButton {
+    .renamingBox {
+      &__buttons {
+        display: flex;
+        gap: 5px;
+      }
+    }
   }
 }

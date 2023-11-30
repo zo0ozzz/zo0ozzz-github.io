@@ -4,28 +4,20 @@ import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
 import { POST_API } from "../../URL";
 import { Quill } from "react-quill";
-import Select1 from "../select1/Select1";
-import Label1 from "../label/Label1";
-import Button1 from "../button1/Button1";
-import InputText1 from "../inputText1/InputText1";
-import QuillEditor from "../../lib/Quill/Quill.jsx";
-import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
-import InputText2 from "../inputText2/InputText2.jsx";
 import PostTitle from "../postTitle/PostTitle.jsx";
 import PostCategoryBar from "../postCategoryBar/PostCategoryBar.jsx";
+import QuillEditor from "../../lib/Quill/QuillEditor.jsx";
+import ImageResizePrompt from "../imageResizePrompt/ImageResizePrompt";
 
 export default function PostEditor({
-  _id,
   mode,
+  _id,
   categoryData,
   setCategoryData,
   isGod,
 }) {
   const [post, setPost] = useState({ title: "", category: "", content: "" });
-  console.log(post);
-  const editorRef = useRef(null);
-  const navigate = useNavigate();
   const [imageResize, setImageResize] = useState({
     isPrompt: false,
     src: "",
@@ -33,6 +25,7 @@ export default function PostEditor({
     inputValue: "",
     position: { top: 0 },
   });
+  const editorRef = useRef(null);
 
   // mount function
   async function getPost() {
@@ -44,28 +37,11 @@ export default function PostEditor({
       if (status === 200) {
         setPost((prevPost) => ({ ...prevPost, ...post }));
       } else {
-        console.log("get, /post:id 요청 실패", "status: ", status);
+        console.log(status);
       }
     } catch (error) {
       console.log(error);
     }
-  }
-
-  const handleChangeCategory = (e) => {
-    const newCategory = e.target.value;
-    setPostCategory(newCategory);
-  };
-
-  function setPostTitle(newPostTitle) {
-    setPost((prevPost) => ({ ...prevPost, title: newPostTitle }));
-  }
-
-  function setPostCategory(newPostCategory) {
-    setPost((prevPost) => ({ ...prevPost, category: newPostCategory }));
-  }
-
-  function setPostContent(newPostContent) {
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
   }
 
   // useEffect
@@ -120,59 +96,46 @@ export default function PostEditor({
     });
   }, []);
 
-  const categorySelectId = "categorySelect";
-  const categorySelectLabelData = {
-    name: "카테고리:",
-    htmlFor: categorySelectId,
-  };
-
-  const categorySelectOptionData = categoryData.reduce((acc, { id, name }) => {
-    if (id === 0) {
-      return acc;
-    } else {
-      acc.push({ id: id, value: name, name: name });
-
-      return acc;
-    }
-  }, []);
-
-  const categorySelectData = {
-    value: post.category,
-    onChange: handleChangeCategory,
-    elementId: categorySelectId,
-    option: categorySelectOptionData,
-  };
-
-  const postEditorData = {
-    value: post.content,
-    onChange: setPostContent,
-    readOnly: false,
-  };
+  // handler function
+  const handleChangePostContent = (newPostContent) =>
+    setPost((prev) => ({ ...prev, content: newPostContent }));
 
   return (
     <>
       <div className="postEditor">
-        <div className="postEditor-bar">
-          <PostToolBar mode={mode} _id={_id} isGod={isGod} post={post} />
+        <div className="postEditor__postToolBar">
+          <PostToolBar
+            mode={mode}
+            _id={_id}
+            isGod={isGod}
+            post={post}
+            setCategoryData={setCategoryData}
+          />
         </div>
-        <div className="postEditor__title">
+        <div className="postEditor__postTitle">
           <PostTitle
             mode={mode}
-            postTitle={post.title}
-            setPostTitle={setPostTitle}
+            post={post}
+            setPost={setPost}
             editorRef={editorRef}
           />
         </div>
         <div className="postEditor__postCategoryBar">
           <PostCategoryBar
             mode={mode}
-            postCategory={post.category}
-            categoryData={categoryData}
+            post={post}
             setPost={setPost}
+            categoryData={categoryData}
           />
         </div>
-        <div className="content">
-          <QuillEditor data={postEditorData} ref={editorRef} />
+        <div className="postEditor__QuillEditor">
+          <QuillEditor
+            value={post.content}
+            onChange={handleChangePostContent}
+            post={post}
+            setPost={setPost}
+            ref={editorRef}
+          />
           {imageResize.isPrompt ? (
             <ImageResizePrompt
               editorRef={editorRef}

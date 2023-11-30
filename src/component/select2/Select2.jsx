@@ -8,7 +8,11 @@ const Select2 = ({
   optionFunction,
 }) => {
   return (
-    <select className={className} value={value} onChange={onChange}>
+    <select
+      className={`select2 select ${className}`}
+      value={value}
+      onChange={onChange}
+    >
       {optionFunction(optionData)}
     </select>
   );

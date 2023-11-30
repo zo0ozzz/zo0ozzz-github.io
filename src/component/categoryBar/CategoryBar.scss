@@ -1,18 +1,8 @@
 .categoryBar {
-  margin-top: 10px;
-
   &__categoryList {
     .categoryList {
       display: flex;
       gap: 5px;
-
-      &--item {
-        display: inline-block;
-
-        margin-right: 5px;
-
-        cursor: pointer;
-      }
 
       &__item--active {
         font-weight: bold;

@@ -1,0 +1,19 @@
+.hellowEditor {
+  width: 900px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &__buttons {
+    display: flex;
+    justify-content: end;
+
+    padding-right: 1px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 5px;
+  }
+}

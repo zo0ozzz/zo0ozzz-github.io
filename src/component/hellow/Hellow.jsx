@@ -1,22 +1,40 @@
-import { useEffect } from "react";
 import "./Hellow.scss";
+import { useState, useEffect } from "react";
+import api from "../../lib/axios/axios";
+import QuillViewer from "../../lib/Quill/QuillViewer";
 
-export default function Hellow() {
-  const hellowData = {
-    content: ["안녕하세요", "zo0ozzz의 블로그입니다.", "오늘도 좋은 날입니다."],
+export default function Hellow({}) {
+  const [hellowMessage, setHellowMessage] = useState("");
+
+  // mount function
+  const getHellowMessage = async () => {
+    try {
+      const response = await api.get("/god/hellowMessage");
+      const status = response.status;
+      const data = response.data;
+
+      if (status === 200) {
+        const hellowMessage = data.hellowMessage;
+
+        setHellowMessage(hellowMessage);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const content = hellowData.content.map((item, index) => {
-    return (
-      <p className="hellow-p" key={index}>
-        {item}
-      </p>
-    );
-  });
+  // useEffect
+  useEffect(() => {
+    getHellowMessage();
+  }, []);
+
+  // handler funtion
+  const handleChangeHellowMessage = (newHellowMessage) =>
+    setHellowMessage((prev) => newHellowMessage);
 
   return (
-    <>
-      <section className="hellow">{content}</section>
-    </>
+    <section className="hellow">
+      <QuillViewer value={hellowMessage} onChange={handleChangeHellowMessage} />
+    </section>
   );
 }

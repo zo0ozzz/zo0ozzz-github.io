@@ -1,15 +1,18 @@
 import "./PostTitle.scss";
 import InputText2 from "../inputText2/InputText2";
+import { useRef } from "react";
 
-const PostTitle = ({ mode, postTitle, setPostTitle, editorRef }) => {
+const PostTitle = ({ mode, post, setPost, editorRef }) => {
+  const postTitleTextInputRef = useRef(null);
+
   // handler function
-  function handleChangePostTitleInput(e) {
-    const newPostTitle = e.target.value;
+  const handleChangePostTitleInput = (e) => {
+    const newTitle = e.target.value;
 
-    setPostTitle(newPostTitle);
-  }
+    setPost((prev) => ({ ...prev, title: newTitle }));
+  };
 
-  function handleKeyDownPostTitleInput(e) {
+  const handleKeyDownPostTitleInput = (e) => {
     if (e.keyCode === 9) {
       e.preventDefault();
 
@@ -17,18 +20,19 @@ const PostTitle = ({ mode, postTitle, setPostTitle, editorRef }) => {
       const index = 0;
       quillInstance.setSelection(index);
     }
-  }
+  };
 
   return (
     <div className="postTitle">
       {mode === "view" ? (
-        <p className="postTitle__title">{postTitle}</p>
+        <p className="postTitle__title">{post.title}</p>
       ) : (
         <InputText2
-          value={postTitle}
+          className="postTitle__titleInput"
+          value={post.title}
           onChange={handleChangePostTitleInput}
           onKeyDown={handleKeyDownPostTitleInput}
-          className="postTitle__titleInput"
+          ref={postTitleTextInputRef}
         />
       )}
     </div>

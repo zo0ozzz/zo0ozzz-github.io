@@ -1,7 +1,7 @@
 import "./PostCategoryBar";
 import Select2 from "../select2/Select2";
 
-const PostCategoryBar = ({ mode, postCategory, categoryData, setPost }) => {
+const PostCategoryBar = ({ mode, post, setPost, categoryData }) => {
   const handleChangePostCategory = (e) => {
     const newCategory = e.target.value;
 
@@ -28,14 +28,14 @@ const PostCategoryBar = ({ mode, postCategory, categoryData, setPost }) => {
       {mode === "view" ? (
         <div className="postCategoryBar__labelAndCategoryNameWrapper">
           <p className="postCategoryBar__label">분류: </p>
-          <p className="postCategoryBar__categoryName">{postCategory}</p>
+          <p className="postCategoryBar__categoryName">{post.category}</p>
         </div>
       ) : (
         <div className="postCategoryBar__labelAndCategorySelectorWrapper">
           <label htmlFor="postCategoryBar__categorySelector">분류: </label>
           <Select2
-            className="select postCategoryBar__categorySelector"
-            value={postCategory}
+            className="postCategoryBar__categorySelector"
+            value={post.category}
             onChange={handleChangePostCategory}
             optionData={categoryData}
             optionFunction={optionFunction}
@@ -47,12 +47,3 @@ const PostCategoryBar = ({ mode, postCategory, categoryData, setPost }) => {
 };
 
 export default PostCategoryBar;
-
-{
-  /* <div className="postCategoryBar">
-            <div className="postCategoryBar__labelAndCategoryNameWrapper">
-              <p className="postCategoryBar__label">분류: </p>
-              <p className="postCategoryBar__categoryName">{post.category}</p>
-            </div>
-          </div> */
-}

@@ -159,9 +159,10 @@ table {
   color: inherit;
 }
 
-.wrapper {
+.app {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 
   width: 900px;
   margin: 0 auto;

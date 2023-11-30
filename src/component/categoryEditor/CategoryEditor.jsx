@@ -1,12 +1,12 @@
 import "./CategoryEditor.scss";
 import React, { useEffect, useState, useRef } from "react";
 import api from "../../lib/axios/axios";
-import InputText1 from "../../component/inputText1/InputText1";
-import Label1 from "../../component/label/Label1";
-import Button1 from "../../component/button1/Button1";
+import Label2 from "../label2/Label2";
+import InputText2 from "../inputText2/InputText2";
+import Button2 from "../button2/Button2";
 
-export default function CategoryEditor({ setCategoryData }) {
-  const [godCategoryData, setGodCategoryData] = useState([]);
+export default function CategoryEditor() {
+  const [categoryData, setCategoryData] = useState({ prev: [], current: [] });
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
   const [isStepForNamingNewCategory, setIsStepForNamingNewCategory] =
     useState(false);
@@ -20,6 +20,7 @@ export default function CategoryEditor({ setCategoryData }) {
   const newCategoryTextInputRef = useRef(null);
   const editingSelectedCategoryNameTextInputRef = useRef(null);
 
+  // mount function
   const getCategoryData = async () => {
     try {
       const response = await api.get("/god/categoryData");
@@ -29,15 +30,45 @@ export default function CategoryEditor({ setCategoryData }) {
       const categoryData = data.categoryData;
 
       if (status === 200) {
-        setGodCategoryData((prev) => categoryData);
+        setCategoryData((prev) => ({
+          ...prev,
+          prev: categoryData,
+          current: categoryData,
+        }));
       } else {
         console.log(status);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.status);
     }
   };
 
+  // useEffect
+  useEffect(() => {
+    getCategoryData();
+  }, []);
+
+  useEffect(() => {
+    if (isStepForNamingNewCategory === false) return;
+
+    if (isStepForNamingNewCategory === true) {
+      newCategoryTextInputRef.current.focus();
+
+      return;
+    }
+  }, [isStepForNamingNewCategory]);
+
+  useEffect(() => {
+    if (editMode === false) return;
+
+    if (editMode === true) {
+      editingSelectedCategoryNameTextInputRef.current.focus();
+
+      return;
+    }
+  }, [editMode]);
+
+  // handler function
   const handleClickMoveUpSelectedCategoryButton = () => {
     // 선택된 인덱스의 요소를 한 칸 앞으로 보낸 새로운 배열을 반환하는 함수
     const getArrayTargetElementMoveForward = (array, index) => {
@@ -50,19 +81,22 @@ export default function CategoryEditor({ setCategoryData }) {
       return newArray;
     };
 
-    if (selectedCategoryIndex > 0) {
-      const newGodCategoryData = getArrayTargetElementMoveForward(
-        godCategoryData,
-        selectedCategoryIndex
-      );
-
-      setGodCategoryData((prev) => newGodCategoryData);
-      setSelectedCategoryIndex((prev) => prev - 1);
-      return;
-    }
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
 
     // 배열의 첫 번째 요소가 선택된 경우 아무 동작도 하지 않음.
     if (selectedCategoryIndex === 0) return;
+
+    if (selectedCategoryIndex > 0) {
+      const newCategoryData = getArrayTargetElementMoveForward(
+        categoryData.current,
+        selectedCategoryIndex
+      );
+
+      setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
+      setSelectedCategoryIndex((prev) => prev - 1);
+      return;
+    }
   };
 
   // 카테고리 순서를 한 칸 뒤로
@@ -77,18 +111,21 @@ export default function CategoryEditor({ setCategoryData }) {
       return newArray;
     };
 
-    if (selectedCategoryIndex < godCategoryData.length - 1) {
-      const newGodCategoryData = getArrayTargetElementMoveBackward(
-        godCategoryData,
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
+    // 배열의 마지막 요소가 선택된 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === categoryData.current.length - 1) return;
+
+    if (selectedCategoryIndex < categoryData.current.length - 1) {
+      const newCategoryData = getArrayTargetElementMoveBackward(
+        categoryData.current,
         selectedCategoryIndex
       );
 
-      setGodCategoryData((prev) => newGodCategoryData);
+      setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
       setSelectedCategoryIndex((prev) => prev + 1);
     }
-
-    // 배열의 마지막 요소가 선택된 경우 아무 동작도 하지 않음.
-    if (selectedCategoryIndex === godCategoryData.length - 1) return;
   };
 
   // 새 카테고리 생성
@@ -111,20 +148,25 @@ export default function CategoryEditor({ setCategoryData }) {
       return newArray;
     };
 
-    const isAllCategory = godCategoryData[selectedCategoryIndex]?.isAllCategory;
-    const isNoCategory = godCategoryData[selectedCategoryIndex]?.isNoCategory;
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
+    const isAllCategory =
+      categoryData.current[selectedCategoryIndex]?.isAllCategory;
+    const isNoCategory =
+      categoryData.current[selectedCategoryIndex]?.isNoCategory;
 
     if (selectedCategoryIndex !== null) {
       if (isAllCategory || isNoCategory) {
         // - 전체, 미분류 카테고리는 삭제할 수 없게.
         alert("이 카테고리는 삭제할 수 없으셈!!!");
       } else {
-        const newGodCategoryData = getArrayTargetElementDelete(
-          godCategoryData,
+        const newCategoryData = getArrayTargetElementDelete(
+          categoryData.current,
           selectedCategoryIndex
         );
 
-        setGodCategoryData((prev) => newGodCategoryData);
+        setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
       }
     } else return;
     // - 선택된 카테고리가 없이(null) 버튼이 눌리면 아무 동작도 하지 않음.
@@ -132,8 +174,11 @@ export default function CategoryEditor({ setCategoryData }) {
 
   // 선택된 카테고리를 대표 카테고리로 지정.
   const handleClickSelectedCategoryAsRepresentativeButton = () => {
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
     // 선택된 인덱스 요소의 isRepresentative 항목을 true로 이외는 false로 설정한 새로운 배열을 반환하는 함수
-    const newGodCategoryData = [...godCategoryData].map((item, index) => {
+    const newCategoryData = [...categoryData.current].map((item, index) => {
       if (selectedCategoryIndex === index) {
         const newItem = { ...item, isRepresentative: true };
 
@@ -147,7 +192,7 @@ export default function CategoryEditor({ setCategoryData }) {
       }
     });
 
-    setGodCategoryData((prev) => newGodCategoryData);
+    setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
   };
 
   // 새로운 카테고리 생성 시에 사용되는 인풋 값 설정 핸들러
@@ -157,18 +202,21 @@ export default function CategoryEditor({ setCategoryData }) {
     setNewCategoryTextInputValue(value);
   };
 
-  const handleClickCategorySubmitButton = async () => {
+  const handleClickSubmitEditedCategoryButton = async () => {
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
     try {
       const response = await api.patch(
         "/post/updateCategoryData",
-        godCategoryData
+        categoryData.current
       );
       const status = response.status;
       const data = response.data;
 
       if (status === 200) {
-        setCategoryData((prev) => data);
         alert("카테고리 변경 성공!");
+        setCategoryData((prev) => ({ ...prev, prev: data, current: data }));
       } else {
         console.log(status);
         alert("카테고리 변경 실패ㅠㅠ 오류 찾아라~~~");
@@ -180,7 +228,7 @@ export default function CategoryEditor({ setCategoryData }) {
 
   const handleClickCompleteCreatingNewCategoryButton = () => {
     const checkDuplicateCategoryName = () => {
-      const result = godCategoryData.findIndex(
+      const result = categoryData.current.findIndex(
         ({ name }) => name === newCategoryTextInputValue
       );
 
@@ -197,17 +245,17 @@ export default function CategoryEditor({ setCategoryData }) {
       newCategoryTextInputValue !== "" &&
       checkDuplicateCategoryName() === false
     ) {
-      const newGodCategoryData = [...godCategoryData];
-      newGodCategoryData.push({
+      const newCategoryData = [...categoryData.current];
+      newCategoryData.push({
         name: newCategoryTextInputValue,
         postCount: 0,
         id: Date.now(),
       });
 
-      setGodCategoryData((prev) => newGodCategoryData);
+      setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
       setIsStepForNamingNewCategory((prev) => false);
       setNewCategoryTextInputValue((prev) => "");
-      setSelectedCategoryIndex((prev) => godCategoryData.length);
+      setSelectedCategoryIndex((prev) => categoryData.current.length);
       setIsDisabled((prev) => ({ ...prev, createNewCategoryButton: false }));
 
       return;
@@ -232,8 +280,11 @@ export default function CategoryEditor({ setCategoryData }) {
   };
 
   const handleClickChangeSelectedCategoryNameButton = () => {
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
     setEditMode(true);
-    setEditedCategoryName(godCategoryData[selectedCategoryIndex].name);
+    setEditedCategoryName(categoryData.current[selectedCategoryIndex].name);
   };
 
   const handleChangeEditingSelectedCategoryNameTextInput = (e) => {
@@ -243,97 +294,22 @@ export default function CategoryEditor({ setCategoryData }) {
   };
 
   const handleClickCompeleteEditingSelectedCategoryNameButton = () => {
-    const newGodCategoryData = [...godCategoryData];
-    const prevElement = newGodCategoryData[selectedCategoryIndex];
-    newGodCategoryData[selectedCategoryIndex] = {
+    const newCategoryData = [...categoryData.current];
+    const prevElement = newCategoryData[selectedCategoryIndex];
+    newCategoryData[selectedCategoryIndex] = {
       ...prevElement,
       name: editedCategoryName,
     };
 
-    setGodCategoryData(newGodCategoryData);
+    setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
     setEditMode((prev) => false);
   };
 
   const handleClickCancelEditingSelectedCategoryNameButton = () => {
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
     setEditMode((prev) => false);
-  };
-
-  useEffect(() => {
-    getCategoryData();
-  }, []);
-
-  useEffect(() => {
-    if (isStepForNamingNewCategory === true) {
-      newCategoryTextInputRef.current.focus();
-    } else return;
-  }, [isStepForNamingNewCategory]);
-
-  useEffect(() => {
-    if (editMode === true) {
-      editingSelectedCategoryNameTextInputRef.current.focus();
-    } else return;
-  }, [editMode]);
-
-  const categoryLabelData = {
-    name: "카테고리 수정: ",
-  };
-
-  const moveUpSelectedCategoryButtonData = {
-    name: "up",
-    onClick: handleClickMoveUpSelectedCategoryButton,
-    className: "settingButtons__button",
-  };
-
-  const moveDownSelectedCategoryButtonData = {
-    name: "down",
-    onClick: handleClickMoveDownSelectedCategoryButton,
-    className: "settingButtons__button",
-  };
-
-  const createNewCategoryButtonData = {
-    name: "+",
-    onClick: handleClickCreateNewCategoryButton,
-    disabled: isDisabled.createNewCategoryButton,
-    className: "settingButtons__button",
-  };
-
-  const deleteSelectedCategoryButtonData = {
-    name: "-",
-    onClick: handleClickDeleteSelectedCategoryButton,
-    className: "settingButtons__button",
-  };
-
-  const setSelectedCategoryAsRepresentativeButtonData = {
-    name: "대표로 설정",
-    onClick: handleClickSelectedCategoryAsRepresentativeButton,
-    className: "settingButtons__button",
-  };
-
-  const categorySubmitButtonData = {
-    name: "확인",
-    onClick: handleClickCategorySubmitButton,
-    className: "settingButtons__button",
-  };
-
-  const newCategoryTextInputData = {
-    value: newCategoryTextInputValue,
-    onChange: handleChangeNewCategoryTextInput,
-    className: "newCategoryCreator__newCategoryNameTextInput",
-  };
-
-  const completeCreatingNewCategoryButtonData = {
-    name: "확인",
-    onClick: handleClickCompleteCreatingNewCategoryButton,
-  };
-
-  const cancelCreatingNewCategoryButtonData = {
-    name: "취소",
-    onClick: handleClickCancelCreatingNewCategoryButton,
-  };
-
-  const changeSelectedCategoryNameButtonData = {
-    name: "이름 변경",
-    onClick: handleClickChangeSelectedCategoryNameButton,
   };
 
   // 카테고리의 이름을 변경하면?
@@ -350,25 +326,7 @@ export default function CategoryEditor({ setCategoryData }) {
   // 서버에서 어차피 그에 관한 작업이 필요한 거면.. 서버에서 처리하는 게 맞을 것 같다.
   // 지금 span으로 되어 있는 걸 input으로 바꿔줘야 해.
 
-  const editingSelectedCategoryNameTextInputData = {
-    value: editedCategoryName,
-    onChange: handleChangeEditingSelectedCategoryNameTextInput,
-    className: "categoryList__renamingTextInput",
-  };
-
-  const compeleteEditingSelectedCategoryNameButtonData = {
-    name: "확인",
-    onClick: handleClickCompeleteEditingSelectedCategoryNameButton,
-    className: "categoryList__completeRenamingButton",
-  };
-
-  const cancelEditingSelectedCategoryNameButtonData = {
-    name: "취소",
-    onClick: handleClickCancelEditingSelectedCategoryNameButton,
-    className: "categoryList__cancelRenamingButton",
-  };
-
-  const categoryList = godCategoryData.map(
+  const categoryList = categoryData.current.map(
     ({ id, name, postCount, isRepresentative = false }, index) => {
       const isSelected = index === selectedCategoryIndex;
       const isEditing = index === selectedCategoryIndex && editMode;
@@ -377,12 +335,21 @@ export default function CategoryEditor({ setCategoryData }) {
         <React.Fragment key={index}>
           {isEditing ? (
             <div className="categoryList__renamingBox">
-              <InputText1
-                data={editingSelectedCategoryNameTextInputData}
+              <InputText2
+                value={editedCategoryName}
+                onChange={handleChangeEditingSelectedCategoryNameTextInput}
                 ref={editingSelectedCategoryNameTextInputRef}
               />
-              <Button1 data={compeleteEditingSelectedCategoryNameButtonData} />
-              <Button1 data={cancelEditingSelectedCategoryNameButtonData} />
+              <Button2
+                className="categoryList__completeRenamingButton"
+                name="확인"
+                onClick={handleClickCompeleteEditingSelectedCategoryNameButton}
+              />
+              <Button2
+                className="categoryList__cancelRenamingButton"
+                name="취소"
+                onClick={handleClickCancelEditingSelectedCategoryNameButton}
+              />
             </div>
           ) : (
             <span
@@ -400,20 +367,51 @@ export default function CategoryEditor({ setCategoryData }) {
     }
   );
 
+  const handleClickBackToPreviousCategoryDataButton = () => {
+    // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
+    if (selectedCategoryIndex === null) return;
+
+    setCategoryData((prev) => ({ ...prev, current: categoryData.prev }));
+  };
+
   return (
     <>
       <div className="categoryEditor">
         <div className="categoryEditor__title">
-          <Label1 data={categoryLabelData} />
+          <Label2 name="카테고리 수정:" />
         </div>
         <div className="categoryEditor__settingButtons">
           <div className="settingButtons">
-            <Button1 data={moveUpSelectedCategoryButtonData} />
-            <Button1 data={moveDownSelectedCategoryButtonData} />
-            <Button1 data={createNewCategoryButtonData} />
-            <Button1 data={deleteSelectedCategoryButtonData} />
-            <Button1 data={setSelectedCategoryAsRepresentativeButtonData} />
-            <Button1 data={changeSelectedCategoryNameButtonData} />
+            <Button2
+              className="settingButtons__button"
+              name="up"
+              onClick={handleClickMoveUpSelectedCategoryButton}
+            />
+            <Button2
+              className="settingButtons__button"
+              name="down"
+              onClick={handleClickMoveDownSelectedCategoryButton}
+            />
+            <Button2
+              className="settingButtons__button"
+              name="+"
+              onClick={handleClickCreateNewCategoryButton}
+              disabled={isDisabled.createNewCategoryButton}
+            />
+            <Button2
+              className="settingButtons__button"
+              name="-"
+              onClick={handleClickDeleteSelectedCategoryButton}
+            />
+            <Button2
+              className="settingButtons__button"
+              name="대표로 설정"
+              onClick={handleClickSelectedCategoryAsRepresentativeButton}
+            />
+            <Button2
+              name="이름 변경"
+              onClick={handleClickChangeSelectedCategoryNameButton}
+            />
           </div>
         </div>
         <div className="categoryEditor__categoryList">
@@ -422,17 +420,34 @@ export default function CategoryEditor({ setCategoryData }) {
         {isStepForNamingNewCategory ? (
           <div className="categoryEditor__newCategoryCreator">
             <div className="newCategoryCreator">
-              <InputText1
-                data={newCategoryTextInputData}
+              <InputText2
+                className="newCategoryCreator__newCategoryNameTextInput"
+                value={newCategoryTextInputValue}
+                onChange={handleChangeNewCategoryTextInput}
                 ref={newCategoryTextInputRef}
               />
-              <Button1 data={completeCreatingNewCategoryButtonData} />
-              <Button1 data={cancelCreatingNewCategoryButtonData} />
+              <Button2
+                name="확인"
+                onClick={handleClickCompleteCreatingNewCategoryButton}
+              />
+              <Button2
+                name="취소"
+                onClick={handleClickCancelCreatingNewCategoryButton}
+              />
             </div>
           </div>
         ) : null}
-        <div className="categoryEditor__submitButton">
-          <Button1 data={categorySubmitButtonData} />
+        <div className="categoryEditor__buttons">
+          <Button2
+            className="settingButtons__button"
+            name="취소"
+            onClick={handleClickBackToPreviousCategoryDataButton}
+          />
+          <Button2
+            className="settingButtons__button"
+            name="확인"
+            onClick={handleClickSubmitEditedCategoryButton}
+          />
         </div>
       </div>
     </>

@@ -1,47 +1,17 @@
 import "./PostViewer.scss";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
-import QuillEditor from "../../lib/Quill/Quill.jsx";
-import { POST_API, POST_EDIT_PAGE } from "../../URL";
+import { POST_API } from "../../URL";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
 import PostTitle from "../postTitle/PostTitle.jsx";
 import PostCategoryBar from "../postCategoryBar/PostCategoryBar.jsx";
+import QuillViewer from "../../lib/Quill/QuillViewer.jsx";
 
-export default function PostViewer({ _id, setCategoryData, mode, isGod }) {
-  const navigate = useNavigate();
+export default function PostViewer({ mode, _id, setCategoryData, isGod }) {
   const [post, setPost] = useState({ title: "", content: "", category: "" });
-  const viewerRef = useRef(null);
+  // const viewerRef = useRef(null);
 
   // mount function
-  async function handleClickDeletePostButton() {
-    const answer = prompt("게시물을 삭제하시겠습니까?");
-
-    if (answer === null) {
-      return;
-    }
-
-    try {
-      const response = await api.delete(POST_API(_id));
-      const status = response.status;
-
-      if (status === 200) {
-        alert("삭제 완료");
-        navigate("/");
-
-        return;
-      } else {
-        console.log(status);
-
-        return;
-      }
-    } catch (error) {
-      alert("삭제 실패(통신 오류)");
-
-      console.log(error);
-    }
-  }
-
   async function getPost() {
     try {
       const response = await api.get(POST_API(_id));
@@ -49,21 +19,18 @@ export default function PostViewer({ _id, setCategoryData, mode, isGod }) {
       const post = response.data;
 
       if (status === 200) {
-        setPost((prev) => ({ ...prev, post }));
+        setPost((prev) => ({
+          ...prev,
+          title: post.title,
+          content: post.content,
+          category: post.category,
+        }));
       } else {
-        console.log("get, /post:id 요청 실패", "status: ", status);
+        console.log(status);
       }
     } catch (error) {
       console.log(error);
     }
-  }
-
-  // handler function
-  const setPostContent = (newPostContent) =>
-    setPost((prevPost) => ({ ...prevPost, content: newPostContent }));
-
-  function handleClickEditPostButton() {
-    navigate(POST_EDIT_PAGE(_id));
   }
 
   // useEffect
@@ -71,11 +38,9 @@ export default function PostViewer({ _id, setCategoryData, mode, isGod }) {
     getPost();
   }, []);
 
-  const postViewerData = {
-    value: post.content,
-    onChange: setPostContent,
-    readOnly: true,
-  };
+  // handler function
+  const handleChangPostContent = (newPostContent) =>
+    setPost((prev) => ({ ...prev, content: newPostContent }));
 
   return (
     <>
@@ -89,13 +54,17 @@ export default function PostViewer({ _id, setCategoryData, mode, isGod }) {
           />
         </div>
         <div className="postViewer__postTitle">
-          <PostTitle mode={mode} postTitle={post.title} />
+          <PostTitle mode={mode} postTitle={post.title} post={post} />
         </div>
         <div className="postViewer__postCategoryBar">
-          <PostCategoryBar postCategory={post.category} mode={mode} />
+          <PostCategoryBar
+            mode={mode}
+            postCategory={post.category}
+            post={post}
+          />
         </div>
         <div className="postViewer__viewer">
-          <QuillEditor data={postViewerData} ref={viewerRef} />
+          <QuillViewer value={post.content} onChange={handleChangPostContent} />
         </div>
       </div>
     </>

@@ -104,6 +104,7 @@ export default function PostList({
   }
 
   useEffect(() => {
+    console.log(selectedCategory, searchString);
     if (categoryData.length === 1) {
       // 아직 카테고리 데이터가 업데이트되지 않은 경우
       return;

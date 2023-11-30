@@ -9,12 +9,16 @@ export default function ToolBar({
 }) {
   return (
     <div className="toolBar">
-      <Searcher />
-      <SortingSelector
-        sortingMedthodData={sortingMedthodData}
-        selectedSortingMedthod={selectedSortingMedthod}
-        setSelectedSortingMedthod={setSelectedSortingMedthod}
-      />
+      <div className="toolBar__searcher">
+        <Searcher />
+      </div>
+      <div className="toolBar__sortingSelector">
+        <SortingSelector
+          sortingMedthodData={sortingMedthodData}
+          selectedSortingMedthod={selectedSortingMedthod}
+          setSelectedSortingMedthod={setSelectedSortingMedthod}
+        />
+      </div>
     </div>
   );
 }

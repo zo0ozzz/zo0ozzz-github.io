@@ -1,46 +1,49 @@
 import "./SortingSelector.scss";
 import { useState, useEffect } from "react";
-import Label1 from "../label/Label1";
-import Select1 from "../select1/Select1";
+import Label2 from "../label2/Label2";
+import Select2 from "../select2/Select2";
 
-export default function SortingSelector({
+const SortingSelector = ({
   sortingMedthodData,
   selectedSortingMedthod,
   setSelectedSortingMedthod,
-}) {
+}) => {
   const [selectValue, setSelectValue] = useState("");
+  const selectId = "select";
 
+  // useEffect
   useEffect(() => {
     setSelectValue(selectedSortingMedthod);
   }, [selectedSortingMedthod]);
 
+  // handler function
   function handleChangeSelect(e) {
     const sortingMedthod = e.target.value;
 
     setSelectedSortingMedthod(sortingMedthod);
   }
 
-  const selectId = "select";
-
-  const sortingSelectorData = {
-    label: {
-      name: "정렬:",
-      htmlFor: selectId,
-      className: "sortingSelector__label",
-    },
-    select: {
-      value: selectValue,
-      onChange: handleChangeSelect,
-      id: selectId,
-      option: sortingMedthodData,
-      className: "sortingSelector__select",
-    },
-  };
+  // component props
+  const optionFunction = (data) =>
+    data.map((item) => <option vlaue={item.name}>{item.name}</option>);
 
   return (
     <span className="sortingSelector">
-      <Label1 data={sortingSelectorData.label} />
-      <Select1 data={sortingSelectorData.select} />
+      <Label2
+        className="sortingSelector__label"
+        name="정렬:"
+        htmlFor={selectId}
+      />
+      <Select2
+        className="sortingSelector__select"
+        value={selectValue}
+        onChange={handleChangeSelect}
+        id={selectId}
+        optionData={sortingMedthodData}
+        optionFunction={optionFunction}
+      />
     </span>
   );
-}
+};
+
+export default SortingSelector;

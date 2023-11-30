@@ -1,62 +1,76 @@
 import "./Searcher.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import InputButton1 from "../inputButton1/InputButton1";
-import InputText1 from "../inputText1/InputText1";
-import Label1 from "../label/Label1";
+import Label2 from "../label2/Label2";
+import InputText2 from "../inputText2/InputText2";
+import Button2 from "../button2/Button2";
 
-export default function () {
+const Searcher = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchQueryTextInputId = "searchQueryTextInput";
+  const searchQueryTextInputRef = useRef(null);
+  const submitButton = useRef(null);
 
-  const [textInputValue, settextInputValue] = useState("");
-
-  const searcherData = {
-    label: {
-      name: "검색:",
-      htmlFor: "searchTextInput",
-      className: "searcher__label",
-    },
-    textInput: {
-      type: "text",
-      id: "searchTextInput",
-      autoComplete: "off",
-      value: textInputValue,
-      onChange: handleChangeTextInput,
-      className: "searcher__textInput",
-    },
-    submitInput: {
-      type: "submit",
-      value: "확인",
-      onClick: handleClickSubmitInput,
-      className: "searcher__submitButton",
-    },
-  };
-
-  function handleChangeTextInput(e) {
+  // handler function
+  const handleChangeSearchQueryTextInput = (e) => {
     const value = e.target.value;
 
-    settextInputValue(value);
-  }
+    setSearchQuery(value);
 
-  function handleClickSubmitInput(e) {
-    e.preventDefault();
+    return;
+  };
 
-    if (textInputValue === "") {
+  const handleClickSubmitButton = () => {
+    if (searchQuery === "") {
       alert("검색어를 입력해주세요.");
 
       return;
     }
 
-    navigate("/search?searchString=" + textInputValue);
-  }
+    navigate("/search?searchString=" + searchQuery);
+  };
+
+  const handleKeyDownSearchQueryTextInput = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      submitButton.current.click();
+    }
+  };
 
   return (
-    <>
-      <div className="searcher">
-        <Label1 data={searcherData.label} />
-        <InputText1 data={searcherData.textInput} ref={null} />
-        <InputButton1 data={searcherData.submitInput} />
-      </div>
-    </>
+    <div className="searcher">
+      <Label2
+        className="searcher__label"
+        name="검색:"
+        htmlFor={searchQueryTextInputId}
+      />
+      <InputText2
+        className="searcher__searchQueryTextInput"
+        value={searchQuery}
+        onChange={handleChangeSearchQueryTextInput}
+        onKeyDown={handleKeyDownSearchQueryTextInput}
+        id={searchQueryTextInputId}
+        ref={searchQueryTextInputRef}
+      />
+      {/* <Button2
+        className="searcher__submitButton"
+        name="확인"
+        onClick={handleClickSubmitButton}
+        ref={submitButton}
+      /> */}
+      {/* - 여기 ref 넣으려면 모든 버튼 컴포넌트 다 찾아다니면서 넣어야 돼서 그냥 이걸로 대체 */}
+      <button
+        className="button searcher__submitButton"
+        name="확인"
+        onClick={handleClickSubmitButton}
+        ref={submitButton}
+      >
+        확인
+      </button>
+    </div>
   );
-}
+};
+
+export default Searcher;

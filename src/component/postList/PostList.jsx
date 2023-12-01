@@ -10,22 +10,31 @@ export default function PostList({
   categoryData,
   representativeCategoryName,
 }) {
-  const { selectedCategory } = useParams();
+  const { categoryName } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("searchQuery");
-  const [postsData, setPostsData] = useState([]);
   const [posts, setPosts] = useState([]);
 
   // mount function
-  const getCategoryPosts = async (selectedCategory) => {
+  const getSortedPosts = (posts) => {
+    const sortingFunc = sortingMedthodData.find(
+      (item) => item.value === selectedSortingMedthod
+    ).sortingFunc;
+
+    const sortedPosts = sortingFunc(posts);
+
+    return sortedPosts;
+  };
+
+  const getCategoryPosts = async (categoryName) => {
     try {
-      const response = await api.get("/post/categories/" + selectedCategory);
+      const response = await api.get("/post/categories/" + categoryName);
       const status = response.status;
       const { categoryPosts } = response.data;
 
       if (status === 200) {
-        setPostsData((prev) => categoryPosts);
+        setPosts((prev) => getSortedPosts(categoryPosts));
       } else {
         console.log(status);
       }
@@ -34,67 +43,50 @@ export default function PostList({
     }
   };
 
-  async function getSearchPosts() {
+  const getSearchPosts = async (searchQuery) => {
     try {
       const response = await api.get("/post/search?searchQuery=" + searchQuery);
       const status = response.status;
       const { searchPosts } = response.data;
 
       if (status === 200) {
-        setPostsData((prev) => searchPosts);
+        setPosts((prev) => getSortedPosts(searchPosts));
       } else {
         console.log(status);
       }
     } catch (error) {
       console.log(error.status);
     }
-  }
-
-  const getSortedPosts = (postsData) => {
-    const sortingFunc = sortingMedthodData.find(
-      (item) => item.value === selectedSortingMedthod
-    ).sortingFunc;
-
-    const sortedPosts = sortingFunc(postsData);
-
-    return sortedPosts;
   };
 
+  // useEffect
   useEffect(() => {
+    // 카테고리 데이터가 초기값인(아직 업데이트되지 않은) 경우
     if (categoryData.length === 1) {
-      // 아직 카테고리 데이터가 업데이트되지 않은 경우
+      // - 아무 동작도 하지 않음.
       return;
     }
 
-    if (!selectedCategory && !searchQuery) {
-      // - url이 '/'(홈)이면 이쪽으로
-      // - 대표 카테고리의 자료들이 뿌려짐
-
+    // 홈 페이지에서 렌더링된 경우
+    if (!categoryName && !searchQuery) {
+      // - url이 '/'(홈)이면 이쪽으로 오게 됨.
+      //  - categoryName -> undifined, searchQuery -> null 할당.
       getCategoryPosts(representativeCategoryName);
-
-      return;
+      // - 대표 카테고리가 호출되어 posts를 구성.
     }
 
-    if (selectedCategory) {
-      // 카테고리를 클릭해서 들어온 경우
-      getCategoryPosts(selectedCategory);
-
-      return;
+    // 카테고리 페이지에서 렌더링된 경우
+    if (categoryName) {
+      getCategoryPosts(categoryName);
+      // - 해당 카테고리가 호출되어 posts를 구성.
     }
 
+    // search 페이지에서 렌더링된 경우
     if (searchQuery) {
-      // 내용 검색으로 들어온 경우
-      getSearchPosts();
-
-      return;
+      getSearchPosts(searchQuery);
+      // - 검색어로 찾은 post들로 posts를 구성.
     }
-  }, [representativeCategoryName, selectedCategory, searchQuery]);
-
-  useEffect(() => {
-    const sortedPostsData = getSortedPosts(postsData);
-
-    setPosts((prev) => sortedPostsData);
-  }, [postsData, selectedSortingMedthod]);
+  }, [representativeCategoryName, categoryName, searchQuery]);
 
   // element
   const list = posts.map((post, index) => {
@@ -112,31 +104,72 @@ export default function PostList({
     }
 
     return (
-      <Link to={"/posts/" + post._id} className="link" key={index}>
-        <section className="postList__post">
-          <h1 className="subject">{post.title}</h1>
-          <div className="number">#{post.number}</div>
-          <time className="date">{convertDate(post.createDate)}</time>
-        </section>
-      </Link>
+      <div className="list__postBox">
+        <div class="postBox">
+          <Link
+            to={"/posts/" + post._id}
+            className="link postBox__link"
+            key={index}
+          >
+            <section className="postBox__postInfoWrapper">
+              <h1 className="postBox__title">{post.title}</h1>
+              <div className="postBox__number">#{post.number}</div>
+              <time className="postBox__createDate">
+                {convertDate(post.createDate)}
+              </time>
+            </section>
+          </Link>
+        </div>
+      </div>
     );
   });
 
   return (
-    <div classNama="postList">
-      {searchQuery ? (
-        <div className="postList__searchInfo">
-          <div className="searchInfo">
-            <Label2 className="searchInfo__label" name="검색어: " />
-            <p className="searchInfo__searchQuery">{searchQuery}</p>
-            {posts[0] === undefined ? (
-              <p className="searchInfo__message">검색된 게시물이 없습니다.</p>
-            ) : null}
-          </div>
-        </div>
-      ) : null}
-      {list}
-      {/* <main className="home-contentList_container">{postsList}</main> */}
+    <div className="postList">
+      <div className="postList__resultInfo">
+        <ResultInfo
+          searchQuery={searchQuery}
+          categoryName={categoryName}
+          posts={posts}
+        />
+        {/* - 이거 상위 컴포넌트로 옮겨야 하는데 옮기면 따라 옮겨야 될 게 많아서 일단 분리만 해둠. */}
+      </div>
+      <div className="postList__list">
+        <div className="list">{list}</div>
+      </div>
     </div>
   );
 }
+
+const ResultInfo = ({ categoryName, searchQuery, posts }) => {
+  const message = {
+    search: "게시물 없음 ㅠㅠ",
+    category: "게시물 없음 ㅠㅠ",
+  };
+
+  return (
+    <>
+      {categoryName ? (
+        <div className="resultInfo">
+          {posts[0] === undefined ? (
+            <div className="resultInfo__messageWrapper">
+              <p className="resultInfo__message">{message.category}</p>
+            </div>
+          ) : null}
+        </div>
+      ) : searchQuery ? (
+        <div className="resultInfo">
+          <div className="resultInfo__wrapper">
+            <Label2 className="resultInfo__label" name="검색어: " />
+            <p className="resultInfo__searchQuery">{searchQuery}</p>
+          </div>
+          {posts[0] === undefined ? (
+            <div className="resultInfo__messageWrapper">
+              <p className="resultInfo__message">{message.search}</p>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+    </>
+  );
+};

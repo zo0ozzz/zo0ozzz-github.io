@@ -1,55 +1,80 @@
-// .postList-info {
-//   font-weight: bold;
-
-//   margin-top: 5px;
-// }
-
 .postList {
-  width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-  display: grid;
-  grid-template-columns: repeat(auto-fill, calc(870px / 4));
-  grid-gap: 10px;
-  justify-content: center;
-
-  margin: 0 auto;
-
-  &__post {
-  }
-
-  .contentList {
-    padding: 5px;
-
-    border: 1px solid;
-
-    cursor: pointer;
-
-    .number {
-      text-align: right;
-
-      margin-top: 5px;
-    }
-
-    .subject {
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-
-      height: calc(1.2em * 3);
+  &__resultInfo {
+    .resultInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
       font-weight: bold;
-      word-break: break-all;
 
-      overflow: hidden;
-      text-overflow: ellipsis;
+      &__wrapper {
+        display: flex;
+        gap: 5px;
+      }
+
+      &__messageWrapper {
+      }
+
+      &__message {
+        display: inline-block;
+
+        padding: 2px 0;
+
+        background-color: whitesmoke;
+      }
     }
+  }
 
-    .date {
-      display: block;
+  &__list {
+    .list {
+      width: 900px;
 
-      text-align: right;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, calc(870px / 4));
+      grid-gap: 10px;
+      justify-content: center;
 
-      margin-top: 5px;
+      margin: 0 auto;
+
+      &__postBox {
+        .postBox {
+          border: 1px solid;
+
+          padding: 5px;
+
+          &__postInfoWrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+          }
+
+          &__title {
+            height: calc(1.2em * 3);
+
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+
+            font-weight: bold;
+            word-break: break-all;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          &__number {
+            text-align: end;
+          }
+
+          &__createDate {
+            text-align: end;
+          }
+        }
+      }
     }
   }
 }

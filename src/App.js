@@ -109,7 +109,7 @@ function App() {
             element={<Login isGod={isGod} setIsGod={setIsGod} />}
           />
           <Route
-            path={CATEGORY_PAGE(":selectedCategory")}
+            path={CATEGORY_PAGE(":categoryName")}
             element={
               <Category
                 selectedSortingMedthod={selectedSortingMedthod}
@@ -137,12 +137,14 @@ function App() {
           <Route
             path={POST_VIEW_PAGE(":_id")}
             element={
-              <Post
-                mode={"view"}
-                categoryData={categoryData}
-                setCategoryData={setCategoryData}
-                isGod={isGod}
-              />
+              <>
+                <Post
+                  mode={"view"}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
+                  isGod={isGod}
+                />
+              </>
             }
           />
           <Route

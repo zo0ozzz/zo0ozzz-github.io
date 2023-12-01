@@ -2,6 +2,7 @@ import "./PostList.scss";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../../lib/axios/axios.js";
+import Label2 from "../label2/Label2.jsx";
 
 export default function PostList({
   sortingMedthodData,
@@ -96,7 +97,7 @@ export default function PostList({
   }, [postsData, selectedSortingMedthod]);
 
   // element
-  const postsList = posts.map((post, index) => {
+  const list = posts.map((post, index) => {
     function convertDate(dateString) {
       // ex) dateString = 20230318목121212
       const year = dateString.slice(2, 4);
@@ -112,7 +113,7 @@ export default function PostList({
 
     return (
       <Link to={"/posts/" + post._id} className="link" key={index}>
-        <section className="contentList">
+        <section className="postList__post">
           <h1 className="subject">{post.title}</h1>
           <div className="number">#{post.number}</div>
           <time className="date">{convertDate(post.createDate)}</time>
@@ -122,12 +123,20 @@ export default function PostList({
   });
 
   return (
-    <>
+    <div classNama="postList">
       {searchQuery ? (
-        <span className="postList-info">검색어: {searchQuery}</span>
+        <div className="postList__searchInfo">
+          <div className="searchInfo">
+            <Label2 className="searchInfo__label" name="검색어: " />
+            <p className="searchInfo__searchQuery">{searchQuery}</p>
+            {posts[0] === undefined ? (
+              <p className="searchInfo__message">검색된 게시물이 없습니다.</p>
+            ) : null}
+          </div>
+        </div>
       ) : null}
-
-      <main className="home-contentList_container">{postsList}</main>
-    </>
+      {list}
+      {/* <main className="home-contentList_container">{postsList}</main> */}
+    </div>
   );
 }

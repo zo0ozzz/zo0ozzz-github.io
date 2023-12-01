@@ -1,0 +1,11 @@
+.otherPosts {
+  &__info {
+    display: inline-block;
+
+    font-size: 95%;
+
+    &:hover {
+      color: gray;
+    }
+  }
+}

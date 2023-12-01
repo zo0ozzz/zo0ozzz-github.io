@@ -2,49 +2,58 @@ import "./PostViewer.scss";
 import { useState, useEffect, useRef } from "react";
 import api from "../../lib/axios/axios.js";
 import { POST_API } from "../../URL";
+import OtherPosts from "../otherPosts/OtherPosts.jsx";
 import PostToolBar from "../postToolBar/PostToolBar.jsx";
 import PostTitle from "../postTitle/PostTitle.jsx";
 import PostCategoryBar from "../postCategoryBar/PostCategoryBar.jsx";
 import QuillViewer from "../../lib/Quill/QuillViewer.jsx";
 
 export default function PostViewer({ mode, _id, setCategoryData, isGod }) {
-  const [post, setPost] = useState({ title: "", content: "", category: "" });
-  // const viewerRef = useRef(null);
+  const [posts, setPosts] = useState({
+    prev: {},
+    current: {},
+    next: {},
+  });
+  const post = posts.current;
 
   // mount function
-  async function getPost() {
+  const getPosts = async (_id) => {
     try {
-      const response = await api.get(POST_API(_id));
+      console.log(_id);
+      const response = await api.get("/post/test/" + _id);
       const status = response.status;
-      const post = response.data;
+      const data = response.data;
 
       if (status === 200) {
-        setPost((prev) => ({
-          ...prev,
-          title: post.title,
-          content: post.content,
-          category: post.category,
-        }));
+        const newPosts = data.posts;
+
+        setPosts((prev) => ({ ...prev, ...newPosts }));
       } else {
         console.log(status);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  }
+  };
 
   // useEffect
   useEffect(() => {
-    getPost();
-  }, []);
+    getPosts(_id);
+  }, [_id]);
 
   // handler function
   const handleChangPostContent = (newPostContent) =>
-    setPost((prev) => ({ ...prev, content: newPostContent }));
+    setPosts((prev) => ({
+      ...prev,
+      current: { ...prev.current, content: newPostContent },
+    }));
 
   return (
     <>
       <div className="postViewer">
+        <div className="postViewer__otherPosts--top">
+          <OtherPosts posts={posts} />
+        </div>
         <div className="postViewer__postToolbar">
           <PostToolBar
             mode={mode}
@@ -65,6 +74,9 @@ export default function PostViewer({ mode, _id, setCategoryData, isGod }) {
         </div>
         <div className="postViewer__viewer">
           <QuillViewer value={post.content} onChange={handleChangPostContent} />
+        </div>
+        <div className="postViewer__otherPosts--bottom">
+          <OtherPosts posts={posts} />
         </div>
       </div>
     </>

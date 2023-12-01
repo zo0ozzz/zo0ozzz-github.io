@@ -3,6 +3,16 @@
   flex-direction: column;
   gap: 5px;
 
+  &__otherPosts {
+    &--top {
+      margin-bottom: 10px;
+    }
+
+    &--bottom {
+      margin-top: 10px;
+    }
+  }
+
   &__postToolbar {
     display: flex;
     justify-content: end;

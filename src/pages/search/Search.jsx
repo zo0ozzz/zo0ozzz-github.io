@@ -10,6 +10,7 @@ export default function Search({
   setSelectedSortingMedthod,
   categoryData,
   setCategoryData,
+  representativeCategoryName,
 }) {
   return (
     <>
@@ -28,6 +29,7 @@ export default function Search({
         selectedSortingMedthod={selectedSortingMedthod}
         setSelectedSortingMedthod={setSelectedSortingMedthod}
         categoryData={categoryData}
+        representativeCategoryName={representativeCategoryName}
       />
     </>
   );

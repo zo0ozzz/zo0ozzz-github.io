@@ -9,6 +9,7 @@ export default function Category({
   setSelectedSortingMedthod,
   categoryData,
   setCategoryData,
+  representativeCategoryName,
 }) {
   return (
     <>
@@ -27,6 +28,7 @@ export default function Category({
         selectedSortingMedthod={selectedSortingMedthod}
         setSelectedSortingMedthod={setSelectedSortingMedthod}
         categoryData={categoryData}
+        representativeCategoryName={representativeCategoryName}
       />
     </>
   );

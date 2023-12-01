@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Label2 from "../label2/Label2";
 import InputText2 from "../inputText2/InputText2";
-import Button2 from "../button2/Button2";
+import ButtonRef from "../buttonWithRef/ButtonRef";
 
 const Searcher = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Searcher = () => {
       return;
     }
 
-    navigate("/search?searchString=" + searchQuery);
+    navigate("/search?searchQuery=" + searchQuery);
   };
 
   const handleKeyDownSearchQueryTextInput = (e) => {
@@ -54,21 +54,12 @@ const Searcher = () => {
         id={searchQueryTextInputId}
         ref={searchQueryTextInputRef}
       />
-      {/* <Button2
+      <ButtonRef
         className="searcher__submitButton"
         name="확인"
         onClick={handleClickSubmitButton}
         ref={submitButton}
-      /> */}
-      {/* - 여기 ref 넣으려면 모든 버튼 컴포넌트 다 찾아다니면서 넣어야 돼서 그냥 이걸로 대체 */}
-      <button
-        className="button searcher__submitButton"
-        name="확인"
-        onClick={handleClickSubmitButton}
-        ref={submitButton}
-      >
-        확인
-      </button>
+      />
     </div>
   );
 };

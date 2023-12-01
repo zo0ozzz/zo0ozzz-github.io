@@ -117,6 +117,7 @@ function App() {
                 sortingMedthodData={sortingMedthodData}
                 categoryData={categoryData}
                 setCategoryData={setCategoryData}
+                representativeCategoryName={representativeCategoryName}
               />
             }
           />
@@ -129,6 +130,7 @@ function App() {
                 sortingMedthodData={sortingMedthodData}
                 categoryData={categoryData}
                 setCategoryData={setCategoryData}
+                representativeCategoryName={representativeCategoryName}
               />
             }
           />

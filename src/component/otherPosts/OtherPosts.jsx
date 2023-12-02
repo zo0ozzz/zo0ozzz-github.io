@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const OtherPosts = ({ posts }) => {
   return (
     <div className="otherPosts">
-      <div otehrPosts__prevPost>
+      <div className="otehrPosts__prevPost">
         {posts.prev !== null ? (
           <Link
             className="link otherPosts__link"
@@ -18,7 +18,10 @@ const OtherPosts = ({ posts }) => {
       </div>
       <div otherPosts__nextPost>
         {posts.next !== null ? (
-          <Link className="link otherPosts__link" to="/posts/4">
+          <Link
+            className="link otherPosts__link"
+            to={`/posts/${posts.next._id}`}
+          >
             <p className="otherPosts__info otherPosts__info--next">
               다음 글: {posts.next.title}
             </p>

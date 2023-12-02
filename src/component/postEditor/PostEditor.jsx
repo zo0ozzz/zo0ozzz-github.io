@@ -89,9 +89,11 @@ export default function PostEditor({
           inputValue: imageBound.width,
         }));
 
-        setTimeout(() => {
+        const setTimeoutId = setTimeout(() => {
           setImageResize((prev) => ({ ...prev, isPrompt: true }));
         }, 0);
+
+        return () => clearTimeout(setTimeoutId);
       }
     });
   }, []);

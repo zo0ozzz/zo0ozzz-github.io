@@ -20,8 +20,11 @@ import Post from "./pages/post/Post";
 import God from "./pages/god/God";
 import Test from "./pages/test/Test";
 import Login from "./pages/login/Login";
+import { createPortal } from "react-dom";
+import Modal from "./component/modal/Modal";
 
 function App() {
+  const [isMemo, setIsMemo] = useState(false);
   const [isGod, setIsGod] = useState(true);
   const [isGodPage, setIsGodPage] = useState(false);
   const sortingMedthodData = [
@@ -88,8 +91,27 @@ function App() {
 
   return (
     <>
-      <div className="app">
-        <Header isGod={isGod} setIsGod={setIsGod} isGodPage={isGodPage} />
+      <div
+        className="app"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            e.preventDefault();
+
+            setIsMemo((prev) => !prev);
+          }
+        }}
+      >
+        {isMemo
+          ? createPortal(<Modal />, document.querySelector("#modal"))
+          : null}
+        <Header
+          isGod={isGod}
+          setIsGod={setIsGod}
+          isGodPage={isGodPage}
+          isMemo={isMemo}
+          setIsMemo={setIsMemo}
+        />
         <Routes>
           <Route
             path={HOME_PAGE}

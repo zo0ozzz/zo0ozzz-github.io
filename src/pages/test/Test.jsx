@@ -6,8 +6,6 @@ import QuillViewer from "../../lib/Quill/QuillViewer";
 import QuillEditor from "../../lib/Quill/QuillEditor";
 import Button2 from "../../component/button2/Button2";
 import ImageResizePrompt from "../../component/imageResizePrompt/ImageResizePrompt";
-import { createPortal } from "react-dom";
-import Modal from "../../component/modal/Modal";
 
 export default function Test() {
   return (
@@ -16,7 +14,7 @@ export default function Test() {
         <div className="test__messageBox">
           <p className="messageBox__message">{"<테스트 페이지>"}</p>
         </div>
-        <div>{createPortal(<Modal />, document.getElementById("modal"))}</div>
+        {/* <div>{createPortal(<Modal />, document.getElementById("modal"))}</div> */}
       </div>
     </>
   );

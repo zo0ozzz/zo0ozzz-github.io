@@ -4,7 +4,13 @@ import api from "../../lib/axios/axios";
 import { Link } from "react-router-dom";
 import { Nav } from "../nav/Nav";
 
-export default function PageHeader({ isGod, setIsGod, isGodPage }) {
+export default function PageHeader({
+  isGod,
+  setIsGod,
+  isGodPage,
+  isMemo,
+  setIsMemo,
+}) {
   const [blogName, setBlogName] = useState("");
 
   // mount function
@@ -50,7 +56,12 @@ export default function PageHeader({ isGod, setIsGod, isGodPage }) {
       </div>
       <div className="flexEmpty" />
       <div className="header__nav">
-        <Nav isGod={isGod} setIsGod={setIsGod} />
+        <Nav
+          isGod={isGod}
+          setIsGod={setIsGod}
+          isMemo={isMemo}
+          setIsMemo={setIsMemo}
+        />
       </div>
     </header>
   );

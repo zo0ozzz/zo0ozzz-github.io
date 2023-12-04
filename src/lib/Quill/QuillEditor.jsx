@@ -148,7 +148,8 @@ const QuillEditor = forwardRef(({ className, value, onChange }, ref) => {
 
   return (
     <ReactQuill
-      className={className}
+      // className={className}
+      className="quillPost"
       value={value}
       onChange={handleChangeQuillEditor}
       modules={modules}

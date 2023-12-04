@@ -4,7 +4,7 @@ import api from "../../lib/axios/axios.js";
 import Button2 from "../button2/Button2.jsx";
 import LinkLi2 from "../linkLi2/LinkLi2.jsx";
 
-export function Nav({ isGod, setIsGod }) {
+export function Nav({ isGod, setIsGod, isMemo, setIsMemo }) {
   const navigate = useNavigate();
 
   // handler function
@@ -37,9 +37,12 @@ export function Nav({ isGod, setIsGod }) {
 
   const handleClickCreatePostButton = () => navigate("/create");
 
+  const handleClickMemoSwitchButton = () => setIsMemo((prev) => !prev);
+
   // component rendering data
   const buttonListData = isGod
     ? [
+        { name: "memoSwitch", onClick: handleClickMemoSwitchButton },
         { name: "quitGodMode", onClick: handleClickLogoutButton },
         { name: "goTestPage", onClick: handleClickGoTestPageButton },
         { name: "goGodpage", onClick: handleClickSetBlogPageButton },

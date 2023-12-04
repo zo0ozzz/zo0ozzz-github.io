@@ -24,8 +24,12 @@ const SortingSelector = ({
   }
 
   // component props
-  const optionFunction = (data) =>
-    data.map((item) => <option vlaue={item.name}>{item.name}</option>);
+  const optionFunction = (data, index) =>
+    data.map((item) => (
+      <option vlaue={item.name} key={index}>
+        {item.name}
+      </option>
+    ));
 
   return (
     <span className="sortingSelector">

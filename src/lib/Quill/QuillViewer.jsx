@@ -81,7 +81,8 @@ const QuillViewer = ({ className, value, onChange }) => {
 
   return (
     <ReactQuill
-      className={className}
+      // className={className}
+      className="quillPost"
       value={value}
       onChange={handleChangeQuillViewer}
       modules={modules}

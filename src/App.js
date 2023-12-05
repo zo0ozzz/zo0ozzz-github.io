@@ -21,7 +21,7 @@ import God from "./pages/god/God";
 import Test from "./pages/test/Test";
 import Login from "./pages/login/Login";
 import { createPortal } from "react-dom";
-import Modal from "./component/modal/Modal";
+import Memo from "./component/memo/Memo";
 
 function App() {
   const [isMemo, setIsMemo] = useState(false);
@@ -103,7 +103,10 @@ function App() {
         }}
       >
         {isMemo
-          ? createPortal(<Modal />, document.querySelector("#modal"))
+          ? createPortal(
+              <Memo isMemo={isMemo} />,
+              document.querySelector("#memo")
+            )
           : null}
         <Header
           isGod={isGod}

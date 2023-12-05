@@ -1,5 +1,4 @@
-// import "./Quill.scss";
-// import "react-quill/dist/quill.snow.css";
+import "./QuillMemo.scss";
 import { forwardRef, useCallback, useMemo, useEffect } from "react";
 import ReactQuill from "react-quill";
 // import hljs from "../hljs/hljs.js";

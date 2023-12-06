@@ -104,7 +104,7 @@ function App() {
       >
         {isMemo
           ? createPortal(
-              <Memo isMemo={isMemo} />,
+              <Memo isMemo={isMemo} setIsMemo={setIsMemo} />,
               document.querySelector("#memo")
             )
           : null}

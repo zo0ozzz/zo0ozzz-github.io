@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Label2 from "../label2/Label2";
 import InputText2 from "../inputText2/InputText2";
-import ButtonRef from "../buttonWithRef/ButtonRef";
+import ButtonRef from "../buttonRef/ButtonRef";
 
 const Searcher = () => {
   const navigate = useNavigate();

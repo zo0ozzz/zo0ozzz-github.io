@@ -5,7 +5,7 @@ export default function Button2({
   name,
   onClick,
   disabled = false,
-  key,
+  key = 1,
 }) {
   return (
     <button

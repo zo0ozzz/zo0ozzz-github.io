@@ -2,7 +2,7 @@ import "./Memo.scss";
 import { useState, useRef, useEffect } from "react";
 import ButtonRef from "../buttonRef/ButtonRef";
 
-const Modal = ({ isMemo, setIsMemo }) => {
+const Memo = ({ isMemo, setIsMemo }) => {
   const [content, setContent] = useState("");
   // 드래그 중 요소에 대한 커서의 위치를 유지하기 위한 값(단차)
   const [correctionValue, setCorrectionValue] = useState({ x: 0, y: 0 });
@@ -36,8 +36,6 @@ const Modal = ({ isMemo, setIsMemo }) => {
   };
 
   const handleDragEnd = (e) => {
-    console.log("엔드", position.left);
-
     setIsDragging(false);
 
     localStorage.setItem(
@@ -65,9 +63,6 @@ const Modal = ({ isMemo, setIsMemo }) => {
   };
 
   useEffect(() => {
-    if (isMemo === false) return;
-
-    if (localStorage.getItem("memo") === null) setContent((prev) => "");
     if (localStorage.getItem("memo"))
       setContent((prev) => localStorage.getItem("memo"));
 
@@ -75,63 +70,66 @@ const Modal = ({ isMemo, setIsMemo }) => {
       setPosition((prev) => ({ left: 0, top: 0 }));
     if (localStorage.getItem("position"))
       setPosition((prev) => JSON.parse(localStorage.getItem("position")));
-  }, [isMemo]);
 
-  useEffect(() => {
-    console.log(1);
-    // if (contentRef.current === null) return;
+    const id = setTimeout(() => {
+      contentRef.current.focus();
+    }, 0);
 
-    // contentRef.current.focus();
-  }, [contentRef]);
+    return () => {
+      clearTimeout(id);
+      // document.querySelector(".app").focus();
+      // - ref로 해야 하는데,, 일단은.
+    };
+  }, []);
 
   return (
-    <>
-      {position.left !== null ? (
-        <div
-          className="memo"
-          tabIndex={0}
-          style={{ left: `${position.left}px`, top: `${position.top}px` }}
-          ref={memoRef}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") {
-              e.preventDefault();
-              e.stopPropagation();
+    <div
+      className="memo"
+      tabIndex={0}
+      style={
+        position.left === null
+          ? { display: "none" }
+          : { left: `${position.left}px`, top: `${position.top}px` }
+      }
+      ref={memoRef}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
 
-              closeButtonRef.current.click();
-            }
-          }}
+          closeButtonRef.current.click();
+        }
+      }}
+    >
+      <div className="memo__topBar">
+        <p
+          className="memo__label"
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDrag={handleDrag}
+          draggable="true"
         >
-          <div className="memo__topBar">
-            <p
-              className="memo__label"
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onDrag={handleDrag}
-              draggable="true"
-            >
-              메모
-            </p>
-            <ButtonRef
-              className="memo__closeButton"
-              name="x"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMemo(false);
-              }}
-              ref={closeButtonRef}
-            />
-          </div>
-          <textarea
-            className="textarea memo__content"
-            value={content}
-            onChange={handleChangeContent}
-            placeholder="쓸 때마다 자동으로 저장됩니다."
-            ref={contentRef}
-          />
-        </div>
-      ) : null}
-    </>
+          메모
+        </p>
+        <ButtonRef
+          className="memo__closeButton"
+          name="x"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsMemo(false);
+          }}
+          ref={closeButtonRef}
+        />
+      </div>
+      <textarea
+        className="textarea memo__content"
+        value={content}
+        onChange={handleChangeContent}
+        placeholder="쓸 때마다 자동으로 저장됩니다."
+        ref={contentRef}
+      />
+    </div>
   );
 };
 
-export default Modal;
+export default Memo;

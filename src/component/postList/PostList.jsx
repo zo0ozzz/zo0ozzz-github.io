@@ -104,13 +104,9 @@ export default function PostList({
     }
 
     return (
-      <div className="list__postBox">
-        <div class="postBox">
-          <Link
-            to={"/posts/" + post._id}
-            className="link postBox__link"
-            key={index}
-          >
+      <div className="list__postBox" key={index}>
+        <div className="postBox">
+          <Link to={"/posts/" + post._id} className="link postBox__link">
             <section className="postBox__postInfoWrapper">
               <h1 className="postBox__title">{post.title}</h1>
               <div className="postBox__number">#{post.number}</div>

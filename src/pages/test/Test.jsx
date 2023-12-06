@@ -14,7 +14,6 @@ export default function Test() {
         <div className="test__messageBox">
           <p className="messageBox__message">{"<테스트 페이지>"}</p>
         </div>
-        {/* <div>{createPortal(<Modal />, document.getElementById("modal"))}</div> */}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import "./App.scss";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import api from "./lib/axios/axios";
 import {
@@ -89,22 +89,28 @@ function App() {
     return;
   }, [categoryData]);
 
+  useEffect(() => {
+    const handleKeyDownBody = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+
+        setIsMemo((prev) => !prev);
+      }
+    };
+
+    const body = document.querySelector("body");
+
+    body.addEventListener("keydown", handleKeyDownBody);
+
+    return () => body.removeEventListener("keydown", handleKeyDownBody);
+  }, []);
+
   return (
     <>
-      <div
-        className="app"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") {
-            e.preventDefault();
-
-            setIsMemo((prev) => !prev);
-          }
-        }}
-      >
+      <div className="app">
         {isMemo
           ? createPortal(
-              <Memo isMemo={isMemo} setIsMemo={setIsMemo} />,
+              <Memo setIsMemo={setIsMemo} />,
               document.querySelector("#memo")
             )
           : null}

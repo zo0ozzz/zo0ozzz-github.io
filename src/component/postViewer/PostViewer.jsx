@@ -19,7 +19,6 @@ export default function PostViewer({ mode, _id, setCategoryData, isGod }) {
   // mount function
   const getPosts = async (_id) => {
     try {
-      console.log(_id);
       const response = await api.get("/post/test/" + _id);
       const status = response.status;
       const data = response.data;

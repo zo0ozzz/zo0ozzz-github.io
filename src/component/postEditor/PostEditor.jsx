@@ -26,6 +26,7 @@ export default function PostEditor({
     position: { top: 0 },
   });
   const editorRef = useRef(null);
+  const timeoutId = useRef(null);
 
   // mount function
   async function getPost() {
@@ -66,7 +67,7 @@ export default function PostEditor({
     const quillInstance = editorRef.current.getEditor();
     const editorBody = editorRef.current.getEditor().root;
 
-    editorBody.addEventListener("click", (e) => {
+    const handleClick = (e) => {
       const target = e.target;
 
       if (target.tagName !== "IMG") {
@@ -89,13 +90,20 @@ export default function PostEditor({
           inputValue: imageBound.width,
         }));
 
-        const setTimeoutId = setTimeout(() => {
+        if (timeoutId.current) clearTimeout(timeoutId.current);
+
+        timeoutId.current = setTimeout(() => {
           setImageResize((prev) => ({ ...prev, isPrompt: true }));
         }, 0);
-
-        return () => clearTimeout(setTimeoutId);
       }
-    });
+    };
+
+    editorBody.addEventListener("click", handleClick);
+
+    return () => {
+      editorBody.removeEventListener("click", handleClick);
+      if (timeoutId.current) clearTimeout(timeoutId.current);
+    };
   }, []);
 
   // handler function

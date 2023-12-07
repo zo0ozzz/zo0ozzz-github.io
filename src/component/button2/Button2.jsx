@@ -5,14 +5,12 @@ export default function Button2({
   name,
   onClick,
   disabled = false,
-  key = 1,
 }) {
   return (
     <button
       className={`button ${className}`}
       onClick={onClick}
       disabled={disabled}
-      key={key}
     >
       {name}
     </button>

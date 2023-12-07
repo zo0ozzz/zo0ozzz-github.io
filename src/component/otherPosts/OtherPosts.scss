@@ -1,4 +1,45 @@
 .otherPosts {
+  &__postInfo {
+    display: flex;
+
+    font-size: 95%;
+
+    &--prevPost {
+      border-bottom: 1px solid;
+
+      padding-bottom: 3px;
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+
+    margin-right: 5px;
+  }
+
+  &__postTitle {
+    font-weight: bold;
+
+    &:hover {
+      color: gray;
+      text-decoration: underline;
+    }
+  }
+
+  &__prevPost {
+    border-bottom: 1px solid;
+
+    padding-bottom: 3px;
+  }
+
+  &__nextPost {
+    padding-top: 3px;
+  }
+
+  &__infoWrapper {
+    display: flex;
+  }
+
   &__info {
     display: inline-block;
 

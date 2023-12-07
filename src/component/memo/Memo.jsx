@@ -2,17 +2,52 @@ import "./Memo.scss";
 import { useState, useRef, useEffect } from "react";
 import ButtonRef from "../buttonRef/ButtonRef";
 
-const Memo = ({ isMemo, setIsMemo }) => {
+const Memo = ({ setIsMemo }) => {
   const [content, setContent] = useState("");
   // 드래그 중 요소에 대한 커서의 위치를 유지하기 위한 값(단차)
   const [correctionValue, setCorrectionValue] = useState({ x: 0, y: 0 });
   // 요소의 위치 결정 값
   const [position, setPosition] = useState({ left: null, top: null });
   const [isDragging, setIsDragging] = useState(false);
+  // - 지금은 딱히 쓸 일이 없는데.. 일단 놓아둠.
   const memoRef = useRef(null);
   const closeButtonRef = useRef(null);
   const contentRef = useRef(null);
 
+  // useEffect
+  useEffect(() => {
+    if (localStorage.getItem("memo"))
+      setContent((prev) => localStorage.getItem("memo"));
+
+    if (localStorage.getItem("position")) {
+      setPosition((prev) => JSON.parse(localStorage.getItem("position")));
+    } else {
+      setPosition((prev) => ({ left: 0, top: 0 }));
+    }
+
+    const id = setTimeout(() => {
+      contentRef.current.focus();
+    }, 0);
+
+    return () => {
+      clearTimeout(id);
+      // document.querySelector(".app").focus();
+      // - ref로 해야 하는데,, 일단은.
+    };
+  }, []);
+
+  // helper function
+  const getViewport = (pixelWidth, pixelHeight) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHight = window.innerHeight;
+
+    const vw = (pixelWidth / viewportWidth) * 100;
+    const vh = (pixelHeight / viewportHight) * 100;
+
+    return { left: vw, top: vh };
+  };
+
+  // handler function
   const handleChangeContent = (e) => {
     const value = e.target.value;
 
@@ -38,13 +73,10 @@ const Memo = ({ isMemo, setIsMemo }) => {
   const handleDragEnd = (e) => {
     setIsDragging(false);
 
-    localStorage.setItem(
-      "position",
-      JSON.stringify({
-        left: e.clientX - correctionValue.x,
-        top: e.clientY - correctionValue.y,
-      })
-    );
+    const left = e.clientX - correctionValue.x;
+    const top = e.clientY - correctionValue.y;
+
+    localStorage.setItem("position", JSON.stringify(getViewport(left, top)));
   };
 
   const handleDrag = (e) => {
@@ -54,52 +86,25 @@ const Memo = ({ isMemo, setIsMemo }) => {
     //  - 이건 브라우저의 기본 동작인 것 같다. dragEnd 이벤트가 발생하기 전에 발생한다.
     // - 0이 되는 경우엔 바로 return 시켜버리는 동작으로 position의 변화를 막는다.
     //  - e.client 값이 바뀌는 건 막을 수 없지만, 요소 위치 결정에 반영될 수 없게 만들면 되는 것.
-    //  - 어차피 요소의 위치는 position 값으로 결정되니까. 이 position 값만 변하지 않게 만들면 된다.
-    setPosition((prev) => ({
-      ...prev,
-      left: e.clientX - correctionValue.x,
-      top: e.clientY - correctionValue.y,
-    }));
+    //  - 어차피 요소의 위치는 position 값으로 결정되니까. 이 position
+    const left = e.clientX - correctionValue.x;
+    const top = e.clientY - correctionValue.y;
+
+    setPosition((prev) => getViewport(left, top));
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("memo"))
-      setContent((prev) => localStorage.getItem("memo"));
-
-    if (localStorage.getItem("position") === null)
-      setPosition((prev) => ({ left: 0, top: 0 }));
-    if (localStorage.getItem("position"))
-      setPosition((prev) => JSON.parse(localStorage.getItem("position")));
-
-    const id = setTimeout(() => {
-      contentRef.current.focus();
-    }, 0);
-
-    return () => {
-      clearTimeout(id);
-      // document.querySelector(".app").focus();
-      // - ref로 해야 하는데,, 일단은.
-    };
-  }, []);
+  const handleClickCloseButton = (e) => setIsMemo(false);
 
   return (
     <div
       className="memo"
-      tabIndex={0}
       style={
         position.left === null
-          ? { display: "none" }
-          : { left: `${position.left}px`, top: `${position.top}px` }
+          ? // - 메모창이 처음 위치에서 이동되는 모습을 보이지 않게 하기 위해.
+            { display: "none" }
+          : { left: `${position.left}vw`, top: `${position.top}vh` }
       }
       ref={memoRef}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          e.preventDefault();
-          e.stopPropagation();
-
-          closeButtonRef.current.click();
-        }
-      }}
     >
       <div className="memo__topBar">
         <p
@@ -108,16 +113,14 @@ const Memo = ({ isMemo, setIsMemo }) => {
           onDragEnd={handleDragEnd}
           onDrag={handleDrag}
           draggable="true"
+          // - 메모창의 상태바 잡고 옮기니까 여기만 드래그가 가능하게 하면 됨.
         >
           메모
         </p>
         <ButtonRef
           className="memo__closeButton"
           name="x"
-          onClick={(e) => {
-            e.preventDefault();
-            setIsMemo(false);
-          }}
+          onClick={handleClickCloseButton}
           ref={closeButtonRef}
         />
       </div>

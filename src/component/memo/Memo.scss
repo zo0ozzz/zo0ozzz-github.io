@@ -2,12 +2,16 @@
   width: 300px;
   height: 300px;
 
-  position: absolute;
+  position: fixed;
 
   display: flex;
   flex-direction: column;
 
   border: 1px solid black;
+
+  &:focus {
+    outline: none;
+  }
 
   &__topBar {
     display: flex;

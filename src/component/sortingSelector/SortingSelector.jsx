@@ -24,8 +24,8 @@ const SortingSelector = ({
   }
 
   // component props
-  const optionFunction = (data, index) =>
-    data.map((item) => (
+  const optionFunction = (data) =>
+    data.map((item, index) => (
       <option vlaue={item.name} key={index}>
         {item.name}
       </option>

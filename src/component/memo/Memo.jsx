@@ -8,11 +8,22 @@ const Memo = ({ setIsMemo }) => {
   const [correctionValue, setCorrectionValue] = useState({ x: 0, y: 0 });
   // 요소의 위치 결정 값
   const [position, setPosition] = useState({ left: null, top: null });
+  const [size, setSize] = useState({ width: 300, height: 300 });
   const [isDragging, setIsDragging] = useState(false);
   // - 지금은 딱히 쓸 일이 없는데.. 일단 놓아둠.
   const memoRef = useRef(null);
   const closeButtonRef = useRef(null);
   const contentRef = useRef(null);
+
+  const resizeObserver = new ResizeObserver(() => {
+    const rect = memoRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    console.log(width);
+    setSize((prev) => ({ ...prev, wdith: width, height: height }));
+  });
+
+  resizeObserver.observe(memoRef.current);
 
   // useEffect
   useEffect(() => {
@@ -23,6 +34,12 @@ const Memo = ({ setIsMemo }) => {
       setPosition((prev) => JSON.parse(localStorage.getItem("position")));
     } else {
       setPosition((prev) => ({ left: 0, top: 0 }));
+    }
+
+    if (localStorage.getItem("size")) {
+      setSize((prev) => JSON.parse(localStorage.getItem("size")));
+    } else {
+      setSize((prev) => ({ width: 300, height: 300 }));
     }
 
     const id = setTimeout(() => {
@@ -93,16 +110,30 @@ const Memo = ({ setIsMemo }) => {
     setPosition((prev) => getViewport(left, top));
   };
 
+  const handleResize = (e) => {
+    const rect = memoRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    setSize((prev) => ({ ...prev, wdith: width, height: height }));
+  };
+
   const handleClickCloseButton = (e) => setIsMemo(false);
 
   return (
     <div
       className="memo"
+      onResize={handleResize}
       style={
         position.left === null
           ? // - 메모창이 처음 위치에서 이동되는 모습을 보이지 않게 하기 위해.
             { display: "none" }
-          : { left: `${position.left}vw`, top: `${position.top}vh` }
+          : {
+              width: `${size.width}px`,
+              height: `${size.height}px`,
+              left: `${position.left}vw`,
+              top: `${position.top}vh`,
+            }
       }
       ref={memoRef}
     >

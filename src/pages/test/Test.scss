@@ -10,8 +10,12 @@
     }
   }
 
-  .buttons {
-    display: flex;
-    gap: 5px;
+  .resize {
+    width: 300px;
+    height: 200px;
+    resize: both;
+    overflow: auto;
+
+    border: 1px solid;
   }
 }

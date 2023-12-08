@@ -1,52 +1,36 @@
 .otherPosts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   &__postInfo {
     display: flex;
-
-    font-size: 95%;
 
     &--prevPost {
       border-bottom: 1px solid;
 
       padding-bottom: 3px;
     }
+
+    &--nextPost {
+      padding-top: 3px;
+    }
   }
 
   &__label {
+    font-size: 95%;
     font-weight: bold;
 
     margin-right: 5px;
   }
 
   &__postTitle {
+    font-size: 95%;
     font-weight: bold;
 
     &:hover {
       color: gray;
       text-decoration: underline;
-    }
-  }
-
-  &__prevPost {
-    border-bottom: 1px solid;
-
-    padding-bottom: 3px;
-  }
-
-  &__nextPost {
-    padding-top: 3px;
-  }
-
-  &__infoWrapper {
-    display: flex;
-  }
-
-  &__info {
-    display: inline-block;
-
-    font-size: 95%;
-
-    &:hover {
-      color: gray;
     }
   }
 }

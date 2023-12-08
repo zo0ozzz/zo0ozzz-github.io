@@ -20,18 +20,21 @@ const OtherPosts = ({ posts }) => {
           </div>
         </div>
       ) : null}
-      <div className="otherPosts__nextPost">
-        {posts.next !== null ? (
-          <Link
-            className="link otherPosts__link"
-            to={`/posts/${posts.next._id}`}
-          >
-            <div className="otherPosts__info otherPosts__info--next">
-              다음 글: {posts.next.title}
+      {posts.next !== null ? (
+        <div className="otherPosts__postInfo otherPosts__postInfo--nextPost">
+          <Label2 className="otherPosts__label" name="다음 글:" />
+          <div className="otherPosts__infoWrapper">
+            <div className="otherPosts__postTitleWrapper">
+              <Link
+                className="link otherPosts__postTitleLink"
+                to={`/posts/${posts.next._id}`}
+              >
+                <p className="otherPosts__postTitle">{posts.next.title}</p>
+              </Link>
             </div>
-          </Link>
-        ) : null}
-      </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -110,7 +110,7 @@ function App() {
       <div className="app">
         {isMemo
           ? createPortal(
-              <Memo setIsMemo={setIsMemo} />,
+              <Memo isMemo={isMemo} setIsMemo={setIsMemo} />,
               document.querySelector("#memo")
             )
           : null}

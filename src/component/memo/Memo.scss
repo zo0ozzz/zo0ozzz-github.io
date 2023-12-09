@@ -12,6 +12,8 @@
   resize: both;
   overflow: auto;
 
+  // opacity: 0.1;
+
   &:focus {
     outline: none;
   }
@@ -45,8 +47,6 @@
     height: 100%;
 
     background-color: white;
-
-    opacity: 0.8;
 
     border: none;
     outline: none;

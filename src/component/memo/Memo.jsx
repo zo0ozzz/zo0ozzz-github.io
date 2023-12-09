@@ -10,6 +10,11 @@ const Memo = ({ setIsMemo }) => {
   const [position, setPosition] = useState({ left: null, top: null });
   // 요소의 사이즈 결정 값
   const [size, setSize] = useState({ width: 300, height: 300 });
+  const [opacity, setOpacity] = useState(1);
+  const [disabled, setDisabled] = useState({
+    upOpacityButton: false,
+    downOpacityButton: false,
+  });
   const [isDragging, setIsDragging] = useState(false);
   // - 지금은 딱히 쓸 일이 없는데.. 일단 놓아둠.
   const memoRef = useRef(null);
@@ -22,18 +27,21 @@ const Memo = ({ setIsMemo }) => {
   useEffect(() => {
     if (localStorage.getItem("memo"))
       setContent((prev) => localStorage.getItem("memo"));
+    else setContent((prev) => "");
 
-    if (localStorage.getItem("position")) {
+    if (localStorage.getItem("position"))
       setPosition((prev) => JSON.parse(localStorage.getItem("position")));
-    } else {
-      setPosition((prev) => ({ left: 0, top: 0 }));
-    }
+    else setPosition((prev) => ({ left: 0, top: 0 }));
 
-    if (localStorage.getItem("size")) {
+    if (localStorage.getItem("size"))
       setSize((prev) => JSON.parse(localStorage.getItem("size")));
-    } else {
-      setSize((prev) => ({ width: 300, height: 300 }));
-    }
+    else setSize((prev) => ({ width: 300, height: 300 }));
+
+    if (localStorage.getItem("opacity"))
+      setOpacity((prev) =>
+        Math.floor(parseInt(localStorage.getItem("opacity")))
+      );
+    else setOpacity((prev) => 0.8);
 
     const id = setTimeout(() => {
       contentRef.current.focus();
@@ -95,16 +103,11 @@ const Memo = ({ setIsMemo }) => {
     setIsDragging(true);
 
     // 드래그 시작 순간 요소 & 커서 간 단차 결정.
-    // setCorrectionValue((prev) => ({
-    //   ...prev,
-    //   x: e.clientX - memoRef.current.offsetLeft,
-    //   y: e.clientY - memoRef.current.offsetTop,
-    // }));
-
-    setCorrectionValue({
+    setCorrectionValue((prev) => ({
+      ...prev,
       x: e.clientX - memoRef.current.offsetLeft,
       y: e.clientY - memoRef.current.offsetTop,
-    });
+    }));
   }, []);
 
   const handleDragEnd = useCallback(
@@ -150,6 +153,7 @@ const Memo = ({ setIsMemo }) => {
               height: `${size.height}px`,
               left: `${position.left}vw`,
               top: `${position.top}vh`,
+              opacity: `${opacity}`,
             }
       }
       ref={memoRef}
@@ -171,7 +175,30 @@ const Memo = ({ setIsMemo }) => {
           onClick={handleClickCloseButton}
           ref={closeButtonRef}
         />
-        <ButtonRef name="+" onClick={() => {}} ref={upOpacityButton} />{" "}
+        <ButtonRef
+          className={`memo__upOpacityButton memo__upOpacityButton--disabled`}
+          name="+"
+          onClick={() => {
+            const newOpacity = Math.floor(opacity + 0.1);
+
+            localStorage.setItem("opacity", newOpacity);
+            setOpacity((prev) => newOpacity);
+          }}
+          disabled={opacity === 1 ? true : false}
+          ref={upOpacityButton}
+        />
+        <ButtonRef
+          className={`memo__downOpacityButton memo__downOpacityButton--disabled`}
+          name="-"
+          onClick={() => {
+            const newOpacity = Math.floor((opacity - 0.1) * 10);
+
+            localStorage.setItem("opacity", newOpacity);
+            setOpacity((prev) => newOpacity);
+          }}
+          disabled={opacity === 0.1 ? true : false}
+          ref={downOpacityButton}
+        />
       </div>
       <textarea
         className="textarea memo__content"

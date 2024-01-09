@@ -1,4 +1,50 @@
-// @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap");
+
+// @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+// @import url("https://cdn.jsdelivr.net/gh/wooin21/web/fonts/UnFont/UnDinaru.woff");
+
+@font-face {
+  font-family: "MyIBMPlexMono";
+  font-weight: normal;
+  src: url("./font/IBMPlexMono-Regular.woff") format("woff");
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A; // 숫자, 영대문자, 영소문자
+}
+
+@font-face {
+  font-family: "MyIBMPlexMono";
+  font-weight: bold;
+  src: url("./font/IBMPlexMono-Bold.woff") format("woff");
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A; // 숫자, 영대문자, 영소문자
+}
+
+// @font-face {
+//   font-family: "MyGulim";
+//   src: local("Gulim"), local("굴림");
+//   unicode-range: U+AC00-D7A3; // 한글
+// }
+
+// @font-face {
+//   font-family: "MyUnDinaru";
+//   src: url("./font/UnDinaru.woff") format("woff"),
+//     url("https://cdn.jsdelivr.net/gh/wooin21/web/fonts/UnFont/UnDinaru.woff");
+// }
+
+// @font-face {
+//   font-family: "MyGulim";
+//   // font-weight: bold;
+//   src: local("Gulim"), local("굴림"),
+//     url("./font/IBMPlexSansKR-Bold.woff") format("woff");
+//   // unicode-range: U+AC00-D7A3; // 한글
+// }
+
+// @font-face {
+//   font-family: "MyGulim";
+//   font-weight: bold;
+//   src: local("Gulim"), local("굴림"), url("./font/IBMPlexSansKR-Regular.woff");
+//   // unicode-range: U+AC00-D7A3; // 한글
+// }
+// - 로컬의 '굴림' 글씨체에는 bold가 이미 포함되어 있으므로 bold를 적용했을 때 사용될 글씨체(파일)을 따로 지정해줄 필요가 없다.
+// - 아님! 굴림이 없어서 ISK이 사용될 경우를 대비해서 만들어주긴 해야 함.
 
 html,
 body,
@@ -84,7 +130,7 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: "IBM Plex Mono", "굴림", monospace;
+  font-family: "MyIBMPlexMono", "Gulim", "굴림", serif;
   font-size: 11px;
   vertical-align: baseline;
 }

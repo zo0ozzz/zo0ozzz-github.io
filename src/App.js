@@ -25,6 +25,7 @@ import Memo from "./component/memo/Memo";
 
 function App() {
   const [isMemo, setIsMemo] = useState(false);
+  console.log(isMemo);
   const [isGod, setIsGod] = useState(true);
   const [isGodPage, setIsGodPage] = useState(false);
   const sortingMedthodData = [
@@ -110,7 +111,7 @@ function App() {
       <div className="app">
         {isMemo
           ? createPortal(
-              <Memo isMemo={isMemo} setIsMemo={setIsMemo} />,
+              <Memo setIsMemo={setIsMemo} />,
               document.querySelector("#memo")
             )
           : null}

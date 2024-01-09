@@ -11,6 +11,7 @@ const Memo = ({ setIsMemo }) => {
   // 요소의 사이즈 결정 값
   const [size, setSize] = useState({ width: 300, height: 300 });
   const [opacity, setOpacity] = useState(1);
+  console.log(opacity);
   const [disabled, setDisabled] = useState({
     upOpacityButton: false,
     downOpacityButton: false,
@@ -37,11 +38,9 @@ const Memo = ({ setIsMemo }) => {
       setSize((prev) => JSON.parse(localStorage.getItem("size")));
     else setSize((prev) => ({ width: 300, height: 300 }));
 
-    if (localStorage.getItem("opacity"))
-      setOpacity((prev) =>
-        Math.floor(parseInt(localStorage.getItem("opacity")))
-      );
-    else setOpacity((prev) => 0.8);
+    if (localStorage.getItem("opacity")) {
+      setOpacity((prev) => Number(localStorage.getItem("opacity")));
+    } else setOpacity((prev) => 0.8);
 
     const id = setTimeout(() => {
       contentRef.current.focus();
@@ -170,16 +169,24 @@ const Memo = ({ setIsMemo }) => {
           메모
         </p>
         <ButtonRef
-          className="memo__closeButton"
-          name="x"
-          onClick={handleClickCloseButton}
-          ref={closeButtonRef}
+          className={`memo__downOpacityButton memo__downOpacityButton--disabled`}
+          name="-"
+          onClick={() => {
+            // const newOpacity = Math.floor((opacity - 0.1) * 10);
+            const newOpacity = (opacity * 10 - 1) / 10;
+
+            localStorage.setItem("opacity", newOpacity);
+            setOpacity((prev) => newOpacity);
+          }}
+          disabled={opacity === 0.1 ? true : false}
+          ref={downOpacityButton}
         />
         <ButtonRef
           className={`memo__upOpacityButton memo__upOpacityButton--disabled`}
           name="+"
           onClick={() => {
-            const newOpacity = Math.floor(opacity + 0.1);
+            // const newOpacity = Math.floor(opacity + 0.1);
+            const newOpacity = (opacity * 10 + 1) / 10;
 
             localStorage.setItem("opacity", newOpacity);
             setOpacity((prev) => newOpacity);
@@ -188,16 +195,10 @@ const Memo = ({ setIsMemo }) => {
           ref={upOpacityButton}
         />
         <ButtonRef
-          className={`memo__downOpacityButton memo__downOpacityButton--disabled`}
-          name="-"
-          onClick={() => {
-            const newOpacity = Math.floor((opacity - 0.1) * 10);
-
-            localStorage.setItem("opacity", newOpacity);
-            setOpacity((prev) => newOpacity);
-          }}
-          disabled={opacity === 0.1 ? true : false}
-          ref={downOpacityButton}
+          className="memo__closeButton"
+          name="x"
+          onClick={handleClickCloseButton}
+          ref={closeButtonRef}
         />
       </div>
       <textarea

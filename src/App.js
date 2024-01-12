@@ -25,7 +25,6 @@ import Memo from "./component/memo/Memo";
 
 function App() {
   const [isMemo, setIsMemo] = useState(false);
-  console.log(isMemo);
   const [isGod, setIsGod] = useState(true);
   const [isGodPage, setIsGodPage] = useState(false);
   const sortingMedthodData = [
@@ -45,9 +44,16 @@ function App() {
   const [selectedSortingMedthod, setSelectedSortingMedthod] = useState(
     sortingMedthodData[0].value
   );
+
+  // 메모)
+  // 1. 분류 기본값을 인덱스(0) 말고 default라는 필드를 만들어서 구분하는 게 좋을까?
+  // 2. 지금 id값이 안 쓰이고 있는데, [{}] 형태일 때는 id가 사용되지 않아도 넣어두는 게 좋을까?
+
   const [categoryData, setCategoryData] = useState([{}]);
   const [representativeCategoryName, setRepresentativeCategoryName] =
     useState("");
+
+  // const appRef = useRef(null);
 
   // mount function
   const getCategoryData = async () => {
@@ -68,28 +74,28 @@ function App() {
     }
   };
 
-  // useEffect
+  // * useEffect
+  // 관리자 페이지로 이동하거나 관리자 페이지를 빠져나올 때마다 카테고리 데이터를 업데이트.
   useEffect(() => {
     getCategoryData();
-
-    return;
   }, [isGodPage]);
 
+  // 카테고리 데이터가 수정될 때마다 대표 카테고리 정보를 업데이트.
   useEffect(() => {
+    // 카테고리 데이터가 초기값([{}])에서 업데이트 되지 않은 상태면 아무 동작도 하지 않음.
     if (categoryData.length === 1) return;
-    // - 카테고리 데이터가 업데이트 되지 않으면 아무 동작도 하지 않음.
-    //  - 전체, 미분류가 기본이라 업데이트된 상태라면 length가 1이 되지 않으니까.
+    // 카테고리 데이터의 length 값으로 업데이트 상태를 판단.
+    //  - 카테고리 데이터엔 기본적으로 '전체', '미분류'가 존재.
+    //    - [{전체...}, {미분류...}, ...] 형태로.
+    //  - 카테고리가 업데이트 됐다면 length는 2 이상.
 
     const representativeCategoryName = categoryData.find(
-      // - 카테고리 데이터가 업데이트 되면
-      // - 대표 카테고리를 찾아(isRe... === true) 저장.
       (item) => item.isRepresentative === true
     ).name;
     setRepresentativeCategoryName((prev) => representativeCategoryName);
-
-    return;
   }, [categoryData]);
 
+  // ESC 키로 메모장 켜기, 끄기 이벤트를 웹페이지 전역에 부착.
   useEffect(() => {
     const handleKeyDownBody = (e) => {
       if (e.key === "Escape") {
@@ -100,15 +106,45 @@ function App() {
     };
 
     const body = document.querySelector("body");
+    window.addEventListener("keydown", handleKeyDownBody);
+    // 처음엔 div app에 onKeyDown 이벤트를 걸었지만 실패.
+    //  - div는 포커싱이 안 되는 요소로 keyDown 이벤트를 붙일 수 없음.
+    //  - tabIndex={0} 속성으로 div가 포커스를 받을 수 있게 할 수 있지만,
+    //  - 아웃라인도 생기고
+    // dom + 이벤트 리스너로 해결함.
+    //  - 리액트에서 이벤트 리스너 써도 되는지 모르겠음.
 
-    body.addEventListener("keydown", handleKeyDownBody);
-
-    return () => body.removeEventListener("keydown", handleKeyDownBody);
+    return () => window.removeEventListener("keydown", handleKeyDownBody);
   }, []);
+
+  console.log(isMemo);
+
+  const appRef = useRef(null);
+
+  // 포커스가 appdiv에 간다? -> 위로 이동해버림. 위치가.
+  // 현재 위치를 찍어서 바로 옮긴다? 음... 그렇게까지 해야 하나..
 
   return (
     <>
-      <div className="app">
+      <div
+        className="app"
+        ref={appRef}
+        // tabIndex={0}
+        // onKeyDown={(e) => {
+        //   if (e.key === "Escape") {
+        //     e.preventDefault();
+
+        //     if (isMemo === true) {
+        //       setIsMemo((prev) => !prev);
+        //       appRef.current.focus();
+        //     }
+
+        //     if (isMemo === false) {
+        //       setIsMemo((prev) => !prev);
+        //     }
+        //   }
+        // }}
+      >
         {isMemo
           ? createPortal(
               <Memo setIsMemo={setIsMemo} />,

@@ -105,8 +105,8 @@ function App() {
       }
     };
 
-    const body = document.querySelector("body");
     window.addEventListener("keydown", handleKeyDownBody);
+    // 전역 이벤트는 window 객체에
     // 처음엔 div app에 onKeyDown 이벤트를 걸었지만 실패.
     //  - div는 포커싱이 안 되는 요소로 keyDown 이벤트를 붙일 수 없음.
     //  - tabIndex={0} 속성으로 div가 포커스를 받을 수 있게 할 수 있지만,
@@ -126,25 +126,7 @@ function App() {
 
   return (
     <>
-      <div
-        className="app"
-        ref={appRef}
-        // tabIndex={0}
-        // onKeyDown={(e) => {
-        //   if (e.key === "Escape") {
-        //     e.preventDefault();
-
-        //     if (isMemo === true) {
-        //       setIsMemo((prev) => !prev);
-        //       appRef.current.focus();
-        //     }
-
-        //     if (isMemo === false) {
-        //       setIsMemo((prev) => !prev);
-        //     }
-        //   }
-        // }}
-      >
+      <div className="app" ref={appRef}>
         {isMemo
           ? createPortal(
               <Memo setIsMemo={setIsMemo} />,

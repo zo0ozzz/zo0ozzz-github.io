@@ -294,6 +294,26 @@ export default function CategoryEditor() {
   };
 
   const handleClickCompeleteEditingSelectedCategoryNameButton = () => {
+    const checkDuplicateCategoryName = (targetName) => {
+      const result = categoryData.current.findIndex(
+        ({ name }) => name === targetName
+      );
+
+      if (result !== -1) {
+        return true;
+      }
+
+      if (result === -1) {
+        return false;
+      }
+    };
+
+    if (checkDuplicateCategoryName(editedCategoryName)) {
+      alert("똑같은 이름이 이미 있잖아~~~");
+
+      return;
+    }
+
     const newCategoryData = [...categoryData.current];
     const prevElement = newCategoryData[selectedCategoryIndex];
     newCategoryData[selectedCategoryIndex] = {
@@ -304,6 +324,7 @@ export default function CategoryEditor() {
     setCategoryData((prev) => ({ ...prev, current: newCategoryData }));
     setEditMode((prev) => false);
   };
+  // 카테고리 이름이 중복될 시 경고를 띄워줘야 함!
 
   const handleClickCancelEditingSelectedCategoryNameButton = () => {
     // 배열의 요소가 선택되지 않은 경우 아무 동작도 하지 않음.
@@ -341,14 +362,14 @@ export default function CategoryEditor() {
                 ref={editingSelectedCategoryNameTextInputRef}
               />
               <Button2
-                className="categoryList__completeRenamingButton"
-                name="확인"
-                onClick={handleClickCompeleteEditingSelectedCategoryNameButton}
-              />
-              <Button2
                 className="categoryList__cancelRenamingButton"
                 name="취소"
                 onClick={handleClickCancelEditingSelectedCategoryNameButton}
+              />
+              <Button2
+                className="categoryList__completeRenamingButton"
+                name="확인"
+                onClick={handleClickCompeleteEditingSelectedCategoryNameButton}
               />
             </div>
           ) : (
@@ -427,12 +448,12 @@ export default function CategoryEditor() {
                 ref={newCategoryTextInputRef}
               />
               <Button2
-                name="확인"
-                onClick={handleClickCompleteCreatingNewCategoryButton}
-              />
-              <Button2
                 name="취소"
                 onClick={handleClickCancelCreatingNewCategoryButton}
+              />
+              <Button2
+                name="확인"
+                onClick={handleClickCompleteCreatingNewCategoryButton}
               />
             </div>
           </div>

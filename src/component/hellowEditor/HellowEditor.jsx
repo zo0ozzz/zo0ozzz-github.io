@@ -8,7 +8,7 @@ const HellowEditor = () => {
   const [hellowMessage, setHellowMessage] = useState({ prev: "", current: "" });
   const editorRef = useRef(null);
 
-  // mount function
+  // * mount function
   const getHellowMessage = async () => {
     try {
       const response = await api.get("/god/hellowMessage");
@@ -29,12 +29,12 @@ const HellowEditor = () => {
     }
   };
 
-  // useEffect
+  // * useEffect
   useEffect(() => {
     getHellowMessage();
   }, []);
 
-  // handler function
+  // * handler function
   const handleChangeHellowMessage = (newHellowMessage) =>
     setHellowMessage((prev) => ({ ...prev, current: newHellowMessage }));
 

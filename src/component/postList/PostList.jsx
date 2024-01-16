@@ -86,7 +86,12 @@ export default function PostList({
       getSearchPosts(searchQuery);
       // - 검색어로 찾은 post들로 posts를 구성.
     }
-  }, [representativeCategoryName, categoryName, searchQuery]);
+  }, [
+    representativeCategoryName,
+    categoryName,
+    searchQuery,
+    selectedSortingMedthod,
+  ]);
 
   // element
   const list = posts.map((post, index) => {

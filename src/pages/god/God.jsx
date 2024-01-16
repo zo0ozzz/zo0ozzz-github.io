@@ -4,7 +4,7 @@ import BlogNameEditor from "../../component/blogNameEditor/BlogNameEditor";
 import HellowEditor from "../../component/hellowEditor/HellowEditor";
 import CategoryEditor from "../../component/categoryEditor/CategoryEditor";
 
-export default function God({ setIsGodPage }) {
+export default function God({ setIsGodPage, blogName, setBlogName }) {
   useEffect(() => {
     setIsGodPage((prev) => true);
 
@@ -16,7 +16,7 @@ export default function God({ setIsGodPage }) {
       <div className="god">
         <p className="god__message">{`나는 신이야!`}</p>
         <div className="god__blogName">
-          <BlogNameEditor />
+          <BlogNameEditor blogName={blogName} setBlogName={setBlogName} />
         </div>
         <div className="god__hellowEditor">
           <HellowEditor />

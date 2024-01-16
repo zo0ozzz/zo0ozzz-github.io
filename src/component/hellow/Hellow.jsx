@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import api from "../../lib/axios/axios";
 import QuillViewer from "../../lib/Quill/QuillViewer";
 
-export default function Hellow({}) {
+export const Hellow = () => {
   const [hellowMessage, setHellowMessage] = useState("");
 
   // mount function
@@ -37,4 +37,6 @@ export default function Hellow({}) {
       <QuillViewer value={hellowMessage} onChange={handleChangeHellowMessage} />
     </section>
   );
-}
+};
+
+export default Hellow;

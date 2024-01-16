@@ -17,8 +17,6 @@ const Searcher = () => {
     const value = e.target.value;
 
     setSearchQuery(value);
-
-    return;
   };
 
   const handleClickSubmitButton = () => {

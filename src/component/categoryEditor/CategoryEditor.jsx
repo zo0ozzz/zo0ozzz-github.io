@@ -20,7 +20,7 @@ export default function CategoryEditor() {
   const newCategoryTextInputRef = useRef(null);
   const editingSelectedCategoryNameTextInputRef = useRef(null);
 
-  // mount function
+  // * mount function
   const getCategoryData = async () => {
     try {
       const response = await api.get("/god/categoryData");
@@ -68,7 +68,7 @@ export default function CategoryEditor() {
     }
   }, [editMode]);
 
-  // handler function
+  // * handler function
   const handleClickMoveUpSelectedCategoryButton = () => {
     // 선택된 인덱스의 요소를 한 칸 앞으로 보낸 새로운 배열을 반환하는 함수
     const getArrayTargetElementMoveForward = (array, index) => {

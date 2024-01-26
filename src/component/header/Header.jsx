@@ -13,7 +13,6 @@ const PageHeader = ({
   setBlogName,
 }) => {
   // * mount function
-
   const changeBlogName = async () => {
     try {
       const response = await api.get("/god/blogName");
@@ -33,13 +32,12 @@ const PageHeader = ({
   };
 
   // * useEffect
-
   // 첫 마운트 시에만 서버에 저장된 값으로 blogName을 최신화.
   useEffect(() => {
     if (blogName !== "") return;
 
     changeBlogName();
-  }, []);
+  }, [blogName]);
 
   return (
     <header className="header">

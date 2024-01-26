@@ -3,6 +3,7 @@
   font-family: "My IBM Plex Mono";
   font-weight: normal;
   src: url("../public/font/IBMPlexMono-Regular.woff") format("woff");
+  font-display: swap;
   unicode-range: U+0030-0039, U+0041-005A, U+0061-007A; // 숫자, 영대문자, 영소문자
 }
 
@@ -10,10 +11,19 @@
   font-family: "My IBM Plex Mono";
   font-weight: bold;
   src: url("../public/font/IBMPlexMono-Bold.woff") format("woff");
+  font-display: swap;
   unicode-range: U+0030-0039, U+0041-005A, U+0061-007A; // 숫자, 영대문자, 영소문자
 }
 
 // 띄어쓰기(유니코드: U+0020) 폰트
+@font-face {
+  font-family: "My UnDinaru";
+  src: url("../public/font/UnDinaru.woff") format("woff");
+  font-display: swap;
+  unicode-range: U+0020;
+}
+// - 띄어 쓰기 문자는 굵기 지정이 없다.
+
 // - 굴림 폰트가 없는 시스템(맥)에서는 monospace 폰트를 쓰고 싶었음.
 //  - 다른 폰트는 다 안티 엘리어싱인가..? 아무튼 매끄럽게 표시돼서.
 //  - 나는 그게 싫음.
@@ -24,41 +34,6 @@
 
 // 문제) 다른 폰트(noto sans kr, apple sd gothic 등)은 이게 안 됨.
 // - 이유를 모르겠음. 일단 되는 걸로 지정해주고 넘어감.
-@font-face {
-  font-family: "My UnDinaru";
-  font-weight: normal;
-  src: url("../public/font/UnDinaru.woff") format("woff");
-  unicode-range: U+0020;
-}
-
-@font-face {
-  font-family: "My UnDinaru";
-  font-weight: bold;
-  src: url("../public/font/UnDinaruBold.woff") format("woff");
-  unicode-range: U+0020;
-}
-
-// @font-face {
-//   font-family: "test";
-//   font-weight: normal;
-//   src: url("./font/Interop-Regular.otf");
-// }
-
-// @font-face {
-//   font-family: "MyGulim";
-//   font-weight: nomal;
-//   src: local("Gulim"), local("굴림");
-// }
-
-// @font-face {
-//   font-family: "MyGulim";
-//   font-weight: bold;
-//   src: local("Gulim"), local("굴림");
-// }
-// - 로컬의 '굴림' 글씨체에는 bold가 이미 포함되어 있으므로 bold를 적용했을 때 사용될 글씨체(파일)을 따로 지정해줄 필요가 없다.
-// - 아님! 굴림이 없어서 ISK이 사용될 경우를 대비해서 만들어주긴 해야 함.
-// - 이렇게 하면 굴림에 볼드체 적용 안 됨!
-//  - 왠지는 아직 모름..
 
 html,
 body,

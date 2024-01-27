@@ -28,6 +28,11 @@ const QuillEditor = forwardRef(({ className, value, onChange }, ref) => {
 
   const modules = useMemo(
     () => ({
+      keyboard: {
+        bindings: {
+          "list autofill": null,
+        },
+      },
       syntax: {
         // 코드 하이라이터
         highlight: highlight,

@@ -6,6 +6,7 @@ import QuillViewer from "../../lib/Quill/QuillViewer";
 import QuillEditor from "../../lib/Quill/QuillEditor";
 import Button2 from "../../component/button2/Button2";
 import ImageResizePrompt from "../../component/imageResizePrompt/ImageResizePrompt";
+import Tiny from "component/tiny/Tiny";
 
 export default function Test() {
   return (
@@ -15,10 +16,7 @@ export default function Test() {
           <p className="messageBox__message">{"<테스트 페이지>"}</p>
         </div>
 
-        <div className="resize">
-          리사이즈
-          <button>ddddd</button>
-        </div>
+        <Tiny />
       </div>
     </>
   );

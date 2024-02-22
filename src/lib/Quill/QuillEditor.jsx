@@ -26,6 +26,11 @@ const QuillEditor = forwardRef(({ className, value, onChange }, ref) => {
 
   const highlight = useCallback((code) => hljs.highlightAuto(code).value, []);
 
+  // const highlight = useCallback(
+  //   (code) => `<code>${hljs.highlightAuto(code).value}</code>`,
+  //   []
+  // );
+
   const modules = useMemo(
     () => ({
       keyboard: {
@@ -33,14 +38,14 @@ const QuillEditor = forwardRef(({ className, value, onChange }, ref) => {
           "list autofill": null,
         },
       },
-      syntax: {
-        // 코드 하이라이터
-        highlight: highlight,
-        // - value에는 대상 문자를 리턴하는 '함수'를 등록해줌.
-        // - 이 함수가 작동해서 대상 문자들을 매개변수로 받은 다음에 하이라이팅 된 태그에 넣어 반환함.
-        // - 그러니까 '함수'를 넣어줘야 함. 대상 문자를 어떻게 해서 요소로 반환할지 설명한 '함수'!
-        interval: 0,
-      },
+      // syntax: {
+      //   // 코드 하이라이터
+      //   highlight: highlight,
+      //   // - value에는 대상 문자를 리턴하는 '함수'를 등록해줌.
+      //   // - 이 함수가 작동해서 대상 문자들을 매개변수로 받은 다음에 하이라이팅 된 태그에 넣어 반환함.
+      //   // - 그러니까 '함수'를 넣어줘야 함. 대상 문자를 어떻게 해서 요소로 반환할지 설명한 '함수'!
+      //   interval: 0,
+      // },
       toolbar: {
         container: [
           { font: Font.whitelist },

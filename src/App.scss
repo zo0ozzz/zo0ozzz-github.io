@@ -121,9 +121,8 @@ video {
   border: 0;
   font-family: "My IBM Plex Mono", Gulim, "굴림", "My Undinaru", monospace;
   font-size: 13px;
-  // 글자 크기를 어떻게 해야 할지.. 모르겠다.
-  vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -164,6 +163,21 @@ table {
 * {
   box-sizing: border-box;
 }
+
+// button,
+// input,
+// select,
+// textarea {
+//   font-family: inherit;
+//   font-size: 100%;
+//   box-sizing: border-box;
+//   padding: 0;
+//   margin: 0;
+// }
+
+// textarea {
+//   overflow: auto;
+// }
 
 .label {
   display: flex;

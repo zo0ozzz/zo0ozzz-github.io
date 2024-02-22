@@ -1,21 +1,2 @@
 .test {
-  &__messageBox {
-  }
-
-  .messageBox {
-    &__message {
-      font-weight: bold;
-
-      margin: 10px 5px;
-    }
-  }
-
-  .resize {
-    width: 300px;
-    height: 200px;
-    resize: both;
-    overflow: auto;
-
-    border: 1px solid;
-  }
 }
